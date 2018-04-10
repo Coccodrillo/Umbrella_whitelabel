@@ -1,0 +1,73 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion 27
+    defaultConfig {
+        applicationId "org.secfirst.umbrella"
+        minSdkVersion 15
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    //Google libs
+    implementation "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
+    implementation "com.android.support:design:$rootProject.supportLibraryVersion"
+    implementation "com.android.support.constraint:constraint-layout:$rootProject.supportConstraint"
+    implementation "com.android.support:support-vector-drawable:$rootProject.supportLibraryVersion"
+
+    //Test libs
+    testImplementation "junit:junit:$rootProject.ext.junitVersion"
+    androidTestImplementation "com.android.support.test:runner:$rootProject.ext.runnerVersion"
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:$rootProject.ext.espressoVersion"
+
+    // Rxjava
+    implementation "io.reactivex.rxjava2:rxandroid:$rootProject.ext.rxAndroid"
+    implementation "io.reactivex.rxjava2:rxjava:$rootProject.ext.rxJava"
+
+    // retrofit
+    implementation "com.squareup.retrofit2:retrofit:$rootProject.ext.retrofit2"
+    implementation "com.squareup.retrofit2:converter-moshi:$rootProject.ext.retrofit2"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$rootProject.ext.retrofit2"
+
+    // okhttp
+    implementation "com.squareup.okhttp3:okhttp:$rootProject.ext.okHttp"
+    implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.ext.interceptor"
+    implementation "com.squareup.moshi:moshi-kotlin:$rootProject.ext.moshiKotlin"
+
+    // dependency injection
+    implementation "com.google.dagger:dagger:$rootProject.dagger2Version"
+    implementation "com.google.dagger:dagger-android-support:$rootProject.dagger2Version"
+    kapt "com.google.dagger:dagger-compiler:$rootProject.dagger2Version"
+    kapt "com.google.dagger:dagger-android-processor:$rootProject.dagger2Version"
+
+    // database
+    implementation "android.arch.persistence.room:rxjava2:$rootProject.roomDatabaseVersion"
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    kapt "android.arch.persistence.room:compiler:$rootProject.roomDatabaseVersion"
+    implementation "com.commonsware.cwac:saferoom:$rootProject.safeRoom"
+
+    // parser
+    implementation "com.google.code.gson:gson:$rootProject.gsonVersion"
+
+    //Kotlin API
+    compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+
+}

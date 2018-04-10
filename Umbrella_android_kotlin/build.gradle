@@ -1,0 +1,71 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    ext.kotlin_version = '1.2.31'
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.2.0-alpha10'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        maven {
+            url "https://s3.amazonaws.com/repo.commonsware.com"
+        }
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+
+ext {
+    // Sdk and tools
+    minSdkVersion = 14
+    targetSdkVersion = 26
+    compileSdkVersion = 26
+    buildToolsVersion = '26.0.2'
+
+    // android support
+    supportLibraryVersion = '27.1.1'
+    supportConstraint = '1.0.2'
+
+    //Dependency Injection
+    dagger2Version = '2.11'
+
+    //test libraries
+    runnerVersion = '1.0.1'
+    espressoVersion = '3.0.1'
+    junitVersion = '4.12'
+
+    //RxAndroid RxJava
+    rxAndroid = '2.0.1'
+    rxJava = '2.1.7'
+
+    //Retrofit 2
+    retrofit2 = '2.3.0'
+
+    //OkHttp
+    okHttp = '3.10.0'
+    interceptor = '3.9.1'
+    moshiKotlin = '1.5.0'
+
+    //database
+    roomDatabaseVersion = '1.0.0'
+    safeRoom = '0.3.4'
+
+    //parser
+    gsonVersion = '2.8.0'
+
+}
