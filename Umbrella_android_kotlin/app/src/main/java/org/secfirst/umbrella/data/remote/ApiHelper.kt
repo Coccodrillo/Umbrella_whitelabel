@@ -2,7 +2,10 @@ package org.secfirst.umbrella.data.remote
 
 import io.reactivex.Observable
 
-interface ApiHelper {
+/**
+ * Created by jyotidubey on 04/01/18.
+ */
+interface  ApiHelper {
 
-    fun getStandardApiCall(): Observable<SampleResponse>
+    fun getBlogApiCall(): Observable<BlogResponse>
 }

@@ -21,8 +21,5 @@ class StandardModule {
     internal fun provideBlogPresenter(presenter: StandardPresenter<StandardMVPView, StandardMVPInteractor>)
             : StandardMVPPresenter<StandardMVPView, StandardMVPInteractor> = presenter
 
-    @Provides
-    internal fun provideLinearLayoutManager(fragment: StandardFragment): LinearLayoutManager = LinearLayoutManager(fragment.activity)
-
 }
 

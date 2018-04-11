@@ -54,7 +54,7 @@ ext {
     rxJava = '2.1.7'
 
     //Retrofit 2
-    retrofit2 = '2.3.0'
+    rx2FastAndroidNetworking = '1.0.1'
 
     //OkHttp
     okHttp = '3.10.0'

@@ -8,31 +8,27 @@ import org.secfirst.umbrella.util.SchedulerProvider
 import javax.inject.Inject
 
 class StandardPresenter<V : StandardMVPView, I : StandardMVPInteractor>
-@Inject internal constructor(interactor: I,
-                             schedulerProvider: SchedulerProvider,
-                             disposable: CompositeDisposable)
-
-    : BasePresenter<V, I>(interactor = interactor,
+@Inject internal constructor(
+        interactor: I,
+        schedulerProvider: SchedulerProvider,
+        disposable: CompositeDisposable) : BasePresenter<V, I>(
+        interactor = interactor,
         schedulerProvider = schedulerProvider,
-        compositeDisposable = disposable),
-        StandardMVPPresenter<V, I> {
+        compositeDisposable = disposable), StandardMVPPresenter<V, I> {
 
-    override fun onAttach(view: V?) {
-        super.onAttach(view)
-        feedInDatabase()
+    override fun onViewPrepared() {
+        getView()?.showProgress()
+        interactor?.let {
+            it.getBlogList()
+                    .compose(schedulerProvider.ioToMainObservableScheduler())
+                    .subscribe { blogResponse ->
+                        getView()?.let {
+                            it.hideProgress()
+                            it.displayBlogList(blogResponse.data)
+                        }
+                    }
+        }
     }
 
-
-    private fun feedInDatabase() = interactor?.let {
-        //stuff
-    }
-
-    private fun decideActivityToOpen() = getView()?.let {
-        //stuf
-    }
-
-    private fun isUserLoggedIn(): Boolean {
-        return false
-    }
 
 }

@@ -1,19 +1,14 @@
 package org.secfirst.umbrella.ui.base.interactor
 
-import org.secfirst.umbrella.data.preferences.PreferenceHelper
+import org.secfirst.umbrella.data.remote.ApiHelper
 
 open class BaseInteractor() : MVPInteractor {
 
-    protected lateinit var preferenceHelper: PreferenceHelper
+    protected lateinit var apiHelper: ApiHelper
 
-    constructor(preferenceHelper: PreferenceHelper) : this() {
-        this.preferenceHelper = preferenceHelper
+    constructor(apiHelper: ApiHelper) : this() {
+        this.apiHelper = apiHelper
     }
 
     override fun isUserLoggedIn() = true
-
-    override fun performUserLogout() = preferenceHelper.let {
-        //stuff
-    }
-
 }
