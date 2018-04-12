@@ -8,9 +8,6 @@ import org.secfirst.umbrella.ui.standard.StandardProvider
 @Module
 abstract class ActivityBuilder {
 
-    //@ContributesAndroidInjector(modules = [(MainActivityModule::class)])
-    //abstract fun bindMainActivity(): MainActivity
-
     @ContributesAndroidInjector(modules = [(StandardProvider::class)])
     abstract fun bindFeedActivity(): MainActivity
 }
