@@ -1,11 +1,8 @@
-package org.secfirst.umbrella.data.remote
+package org.secfirst.umbrella.data.network
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-/**
- * Created by jyotidubey on 13/01/18.
- */
 data class BlogResponse(@Expose
                         @SerializedName("status_code")
                         private var statusCode: String? = null,

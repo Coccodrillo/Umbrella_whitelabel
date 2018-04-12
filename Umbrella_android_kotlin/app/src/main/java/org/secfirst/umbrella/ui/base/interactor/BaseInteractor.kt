@@ -1,6 +1,6 @@
 package org.secfirst.umbrella.ui.base.interactor
 
-import org.secfirst.umbrella.data.remote.ApiHelper
+import org.secfirst.umbrella.data.network.ApiHelper
 
 open class BaseInteractor() : MVPInteractor {
 

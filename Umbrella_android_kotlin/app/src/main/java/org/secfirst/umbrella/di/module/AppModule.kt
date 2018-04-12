@@ -8,8 +8,8 @@ import dagger.Provides
 import io.reactivex.disposables.CompositeDisposable
 import org.secfirst.umbrella.BuildConfig
 import org.secfirst.umbrella.data.local.AppDatabase
-import org.secfirst.umbrella.data.remote.ApiHelper
-import org.secfirst.umbrella.data.remote.AppApiHelper
+import org.secfirst.umbrella.data.network.ApiHelper
+import org.secfirst.umbrella.data.network.AppApiHelper
 import org.secfirst.umbrella.di.ApiKeyInfo
 import org.secfirst.umbrella.util.SchedulerProvider
 

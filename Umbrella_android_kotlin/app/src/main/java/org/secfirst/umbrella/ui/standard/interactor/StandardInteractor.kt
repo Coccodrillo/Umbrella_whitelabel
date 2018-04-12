@@ -1,7 +1,7 @@
 package org.secfirst.umbrella.ui.standard.interactor
 
 
-import org.secfirst.umbrella.data.remote.ApiHelper
+import org.secfirst.umbrella.data.network.ApiHelper
 import org.secfirst.umbrella.ui.base.interactor.BaseInteractor
 import javax.inject.Inject
 
