@@ -11,6 +11,7 @@ internal constructor(protected var interactor: I?,
                      protected val compositeDisposable: CompositeDisposable) : MVPPresenter<V, I> {
 
     private var view: V? = null
+
     private val isViewAttached: Boolean get() = view != null
 
     override fun onAttach(view: V?) {

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import org.secfirst.umbrella.R
+import org.secfirst.umbrella.data.network.Blog
 import org.secfirst.umbrella.ui.base.view.BaseFragment
 import org.secfirst.umbrella.ui.standard.interactor.StandardMVPInteractor
 import org.secfirst.umbrella.ui.standard.presenter.StandardMVPPresenter

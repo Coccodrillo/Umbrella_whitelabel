@@ -1,18 +1,15 @@
 package org.secfirst.umbrella.di.module
 
 import android.app.Application
-import android.arch.persistence.room.Room
 import android.content.Context
 import dagger.Module
 import dagger.Provides
 import io.reactivex.disposables.CompositeDisposable
-import org.secfirst.umbrella.BuildConfig
-import org.secfirst.umbrella.data.local.AppDatabase
 import org.secfirst.umbrella.data.network.ApiHelper
 import org.secfirst.umbrella.data.network.AppApiHelper
+import org.secfirst.umbrella.data.network.NetworkEndPoint
 import org.secfirst.umbrella.di.ApiKeyInfo
 import org.secfirst.umbrella.util.SchedulerProvider
-
 import javax.inject.Singleton
 
 
@@ -23,14 +20,14 @@ class AppModule {
     @Singleton
     internal fun provideContext(application: Application): Context = application
 
-    @Provides
-    @Singleton
-    internal fun provideAppDatabase(context: Context): AppDatabase =
-            Room.databaseBuilder(context, AppDatabase::class.java, "db_name").build()
+//    @Provides
+//    @Singleton
+//    internal fun provideAppDatabase(context: Context): AppDatabase =
+//            Room.databaseBuilder(context, AppDatabase::class.java, "db_name").build()
 
     @Provides
     @ApiKeyInfo
-    internal fun provideApiKey(): String = BuildConfig.API_KEY
+    internal fun provideApiKey(): String = NetworkEndPoint.ENDPOINT_BLOG
 
 
     @Provides

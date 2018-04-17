@@ -1,21 +1,16 @@
 package org.secfirst.umbrella.data.local.standard
 
-import android.arch.persistence.room.ColumnInfo
-import android.arch.persistence.room.Entity
-import android.arch.persistence.room.PrimaryKey
-import com.google.gson.annotations.Expose
-import com.google.gson.annotations.SerializedName
+import com.raizlabs.android.dbflow.annotation.Column
+import com.raizlabs.android.dbflow.annotation.PrimaryKey
+import com.raizlabs.android.dbflow.annotation.Table
+import com.raizlabs.android.dbflow.rx2.structure.BaseRXModel
+import org.secfirst.umbrella.data.local.AppDatabase
 
-@Entity(tableName = "standard_table")
-data class Standard(
-        @Expose
-        @PrimaryKey
-        var id: Long,
+@Table(name = "standard", database = AppDatabase::class)
+class Standard constructor(
+        @PrimaryKey(autoincrement = true)
+        @Column(name = "id")
+        var id: Long = 1,
 
-        @Expose
-        @SerializedName("question_text")
-        @ColumnInfo(name = "question_text")
-        var questionText: String
-
-
-)
+        @Column(name = "question_text")
+        var questionText: String = "") : BaseRXModel()

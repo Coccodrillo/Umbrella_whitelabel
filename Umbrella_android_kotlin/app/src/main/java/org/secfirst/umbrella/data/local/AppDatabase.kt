@@ -1,12 +1,10 @@
 package org.secfirst.umbrella.data.local
 
-import android.arch.persistence.room.Database
-import android.arch.persistence.room.RoomDatabase
-import org.secfirst.umbrella.data.local.standard.Standard
-import org.secfirst.umbrella.data.local.standard.StandardDao
+import com.raizlabs.android.dbflow.annotation.Database
 
-@Database(entities = [(Standard::class)], version = 1)
-abstract class AppDatabase : RoomDatabase() {
+@Database(name = AppDatabase.NAME, version = AppDatabase.VERSION)
+object AppDatabase {
 
-    abstract fun standardDao(): StandardDao
+    const val NAME = "AppDatabase"
+    const val VERSION = 1
 }

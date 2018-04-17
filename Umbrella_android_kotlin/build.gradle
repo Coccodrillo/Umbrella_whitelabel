@@ -19,9 +19,8 @@ allprojects {
     repositories {
         google()
         jcenter()
-        maven {
-            url "https://s3.amazonaws.com/repo.commonsware.com"
-        }
+
+        maven { url "https://www.jitpack.io" }
     }
 }
 
@@ -42,7 +41,7 @@ ext {
     supportConstraint = '1.0.2'
 
     //Dependency Injection
-    dagger2Version = '2.11'
+    dagger2Version = '2.15'
 
     //test libraries
     runnerVersion = '1.0.1'
@@ -50,10 +49,10 @@ ext {
     junitVersion = '4.12'
 
     //RxAndroid RxJava
-    rxAndroid = '2.0.1'
+    rxAndroid = '2.0.2'
     rxJava = '2.1.7'
 
-    //Retrofit 2
+    //network
     rx2FastAndroidNetworking = '1.0.1'
 
     //OkHttp
@@ -62,8 +61,8 @@ ext {
     moshiKotlin = '1.5.0'
 
     //database
-    roomDatabaseVersion = '1.0.0'
-    safeRoom = '0.3.4'
+    dbFlowDatabaseVersion = '4.2.4'
+    dbFlowSqlcipher = '3.5.9'
 
     //parser
     gsonVersion = '2.8.0'

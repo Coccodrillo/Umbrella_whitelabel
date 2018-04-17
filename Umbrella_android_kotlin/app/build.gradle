@@ -54,12 +54,6 @@ dependencies {
     kapt "com.google.dagger:dagger-compiler:$rootProject.dagger2Version"
     kapt "com.google.dagger:dagger-android-processor:$rootProject.dagger2Version"
 
-    // database
-    implementation "android.arch.persistence.room:rxjava2:$rootProject.roomDatabaseVersion"
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-    kapt "android.arch.persistence.room:compiler:$rootProject.roomDatabaseVersion"
-    implementation "com.commonsware.cwac:saferoom:$rootProject.safeRoom"
-
     // parser
     implementation "com.google.code.gson:gson:$rootProject.gsonVersion"
 
@@ -69,6 +63,23 @@ dependencies {
 
     //Anko lib
     compile "org.jetbrains.anko:anko-commons:$anko_version"
+
+    // ----- init database
+    kapt "com.github.Raizlabs.DBFlow:dbflow-processor:${dbFlowDatabaseVersion}"
+    implementation "com.github.Raizlabs.DBFlow:dbflow-core:${dbFlowDatabaseVersion}"
+    implementation "com.github.Raizlabs.DBFlow:dbflow:${dbFlowDatabaseVersion}"
+
+    // RXJava 2 Kotlin Extensions Support
+    implementation "com.github.Raizlabs.DBFlow:dbflow-rx2-kotlinextensions:${dbFlowDatabaseVersion}"
+
+    // kotlin extensions
+    implementation "com.github.Raizlabs.DBFlow:dbflow-kotlinextensions:${dbFlowDatabaseVersion}"
+
+    // sql-cipher database encryption
+    implementation "com.github.Raizlabs.DBFlow:dbflow-sqlcipher:${dbFlowDatabaseVersion}"
+    implementation "net.zetetic:android-database-sqlcipher:${dbFlowSqlcipher}@aar"
+
+    // end ---- database
 
 
 }

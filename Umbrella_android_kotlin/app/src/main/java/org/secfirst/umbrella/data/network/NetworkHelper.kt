@@ -19,7 +19,7 @@ class ApiHeader @Inject constructor(internal val publicApiHeader: PublicApiHeade
 }
 
 /**
- * Make all requisitions tracked in @AppApiHelper
+ * Make all requisitions tracked by @AppApiHelper
  */
 class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHelper {
 
@@ -33,7 +33,7 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
 }
 
 /**
- * Responsable to tracking all API calls.
+ * Responsible to tracking all API calls.
  */
 interface ApiHelper {
 

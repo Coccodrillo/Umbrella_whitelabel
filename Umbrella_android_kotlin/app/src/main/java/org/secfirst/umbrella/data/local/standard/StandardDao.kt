@@ -1,16 +1,15 @@
 package org.secfirst.umbrella.data.local.standard
 
-import android.arch.persistence.room.Dao
-import android.arch.persistence.room.Insert
-import android.arch.persistence.room.OnConflictStrategy
-import android.arch.persistence.room.Query
-
-@Dao
 interface StandardDao {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(question: List<Standard>)
+    fun insert(standard: Standard) = standard.insert()!!
 
-    @Query("SELECT * FROM standard_table")
-    fun loadAll(): List<Standard>
+    fun delete(standard: Standard) = standard.delete()
+
+    fun update(standard: Standard) = standard.update()
+
+    fun loadAll(standard: Standard)
+
+    //fun loadAll(standard: Standard) = RXSQLite.rx(select from Standard::class where (Standard_Table.is_delete.`is`(false))).queryList()
 }
+

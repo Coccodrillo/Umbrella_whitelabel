@@ -1,8 +1,7 @@
 package org.secfirst.umbrella.data.network
 
-import org.secfirst.umbrella.BuildConfig
-
 object NetworkEndPoint {
 
-    val ENDPOINT_BLOG = BuildConfig.BASE_URL + "/5926ce9d11000096006ccb30"
+    val ENDPOINT_BLOG = "http://www.mocky.io/v2" + "/5926ce9d11000096006ccb30"
+    val API_KEY = "ABCXYZ123TEST"
 }
