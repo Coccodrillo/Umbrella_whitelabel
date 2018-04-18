@@ -34,7 +34,10 @@ class UmbrellaApplication : Application(), HasActivityInjector {
 
     private fun initRealmDatabase() {
         Realm.init(this)
-        val config = RealmConfiguration.Builder().name("umbrella.realm").build()
+        val config = RealmConfiguration.Builder()
+                //The Realm file can be encrypted on disk by passing a 512-bit encryption key (64 bytes)
+                .encryptionKey("aaljdkfjkadsfçldsklfjalksdjfkljasdfkjakdsfasdflkjiiepeieippwowo".toByteArray())
+                .name("umbrella.realm").build()
         Realm.setDefaultConfiguration(config)
 
     }
