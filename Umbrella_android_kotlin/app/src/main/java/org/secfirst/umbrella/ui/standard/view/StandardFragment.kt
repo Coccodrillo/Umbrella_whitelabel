@@ -5,7 +5,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import io.realm.Realm
 import org.secfirst.umbrella.R
+import org.secfirst.umbrella.data.local.standard.Standard
 import org.secfirst.umbrella.data.network.Blog
 import org.secfirst.umbrella.ui.base.view.BaseFragment
 import org.secfirst.umbrella.ui.standard.interactor.StandardMVPInteractor
@@ -36,6 +38,14 @@ class StandardFragment : BaseFragment(), StandardMVPView {
 
     override fun displayBlogList(blogs: List<Blog>?) {
         for (blog in blogs!!) Log.e("test", blog.author)
+
+        val realmInstance = Realm.getDefaultInstance()
+        realmInstance.executeTransaction { realm ->
+            val standard = Standard(1, "douglas")
+            realm.insert(standard)
+            val filter = realm.where(Standard::class.java).findFirst()
+            Log.e("test", "salvo - " + filter!!.questionText)
+        }
     }
 
     override fun onDestroyView() {

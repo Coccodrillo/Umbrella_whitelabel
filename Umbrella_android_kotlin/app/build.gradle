@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'realm-android'
 
 android {
     compileSdkVersion 27
@@ -24,6 +25,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+
+    realm {
+        syncEnabled = true
     }
 }
 
@@ -63,23 +68,5 @@ dependencies {
 
     //Anko lib
     compile "org.jetbrains.anko:anko-commons:$anko_version"
-
-    // ----- init database
-    kapt "com.github.Raizlabs.DBFlow:dbflow-processor:${dbFlowDatabaseVersion}"
-    implementation "com.github.Raizlabs.DBFlow:dbflow-core:${dbFlowDatabaseVersion}"
-    implementation "com.github.Raizlabs.DBFlow:dbflow:${dbFlowDatabaseVersion}"
-
-    // RXJava 2 Kotlin Extensions Support
-    implementation "com.github.Raizlabs.DBFlow:dbflow-rx2-kotlinextensions:${dbFlowDatabaseVersion}"
-
-    // kotlin extensions
-    implementation "com.github.Raizlabs.DBFlow:dbflow-kotlinextensions:${dbFlowDatabaseVersion}"
-
-    // sql-cipher database encryption
-    implementation "com.github.Raizlabs.DBFlow:dbflow-sqlcipher:${dbFlowDatabaseVersion}"
-    implementation "net.zetetic:android-database-sqlcipher:${dbFlowSqlcipher}@aar"
-
-    // end ---- database
-
 
 }

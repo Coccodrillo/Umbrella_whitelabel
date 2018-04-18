@@ -2,11 +2,11 @@ package org.secfirst.umbrella.data.local.standard
 
 interface StandardDao {
 
-    fun insert(standard: Standard) = standard.insert()!!
+    fun insert(standard: Standard)
 
-    fun delete(standard: Standard) = standard.delete()
+    fun delete(standard: Standard)
 
-    fun update(standard: Standard) = standard.update()
+    fun update(standard: Standard)
 
     fun loadAll(standard: Standard)
 
