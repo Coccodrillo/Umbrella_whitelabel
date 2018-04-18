@@ -5,6 +5,9 @@ import android.content.Context
 import dagger.Module
 import dagger.Provides
 import io.reactivex.disposables.CompositeDisposable
+import org.secfirst.umbrella.data.local.standard.StandardDao
+import org.secfirst.umbrella.data.local.standard.StandardRepo
+import org.secfirst.umbrella.data.local.standard.StandardRepository
 import org.secfirst.umbrella.data.network.ApiHelper
 import org.secfirst.umbrella.data.network.AppApiHelper
 import org.secfirst.umbrella.data.network.NetworkEndPoint
@@ -28,6 +31,15 @@ class AppModule {
     @Provides
     @ApiKeyInfo
     internal fun provideApiKey(): String = NetworkEndPoint.ENDPOINT_BLOG
+
+    //QuestionRepo = QuestionRepository(appDatabase.questionsDao())
+
+    internal val standardDao
+        get() = object : StandardDao {}
+
+    @Provides
+    @Singleton
+    internal fun provideApiStandardRepo(): StandardRepo = StandardRepository(standardDao)
 
 
     @Provides

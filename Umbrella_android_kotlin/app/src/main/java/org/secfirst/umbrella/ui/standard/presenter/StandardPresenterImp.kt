@@ -1,6 +1,7 @@
 package org.secfirst.umbrella.ui.standard.presenter
 
 import io.reactivex.disposables.CompositeDisposable
+import org.secfirst.umbrella.data.local.standard.Standard
 import org.secfirst.umbrella.ui.base.presenter.BasePresenterImp
 import org.secfirst.umbrella.ui.standard.interactor.StandardBaseInteractor
 import org.secfirst.umbrella.ui.standard.view.StandardBaseView
@@ -15,6 +16,20 @@ class StandardPresenterImp<V : StandardBaseView, I : StandardBaseInteractor>
         interactor = interactor,
         schedulerProvider = schedulerProvider,
         compositeDisposable = disposable), StandardBasePresenter<V, I> {
+
+
+
+    override fun onValidateInsertStandard(standard: Standard) {
+        interactor.let {
+            it!!.submitQuestion(standard)
+        }
+    }
+
+    override fun getData() {
+        interactor?.let {
+            getView()?.displayData(it.getData())
+        }
+    }
 
     override fun onViewPrepared() {
         getView()?.showProgress()

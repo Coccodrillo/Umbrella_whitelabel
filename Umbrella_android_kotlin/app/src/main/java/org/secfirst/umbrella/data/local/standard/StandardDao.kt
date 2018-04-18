@@ -1,15 +1,15 @@
 package org.secfirst.umbrella.data.local.standard
 
+import io.realm.Realm
+
 interface StandardDao {
 
-    fun insert(standard: Standard)
+    fun insert(standard: Standard) = Realm.getDefaultInstance().executeTransactionAsync { realm -> realm.insertOrUpdate(standard) }
 
-    fun delete(standard: Standard)
+    fun update(standard: Standard) = Realm.getDefaultInstance().executeTransactionAsync { realm -> realm.insertOrUpdate(standard) }
 
-    fun update(standard: Standard)
+    fun getStandard() = Realm.getDefaultInstance().where(Standard::class.java).findFirst()
 
-    fun loadAll(standard: Standard)
 
-    //fun loadAll(standard: Standard) = RXSQLite.rx(select from Standard::class where (Standard_Table.is_delete.`is`(false))).queryList()
 }
 

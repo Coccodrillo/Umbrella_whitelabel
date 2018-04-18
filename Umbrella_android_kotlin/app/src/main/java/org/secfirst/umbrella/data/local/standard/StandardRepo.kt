@@ -5,7 +5,9 @@ import io.reactivex.Single
 
 interface StandardRepo {
 
-    fun insertQuestions(questions: List<Standard>): Observable<Boolean>
+    fun insertStandard(standard: Standard): Observable<Boolean>
 
     fun loadQuestions(): Single<List<Standard>>
+
+    fun getStandard(): Standard?
 }

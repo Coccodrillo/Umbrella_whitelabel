@@ -5,7 +5,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import io.realm.Realm
 import org.secfirst.umbrella.R
 import org.secfirst.umbrella.data.local.standard.Standard
 import org.secfirst.umbrella.data.network.Blog
@@ -37,16 +36,22 @@ class StandardFragment : BaseFragment(), StandardBaseView {
     }
 
     override fun displayBlogList(blogs: List<Blog>?) {
+
+        //Network's test
         for (blog in blogs!!) Log.e("test", blog.author)
 
-        val realmInstance = Realm.getDefaultInstance()
-        realmInstance.executeTransaction { realm ->
-            val standard = Standard(1, "douglas")
-            realm.insert(standard)
-            val filter = realm.where(Standard::class.java).findFirst()
-            Log.e("test", "salvo - " + filter!!.questionText)
-        }
+        //Insert db
+        presenter.onValidateInsertStandard(Standard(2, "douglas"))
+
+        //get object in database
+        presenter.getData()
+
     }
+
+    override fun displayData(standard: Standard?) {
+        Log.i("test", "saved - " + standard!!.questionText)
+    }
+
 
     override fun onDestroyView() {
         presenter.onDetach()
