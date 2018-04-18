@@ -1,14 +1,7 @@
 package org.secfirst.umbrella.ui.base.interactor
 
-import org.secfirst.umbrella.data.network.ApiHelper
+interface BaseInteractor {
 
-open class BaseInteractor() : MVPInteractor {
+    fun isUserLoggedIn(): Boolean
 
-    protected lateinit var apiHelper: ApiHelper
-
-    constructor(apiHelper: ApiHelper) : this() {
-        this.apiHelper = apiHelper
-    }
-
-    override fun isUserLoggedIn() = true
 }

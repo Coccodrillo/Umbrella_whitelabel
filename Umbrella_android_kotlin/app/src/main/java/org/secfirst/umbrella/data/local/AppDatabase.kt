@@ -2,9 +2,9 @@ package org.secfirst.umbrella.data.local
 
 import com.raizlabs.android.dbflow.annotation.Database
 
-@Database(name = AppDatabase.NAME, version = AppDatabase.VERSION)
+@Database(version = AppDatabase.VERSION)
 object AppDatabase {
 
-    const val NAME = "AppDatabase"
+    const val NAME = "umbrella-database"
     const val VERSION = 1
 }

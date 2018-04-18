@@ -4,11 +4,10 @@ import android.app.Activity
 import android.app.Application
 import com.raizlabs.android.dbflow.config.DatabaseConfig
 import com.raizlabs.android.dbflow.config.FlowConfig
+import com.raizlabs.android.dbflow.config.FlowLog
 import com.raizlabs.android.dbflow.config.FlowManager
-import dagger.android.DaggerApplication
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
-import dagger.android.support.DaggerAppCompatActivity
 import net.sqlcipher.database.SQLiteDatabase
 import org.secfirst.umbrella.data.local.AppDatabase
 import org.secfirst.umbrella.data.local.SQLCipherHelperImpl
@@ -42,11 +41,12 @@ class UmbrellaApplication : Application(), HasActivityInjector {
         val dbConfig = FlowConfig.Builder(this)
                 .addDatabaseConfig(DatabaseConfig
                         .Builder(AppDatabase::class.java)
-                        .openHelper { databaseDefinition, helperListener ->
-                            SQLCipherHelperImpl(databaseDefinition, helperListener)
+                        .databaseName(AppDatabase.NAME)
+                        .openHelper { databaseDefinition, helperListener -> SQLCipherHelperImpl(databaseDefinition, helperListener)
                         }
                         .build())
                 .build()
         FlowManager.init(dbConfig)
+        FlowLog.setMinimumLoggingLevel(FlowLog.Level.V)
     }
 }

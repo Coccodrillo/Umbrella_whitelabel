@@ -1,29 +1,14 @@
 package org.secfirst.umbrella.ui.base.presenter
 
-import io.reactivex.disposables.CompositeDisposable
-import org.secfirst.umbrella.ui.base.interactor.MVPInteractor
-import org.secfirst.umbrella.ui.base.view.MVPView
-import org.secfirst.umbrella.util.SchedulerProvider
+import org.secfirst.umbrella.ui.base.interactor.BaseInteractor
+import org.secfirst.umbrella.ui.base.view.BaseView
 
-abstract class BasePresenter<V : MVPView, I : MVPInteractor>
-internal constructor(protected var interactor: I?,
-                     protected val schedulerProvider: SchedulerProvider,
-                     protected val compositeDisposable: CompositeDisposable) : MVPPresenter<V, I> {
+interface BasePresenter<V : BaseView, I : BaseInteractor> {
 
-    private var view: V? = null
+    fun onAttach(view: V?)
 
-    private val isViewAttached: Boolean get() = view != null
+    fun onDetach()
 
-    override fun onAttach(view: V?) {
-        this.view = view
-    }
-
-    override fun getView(): V? = view
-
-    override fun onDetach() {
-        compositeDisposable.dispose()
-        view = null
-        interactor = null
-    }
+    fun getView(): V?
 
 }

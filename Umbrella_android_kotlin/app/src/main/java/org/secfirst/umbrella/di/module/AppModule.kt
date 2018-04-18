@@ -5,6 +5,9 @@ import android.content.Context
 import dagger.Module
 import dagger.Provides
 import io.reactivex.disposables.CompositeDisposable
+import org.secfirst.umbrella.data.local.standard.StandardDao
+import org.secfirst.umbrella.data.local.standard.StandardRepo
+import org.secfirst.umbrella.data.local.standard.StandardRepository
 import org.secfirst.umbrella.data.network.ApiHelper
 import org.secfirst.umbrella.data.network.AppApiHelper
 import org.secfirst.umbrella.data.network.NetworkEndPoint
@@ -20,10 +23,14 @@ class AppModule {
     @Singleton
     internal fun provideContext(application: Application): Context = application
 
-//    @Provides
-//    @Singleton
-//    internal fun provideAppDatabase(context: Context): AppDatabase =
-//            Room.databaseBuilder(context, AppDatabase::class.java, "db_name").build()
+    val standardDAO
+        @Provides
+        @Singleton
+        get() = object : StandardDao {}
+
+    @Singleton
+    @Provides
+    internal fun provideStandardRepo(): StandardRepo = StandardRepository(standardDAO)
 
     @Provides
     @ApiKeyInfo

@@ -1,13 +1,12 @@
 package org.secfirst.umbrella.ui.base.view
 
-import android.app.ProgressDialog
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.View
 import dagger.android.support.AndroidSupportInjection
 
-abstract class BaseFragment : Fragment(), MVPView {
+abstract class BaseFragment : Fragment(), BaseView {
 
     private var parentActivity: BaseActivity? = null
 

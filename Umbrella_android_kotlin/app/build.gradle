@@ -78,7 +78,6 @@ dependencies {
     // sql-cipher database encryption
     implementation "com.github.Raizlabs.DBFlow:dbflow-sqlcipher:${dbFlowDatabaseVersion}"
     implementation "net.zetetic:android-database-sqlcipher:${dbFlowSqlcipher}@aar"
-
     // end ---- database
 
 
