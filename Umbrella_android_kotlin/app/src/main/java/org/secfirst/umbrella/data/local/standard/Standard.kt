@@ -1,16 +1,13 @@
 package org.secfirst.umbrella.data.local.standard
 
-import com.raizlabs.android.dbflow.annotation.Column
-import com.raizlabs.android.dbflow.annotation.PrimaryKey
-import com.raizlabs.android.dbflow.annotation.Table
-import com.raizlabs.android.dbflow.rx2.structure.BaseRXModel
-import org.secfirst.umbrella.data.local.AppDatabase
+import io.realm.RealmObject
+import io.realm.annotations.PrimaryKey
+import io.realm.annotations.Required
 
-@Table(name = "standard", database = AppDatabase::class)
-class Standard constructor(
-        @PrimaryKey(autoincrement = true)
-        @Column(name = "id")
+
+open class Standard constructor(
+        @PrimaryKey
         var id: Long = 1,
 
-        @Column(name = "question_text")
-        var questionText: String = "") : BaseRXModel()
+        @Required
+        var questionText: String = "") : RealmObject()

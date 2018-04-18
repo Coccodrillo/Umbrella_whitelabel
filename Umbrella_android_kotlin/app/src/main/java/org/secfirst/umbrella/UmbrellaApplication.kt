@@ -2,17 +2,13 @@ package org.secfirst.umbrella
 
 import android.app.Activity
 import android.app.Application
-import com.raizlabs.android.dbflow.config.DatabaseConfig
-import com.raizlabs.android.dbflow.config.FlowConfig
-import com.raizlabs.android.dbflow.config.FlowLog
-import com.raizlabs.android.dbflow.config.FlowManager
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
-import net.sqlcipher.database.SQLiteDatabase
-import org.secfirst.umbrella.data.local.AppDatabase
-import org.secfirst.umbrella.data.local.SQLCipherHelperImpl
+import io.realm.Realm
+import io.realm.RealmConfiguration
 import org.secfirst.umbrella.di.component.DaggerAppComponent
 import javax.inject.Inject
+
 
 class UmbrellaApplication : Application(), HasActivityInjector {
 
@@ -37,16 +33,8 @@ class UmbrellaApplication : Application(), HasActivityInjector {
     }
 
     private fun initDatabase() {
-        SQLiteDatabase.loadLibs(this)
-        val dbConfig = FlowConfig.Builder(this)
-                .addDatabaseConfig(DatabaseConfig
-                        .Builder(AppDatabase::class.java)
-                        .databaseName(AppDatabase.NAME)
-                        .openHelper { databaseDefinition, helperListener -> SQLCipherHelperImpl(databaseDefinition, helperListener)
-                        }
-                        .build())
-                .build()
-        FlowManager.init(dbConfig)
-        FlowLog.setMinimumLoggingLevel(FlowLog.Level.V)
+        Realm.init(this)
+        val config = RealmConfiguration.Builder().name("umbrella.db").build()
+        Realm.setDefaultConfiguration(config)
     }
 }
