@@ -10,14 +10,14 @@ import org.secfirst.umbrella.R
 import org.secfirst.umbrella.data.local.standard.Standard
 import org.secfirst.umbrella.data.network.Blog
 import org.secfirst.umbrella.ui.base.view.BaseFragment
-import org.secfirst.umbrella.ui.standard.interactor.StandardMVPInteractor
-import org.secfirst.umbrella.ui.standard.presenter.StandardMVPPresenter
+import org.secfirst.umbrella.ui.standard.interactor.StandardBaseInteractor
+import org.secfirst.umbrella.ui.standard.presenter.StandardBasePresenter
 import javax.inject.Inject
 
-class StandardFragment : BaseFragment(), StandardMVPView {
+class StandardFragment : BaseFragment(), StandardBaseView {
 
     @Inject
-    internal lateinit var presenter: StandardMVPPresenter<StandardMVPView, StandardMVPInteractor>
+    internal lateinit var presenter: StandardBasePresenter<StandardBaseView, StandardBaseInteractor>
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
             inflater.inflate(R.layout.fragment_standard, container, false)

@@ -1,6 +1,6 @@
 package org.secfirst.umbrella.ui.base.view
 
-interface MVPView {
+interface BaseView {
 
     fun showProgress()
 
