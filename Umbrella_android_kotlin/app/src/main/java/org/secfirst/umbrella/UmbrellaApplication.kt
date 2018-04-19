@@ -41,4 +41,4 @@ class UmbrellaApplication : Application(), HasActivityInjector {
         Realm.setDefaultConfiguration(config)
 
     }
-}
+}     
