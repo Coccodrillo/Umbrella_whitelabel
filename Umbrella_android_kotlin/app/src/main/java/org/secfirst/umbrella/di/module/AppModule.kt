@@ -23,23 +23,9 @@ class AppModule {
     @Singleton
     internal fun provideContext(application: Application): Context = application
 
-//    @Provides
-//    @Singleton
-//    internal fun provideAppDatabase(context: Context): AppDatabase =
-//            Room.databaseBuilder(context, AppDatabase::class.java, "db_name").build()
-
     @Provides
     @ApiKeyInfo
     internal fun provideApiKey(): String = NetworkEndPoint.ENDPOINT_BLOG
-
-    //QuestionRepo = QuestionRepository(appDatabase.questionsDao())
-
-    internal val standardDao
-        get() = object : StandardDao {}
-
-    @Provides
-    @Singleton
-    internal fun provideApiStandardRepo(): StandardRepo = StandardRepository(standardDao)
 
 
     @Provides
@@ -52,5 +38,16 @@ class AppModule {
     @Provides
     internal fun provideCompositeDisposable(): CompositeDisposable = CompositeDisposable()
 
+}
+
+@Module
+class RepositoryModule {
+
+    internal val standardDao
+        get() = object : StandardDao {}
+
+    @Provides
+    @Singleton
+    internal fun provideApiStandardRepo(): StandardRepo = StandardRepository(standardDao)
 
 }

@@ -7,10 +7,11 @@ import dagger.android.AndroidInjectionModule
 import org.secfirst.umbrella.UmbrellaApplication
 import org.secfirst.umbrella.di.builder.ActivityBuilder
 import org.secfirst.umbrella.di.module.AppModule
+import org.secfirst.umbrella.di.module.RepositoryModule
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [(AndroidInjectionModule::class), (AppModule::class), (ActivityBuilder::class)])
+@Component(modules = [(AndroidInjectionModule::class), (AppModule::class), (RepositoryModule::class), (ActivityBuilder::class)])
 interface AppComponent {
 
     @Component.Builder
