@@ -8,5 +8,5 @@ interface StandardBaseView : BaseView {
 
     fun displayBlogList(blogs: List<Blog>?)
 
-    fun displayData(standard: Standard?)
+    fun displayData(standard: List<Standard>)
 }

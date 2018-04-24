@@ -1,6 +1,7 @@
 package org.secfirst.umbrella.ui.standard.view
 
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +15,7 @@ import org.secfirst.umbrella.ui.standard.presenter.StandardBasePresenter
 import javax.inject.Inject
 
 class StandardFragment : BaseFragment(), StandardBaseView {
+
 
     @Inject
     internal lateinit var presenter: StandardBasePresenter<StandardBaseView, StandardBaseInteractor>
@@ -41,17 +43,16 @@ class StandardFragment : BaseFragment(), StandardBaseView {
         for (blog in blogs!!) Log.e("test", blog.author)
 
         //Insert db
-        presenter.onValidateInsertStandard(Standard(2, "douglas"))
+        presenter.onValidateInsertStandard(Standard(System.currentTimeMillis(), "douglas"))
 
-        //get object in database
-        presenter.getData()
-
+        Handler().postDelayed({
+            presenter.getData()
+        }, 5000)
     }
 
-    override fun displayData(standard: Standard?) {
-        Log.i("test", "saved - " + standard!!.questionText)
+    override fun displayData(standard: List<Standard>) {
+        Log.i("test", "saved - " + standard[1].questionText)
     }
-
 
     override fun onDestroyView() {
         presenter.onDetach()

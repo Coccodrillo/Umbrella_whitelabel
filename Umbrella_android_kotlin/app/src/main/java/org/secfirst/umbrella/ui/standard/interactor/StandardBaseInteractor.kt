@@ -9,7 +9,7 @@ interface StandardBaseInteractor : BaseInteractor {
 
     fun getBlogList(): Observable<BlogResponse>
 
-    fun submitQuestion(standard: Standard): Observable<Boolean>
+    fun submitQuestion(standard: Standard): Long
 
-    fun getData(): Standard?
+    fun getData(): List<Standard>
 }

@@ -9,7 +9,6 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:3.2.0-alpha10'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath "io.realm:realm-gradle-plugin:5.0.1"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -61,8 +60,8 @@ ext {
     moshiKotlin = '1.5.0'
 
     //database
-    dbFlowDatabaseVersion = '4.2.4'
-    dbFlowSqlcipher = '3.5.9'
+    dbflow_version = '4.2.4'
+    sqlcipher_version = '3.5.9'
 
     //parser
     gsonVersion = '2.8.0'
