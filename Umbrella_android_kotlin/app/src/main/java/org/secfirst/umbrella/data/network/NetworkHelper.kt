@@ -2,9 +2,9 @@ package org.secfirst.umbrella.data.network
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import com.rx2androidnetworking.Rx2AndroidNetworking
 import io.reactivex.Observable
 import org.secfirst.umbrella.di.ApiKeyInfo
+import retrofit2.http.GET
 import javax.inject.Inject
 
 /**
@@ -19,23 +19,10 @@ class ApiHeader @Inject constructor(internal val publicApiHeader: PublicApiHeade
 }
 
 /**
- * Make all requisitions tracked by @AppApiHelper
- */
-class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHelper {
-
-    override fun getBlogApiCall(): Observable<BlogResponse> =
-            Rx2AndroidNetworking.get(NetworkEndPoint.ENDPOINT_BLOG)
-                    .addHeaders(apiHeader.publicApiHeader)
-                    .build()
-                    .getObjectObservable(BlogResponse::class.java)
-
-
-}
-
-/**
  * Responsible to tracking all API calls.
  */
 interface ApiHelper {
 
+    @GET(NetworkEndPoint.GET_BLOG)
     fun getBlogApiCall(): Observable<BlogResponse>
 }

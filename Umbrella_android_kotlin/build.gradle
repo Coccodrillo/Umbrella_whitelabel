@@ -53,6 +53,7 @@ ext {
 
     //network
     rx2FastAndroidNetworking = '1.0.1'
+    retrofit = '2.3.0'
 
     //OkHttp
     okHttp = '3.10.0'
@@ -68,5 +69,9 @@ ext {
 
     //Anko
     anko_version = '0.10.4'
+
+    //okhttp log
+    okHttpLog = '3.9.1'
+
 
 }

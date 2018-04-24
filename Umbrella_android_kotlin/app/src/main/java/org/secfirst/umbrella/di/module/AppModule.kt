@@ -4,15 +4,18 @@ import android.app.Application
 import android.content.Context
 import dagger.Module
 import dagger.Provides
+import dagger.Reusable
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import org.secfirst.umbrella.data.local.standard.StandardDao
 import org.secfirst.umbrella.data.local.standard.StandardRepo
 import org.secfirst.umbrella.data.local.standard.StandardRepository
 import org.secfirst.umbrella.data.network.ApiHelper
-import org.secfirst.umbrella.data.network.AppApiHelper
-import org.secfirst.umbrella.data.network.NetworkEndPoint
-import org.secfirst.umbrella.di.ApiKeyInfo
+import org.secfirst.umbrella.data.network.NetworkEndPoint.BASE_URL
 import org.secfirst.umbrella.util.SchedulerProvider
+import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
+import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
 
 
@@ -22,15 +25,6 @@ class AppModule {
     @Provides
     @Singleton
     internal fun provideContext(application: Application): Context = application
-
-    @Provides
-    @ApiKeyInfo
-    internal fun provideApiKey(): String = NetworkEndPoint.ENDPOINT_BLOG
-
-
-    @Provides
-    @Singleton
-    internal fun provideApiHelper(appApiHelper: AppApiHelper): ApiHelper = appApiHelper
 
     @Provides
     internal fun provideSchedulerProvider(): SchedulerProvider = SchedulerProvider()
@@ -49,5 +43,26 @@ class RepositoryModule {
     @Provides
     @Singleton
     internal fun provideApiStandardRepo(): StandardRepo = StandardRepository(standardDao)
+
+}
+
+@Module
+class NetworkModudule {
+
+    @Provides
+    @Reusable
+    internal fun providePostApi(retrofit: Retrofit): ApiHelper {
+        return retrofit.create(ApiHelper::class.java)
+    }
+
+    @Provides
+    @Reusable
+    internal fun provideRetrofitInterface(): Retrofit {
+        return Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(MoshiConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
+                .build()
+    }
 
 }
