@@ -40,17 +40,17 @@ class StandardFragment : BaseFragment(), StandardBaseView {
     override fun displayBlogList(blogs: List<Blog>?) {
 
         //Network's test
-        for (blog in blogs!!) Log.e("test", blog.author)
+        for (blog in blogs!!) Log.e("test", "----"+ blog.title)
 
         //Insert db
         presenter.onValidateInsertStandard(Standard(System.currentTimeMillis(), "douglas"))
 
-        Handler().postDelayed({
-            presenter.getData()
-        }, 5000)
+
+        Handler().postDelayed({ presenter.getData() }, 0)
     }
 
     override fun displayData(standard: List<Standard>) {
+        //List data from network
         Log.i("test", "saved - " + standard[1].questionText)
     }
 
