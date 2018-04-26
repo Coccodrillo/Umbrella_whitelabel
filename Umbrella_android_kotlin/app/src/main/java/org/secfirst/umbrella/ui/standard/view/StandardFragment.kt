@@ -51,7 +51,7 @@ class StandardFragment : BaseFragment(), StandardBaseView {
 
     override fun displayData(standard: List<Standard>) {
         //List data from network
-        Log.i("test", "saved - " + standard[1].questionText)
+        if(!standard.isEmpty()) Log.i("test", "saved - " + standard[1].questionText)
     }
 
     override fun onDestroyView() {
