@@ -18,4 +18,8 @@ class ExampleUnitTest {
     fun test_testando() {
         assertEquals(4, 2 + 2)
     }
+
+    fun another_test() {
+        assertEquals(4, 2 + 2)
+    }
 }
