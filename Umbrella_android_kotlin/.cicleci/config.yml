@@ -33,7 +33,7 @@ jobs:
 
       - run:
           name: Run Tests
-          command: ./gradlew lint test
+          command: gradlew lint test
 
       - save_cache:
           paths:
