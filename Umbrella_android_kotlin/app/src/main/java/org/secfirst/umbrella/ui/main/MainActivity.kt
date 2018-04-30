@@ -58,3 +58,4 @@ class MainActivity : BaseActivity(), HasSupportFragmentInjector {
         transaction.commit()
     }
 }
+

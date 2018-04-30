@@ -17,3 +17,4 @@ interface StandardDao {
 }
 //FlowManager.getModelAdapter<Standard>(Standard::class.java).insert(standard)
 //FlowManager.getDatabase(AppDatabase::class.java).executeTransaction { databaseWrapper -> standard.save(databaseWrapper) }
+

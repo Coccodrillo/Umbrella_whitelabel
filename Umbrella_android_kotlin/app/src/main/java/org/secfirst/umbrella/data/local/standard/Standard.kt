@@ -9,3 +9,4 @@ import org.secfirst.umbrella.data.local.AppDatabase
 
 @Table(database = AppDatabase::class, allFields = true)
 open class Standard(@PrimaryKey(autoincrement = true) var id: Long = 1, @Column var questionText: String = "") : BaseRXModel()
+

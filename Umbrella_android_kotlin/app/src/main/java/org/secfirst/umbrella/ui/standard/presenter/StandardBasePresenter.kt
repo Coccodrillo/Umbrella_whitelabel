@@ -12,3 +12,4 @@ interface StandardBasePresenter<V : StandardBaseView, I : StandardBaseInteractor
 
     fun getData()
 }
+
