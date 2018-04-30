@@ -2,7 +2,8 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-
+apply plugin: "io.gitlab.arturbosch.detekt"
+//apply plugin: 'jacoco-android'
 android {
     compileSdkVersion 27
     defaultConfig {
@@ -17,6 +18,7 @@ android {
     buildTypes {
         debug {
             minifyEnabled false
+            testCoverageEnabled true
             buildConfigField("String", "BASE_URL", "\"http://www.mocky.io/v2\"")
             buildConfigField("String", "API_KEY", "\"ABCXYZ123TEST\"")
         }
@@ -25,8 +27,21 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-}
 
+
+
+//    jacocoAndroidUnitTestReport {
+//        csv.enabled false
+//        html.enabled true
+//        xml.enabled true
+//    }
+
+
+//    jacocoAndroidUnitTestReport {
+//        excludes += ['**/AutoValue_*.*',
+//                     '**/*JavascriptBridge.class']
+//    }
+}
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
@@ -61,7 +76,7 @@ dependencies {
 
     //Kotlin API
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     //Anko lib
     implementation "org.jetbrains.anko:anko-commons:$anko_version"
