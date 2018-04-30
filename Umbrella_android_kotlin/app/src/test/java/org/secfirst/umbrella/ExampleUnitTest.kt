@@ -1,7 +1,9 @@
 package org.secfirst.umbrella
 
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotNull
 import org.junit.Test
+import org.secfirst.umbrella.data.local.standard.Standard
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -22,4 +24,10 @@ class ExampleUnitTest {
     fun another_test() {
         assertEquals(4, 2 + 2)
     }
+    @Test
+    fun another_test2(){
+        assertNotNull(Standard(1,"douglas"))
+    }
+
 }
+

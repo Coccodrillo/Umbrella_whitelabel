@@ -1,7 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    ext.kotlin_version = '1.2.31'
+    ext.kotlin_version = '1.2.41'
     repositories {
         google()
         jcenter()
@@ -9,9 +9,15 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:3.2.0-alpha12'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "gradle.plugin.io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.0.0.RC6-4"
+        // classpath 'com.dicedmelon.gradle:jacoco-android:0.1.2'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
+}
+
+plugins {
+    id "io.gitlab.arturbosch.detekt" version "1.0.0.RC6-4"
 }
 
 allprojects {
@@ -27,6 +33,18 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
+//Static code analysis for Kotlin
+detekt {
+    version = "1.0.0.RC6-4"
+    defaultProfile {
+        input = file("app/src/main/java")
+        config = file("detekt-config.yml")
+        filters = ".*/resources/.*,.*/tmp/.*"
+        output = file("reports")
+        outputName = "detekt-report"
+        baseline = file("reports/baseline.xml")
+    }
+}
 
 ext {
     // Sdk and tools
