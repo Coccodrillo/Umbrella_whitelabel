@@ -7,7 +7,9 @@ import org.secfirst.umbrella.data.network.ApiHelper
 import org.secfirst.umbrella.ui.base.interactor.BaseInteractorImp
 import javax.inject.Inject
 
-class StandardInteractorImp @Inject constructor(private val standardRepo: StandardRepo, apiHelper: ApiHelper) : BaseInteractorImp(apiHelper), StandardBaseInteractor {
+class StandardInteractorImp @Inject constructor(
+        private val standardRepo: StandardRepo,
+        apiHelper: ApiHelper) : BaseInteractorImp(apiHelper), StandardBaseInteractor {
 
 
     override fun submitQuestion(standard: Standard) = standardRepo.insertStandard(standard)

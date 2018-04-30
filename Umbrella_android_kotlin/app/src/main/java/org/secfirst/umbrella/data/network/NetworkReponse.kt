@@ -3,6 +3,7 @@ package org.secfirst.umbrella.data.network
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
+@Suppress("MatchingDeclarationName")
 data class BlogResponse(@Expose
                         @SerializedName("status_code")
                         private var statusCode: String? = null,
