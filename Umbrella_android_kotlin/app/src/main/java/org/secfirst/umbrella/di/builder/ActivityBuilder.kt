@@ -11,3 +11,4 @@ abstract class ActivityBuilder {
     @ContributesAndroidInjector(modules = [(StandardProvider::class)])
     abstract fun bindFeedActivity(): MainActivity
 }
+
