@@ -10,7 +10,8 @@ interface StandardDao {
 
     fun insert(standard: Standard) = modelAdapter<Standard>().insert(standard)
 
-    fun update(standard: Standard) = FlowManager.getDatabase(AppDatabase::class.java).executeTransaction { databaseWrapper -> standard.update(databaseWrapper) }
+    fun update(standard: Standard) = FlowManager.getDatabase(AppDatabase::class.java)
+            .executeTransaction { databaseWrapper -> standard.update(databaseWrapper) }
 
     fun getStandard() = SQLite.select().from(Standard::class.java).queryList()
 
