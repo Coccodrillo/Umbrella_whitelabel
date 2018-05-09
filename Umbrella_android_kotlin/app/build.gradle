@@ -27,14 +27,11 @@ android {
         }
     }
 
-
-
 //    jacocoAndroidUnitTestReport {
 //        csv.enabled false
 //        html.enabled true
 //        xml.enabled true
 //    }
-
 
 //    jacocoAndroidUnitTestReport {
 //        excludes += ['**/AutoValue_*.*',
@@ -89,4 +86,11 @@ dependencies {
     implementation "com.github.Raizlabs.DBFlow:dbflow-sqlcipher:${dbflow_version}"
     implementation "net.zetetic:android-database-sqlcipher:${sqlcipher_version}@aar"
     //end - database
+
+    //JGit
+    compile "org.eclipse.jgit:org.eclipse.jgit:${jgit}"
+    compile "org.eclipse.jgit:org.eclipse.jgit.archive:${jgit}"
+    compile "commons-io:commons-io:${commons}"
+    compile "org.slf4j:slf4j-simple:${slf4j}"
+    compile "org.tukaani:xz:${tukaani}"
 }

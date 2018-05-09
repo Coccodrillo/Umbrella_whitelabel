@@ -6,6 +6,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import junit.framework.Assert.assertNotNull
+import org.eclipse.jgit.revwalk.RevWalk
 import org.secfirst.umbrella.R
 import org.secfirst.umbrella.data.local.standard.Standard
 import org.secfirst.umbrella.data.network.Blog
@@ -13,6 +15,14 @@ import org.secfirst.umbrella.ui.base.view.BaseFragment
 import org.secfirst.umbrella.ui.standard.interactor.StandardBaseInteractor
 import org.secfirst.umbrella.ui.standard.presenter.StandardBasePresenter
 import javax.inject.Inject
+import org.eclipse.jgit.lib.ObjectLoader
+import org.eclipse.jgit.treewalk.filter.PathFilter
+import org.eclipse.jgit.treewalk.TreeWalk
+import org.eclipse.jgit.revwalk.RevTree
+import org.eclipse.jgit.revwalk.RevCommit
+import org.eclipse.jgit.internal.storage.file.FileRepository
+
+
 
 class StandardFragment : BaseFragment(), StandardBaseView {
 
