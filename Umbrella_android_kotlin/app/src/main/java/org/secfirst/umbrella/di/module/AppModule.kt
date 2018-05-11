@@ -7,12 +7,14 @@ import dagger.Provides
 import dagger.Reusable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import org.eclipse.jgit.api.Git
 import org.secfirst.umbrella.data.local.standard.StandardDao
 import org.secfirst.umbrella.data.local.standard.StandardRepo
 import org.secfirst.umbrella.data.local.standard.StandardRepository
 import org.secfirst.umbrella.data.network.ApiHelper
 import org.secfirst.umbrella.data.network.NetworkEndPoint.BASE_URL
 import org.secfirst.umbrella.util.SchedulerProvider
+import org.secfirst.umbrella.util.SingletonHolder
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -47,7 +49,7 @@ class RepositoryModule {
 }
 
 @Module
-class NetworkModudule {
+class NetworkModule {
 
     @Provides
     @Reusable
@@ -65,4 +67,8 @@ class NetworkModudule {
                 .build()
     }
 
+    @Provides
+    @Reusable
+    internal fun provideTentGitInstance(context: Context) =
+            NetworkTent.geTentInstance(context.cacheDir.path + "/repo/")
 }

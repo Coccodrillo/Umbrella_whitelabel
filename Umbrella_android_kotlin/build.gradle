@@ -79,8 +79,6 @@ ext {
     //okhttp log and dependencies
     okHttpLog = '3.9.1'
     //JGit and dependencies
-    jgit = '4.11.0.201803080745-r'
-    slf4j = '1.7.25'
-    tukaani = '1.8'
-    commons = '2.6'
+    jgit = '3.7.1.201504261725-r'
+    commonsIo = '2.5'
 }

@@ -3,14 +3,20 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 //apply plugin: 'jacoco-android'
+
 android {
     compileSdkVersion 27
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
     defaultConfig {
         applicationId "org.secfirst.umbrella"
         minSdkVersion 15
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
@@ -76,7 +82,7 @@ dependencies {
 
     //Anko lib
     implementation "org.jetbrains.anko:anko-commons:$anko_version"
-
+    implementation 'com.android.support:multidex:1.0.3'
     //init - database
     kapt "com.github.Raizlabs.DBFlow:dbflow-processor:${dbflow_version}"
     implementation "com.github.Raizlabs.DBFlow:dbflow-core:${dbflow_version}"
@@ -88,9 +94,6 @@ dependencies {
     //end - database
 
     //JGit
-    compile "org.eclipse.jgit:org.eclipse.jgit:${jgit}"
-    compile "org.eclipse.jgit:org.eclipse.jgit.archive:${jgit}"
-    compile "commons-io:commons-io:${commons}"
-    compile "org.slf4j:slf4j-simple:${slf4j}"
-    compile "org.tukaani:xz:${tukaani}"
+    implementation "commons-io:commons-io:$commonsIo"
+    implementation "org.eclipse.jgit:org.eclipse.jgit:$jgit"
 }
