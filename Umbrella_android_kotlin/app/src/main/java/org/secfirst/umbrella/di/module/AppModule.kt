@@ -7,14 +7,15 @@ import dagger.Provides
 import dagger.Reusable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import org.eclipse.jgit.api.Git
-import org.secfirst.umbrella.data.local.standard.StandardDao
-import org.secfirst.umbrella.data.local.standard.StandardRepo
-import org.secfirst.umbrella.data.local.standard.StandardRepository
+import org.secfirst.umbrella.data.database.standard.StandardDao
+import org.secfirst.umbrella.data.database.standard.StandardRepo
+import org.secfirst.umbrella.data.database.standard.StandardRepository
+import org.secfirst.umbrella.data.internal.TentDao
+import org.secfirst.umbrella.data.internal.TentRepo
+import org.secfirst.umbrella.data.internal.TentRepository
 import org.secfirst.umbrella.data.network.ApiHelper
 import org.secfirst.umbrella.data.network.NetworkEndPoint.BASE_URL
 import org.secfirst.umbrella.util.SchedulerProvider
-import org.secfirst.umbrella.util.SingletonHolder
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -46,6 +47,12 @@ class RepositoryModule {
     @Singleton
     internal fun provideApiStandardRepo(): StandardRepo = StandardRepository(standardDao)
 
+    internal val tentDao
+        get() = object : TentDao {}
+
+    @Provides
+    @Singleton
+    internal fun provideTentGitInstance(context: Context): TentRepo = TentRepository(tentDao, context)
 }
 
 @Module
@@ -66,9 +73,4 @@ class NetworkModule {
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
                 .build()
     }
-
-    @Provides
-    @Reusable
-    internal fun provideTentGitInstance(context: Context) =
-            NetworkTent.geTentInstance(context.cacheDir.path + "/repo/")
 }
