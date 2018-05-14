@@ -10,8 +10,8 @@ import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
 import net.sqlcipher.database.SQLiteDatabase
 import org.eclipse.jgit.api.Git
-import org.secfirst.umbrella.data.local.AppDatabase
-import org.secfirst.umbrella.data.local.SQLCipherHelperImpl
+import org.secfirst.umbrella.data.database.AppDatabase
+import org.secfirst.umbrella.data.database.SQLCipherHelperImpl
 import org.secfirst.umbrella.di.component.DaggerAppComponent
 import java.io.File
 import java.util.*

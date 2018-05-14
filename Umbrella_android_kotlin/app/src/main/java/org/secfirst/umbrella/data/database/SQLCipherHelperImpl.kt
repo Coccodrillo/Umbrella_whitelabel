@@ -1,4 +1,4 @@
-package org.secfirst.umbrella.data.local
+package org.secfirst.umbrella.data.database
 
 import com.raizlabs.android.dbflow.config.DatabaseDefinition
 import com.raizlabs.android.dbflow.sqlcipher.SQLCipherOpenHelper

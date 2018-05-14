@@ -1,4 +1,4 @@
-package org.secfirst.umbrella.data.local.standard
+package org.secfirst.umbrella.data.database.standard
 
 import io.reactivex.Single
 import javax.inject.Inject
