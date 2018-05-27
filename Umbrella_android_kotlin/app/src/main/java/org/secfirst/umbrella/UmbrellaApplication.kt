@@ -9,18 +9,11 @@ import com.raizlabs.android.dbflow.config.FlowManager
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
 import net.sqlcipher.database.SQLiteDatabase
-import org.eclipse.jgit.api.Git
 import org.secfirst.umbrella.data.database.AppDatabase
 import org.secfirst.umbrella.data.database.SQLCipherHelperImpl
+import org.secfirst.umbrella.data.internal.TentDatabase
 import org.secfirst.umbrella.di.component.DaggerAppComponent
-import java.io.File
-import java.util.*
 import javax.inject.Inject
-import org.eclipse.jgit.storage.file.FileRepositoryBuilder
-
-
-
-
 
 
 class UmbrellaApplication : Application(), HasActivityInjector {
@@ -36,6 +29,7 @@ class UmbrellaApplication : Application(), HasActivityInjector {
 
         initDaggerComponent()
         initDatabase()
+        initTentRepository()
     }
 
     private fun initDaggerComponent() {
@@ -62,22 +56,7 @@ class UmbrellaApplication : Application(), HasActivityInjector {
     }
 
     private fun initTentRepository() {
-       val git =  Git.cloneRepository()
-                .setURI("https://github.com/klaidliadon/tent-sample.git")
-                .setDirectory(File(applicationContext.cacheDir.path + "/repo/"))
-                .setBranchesToClone(Arrays.asList("refs/heads/master"))
-                .setBranch("refs/heads/master")
-                .call()
-
-        val repositoryBuilder = FileRepositoryBuilder()
-        val repository = repositoryBuilder.setGitDir(File("/path/to/repo/.git"))
-                .readEnvironment() // scan environment GIT_* variables
-                .findGitDir() // scan up the file system tree
-                .setMustExist(true)
-                .build()
-        Git.open(File("/path/to/repo/.git"))
-                .checkout()
-        val te = git.getRepository()
+        TentDatabase(applicationContext).initTentRepository()
     }
 
     override fun onTerminate() {
