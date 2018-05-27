@@ -45,8 +45,8 @@ android {
 //    }
 }
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation files('libs/snakeyaml-1.21-android.jar')
     //Google libs
     implementation "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
     implementation "com.android.support:design:$rootProject.supportLibraryVersion"
@@ -83,6 +83,7 @@ dependencies {
     //Anko lib
     implementation "org.jetbrains.anko:anko-commons:$anko_version"
     implementation 'com.android.support:multidex:1.0.3'
+
     //init - database
     kapt "com.github.Raizlabs.DBFlow:dbflow-processor:${dbflow_version}"
     implementation "com.github.Raizlabs.DBFlow:dbflow-core:${dbflow_version}"
@@ -91,9 +92,11 @@ dependencies {
     implementation "com.github.Raizlabs.DBFlow:dbflow-kotlinextensions:${dbflow_version}"
     implementation "com.github.Raizlabs.DBFlow:dbflow-sqlcipher:${dbflow_version}"
     implementation "net.zetetic:android-database-sqlcipher:${sqlcipher_version}@aar"
+
     //end - database
 
     //JGit
     implementation "commons-io:commons-io:$commonsIo"
     implementation "org.eclipse.jgit:org.eclipse.jgit:$jgit"
+    implementation files('libs/snakeyaml-1.21-android.jar')
 }
