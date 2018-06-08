@@ -7,12 +7,13 @@ import dagger.Provides
 import dagger.Reusable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import org.secfirst.core.storage.TentConfig
+import org.secfirst.core.storage.TentStorageDao
+import org.secfirst.core.storage.TentStorageRepo
+import org.secfirst.core.storage.TentStorageRepository
 import org.secfirst.umbrella.data.database.standard.StandardDao
 import org.secfirst.umbrella.data.database.standard.StandardRepo
 import org.secfirst.umbrella.data.database.standard.StandardRepository
-import org.secfirst.umbrella.data.internal.TentDao
-import org.secfirst.umbrella.data.internal.TentRepo
-import org.secfirst.umbrella.data.internal.TentRepository
 import org.secfirst.umbrella.data.network.ApiHelper
 import org.secfirst.umbrella.data.network.NetworkEndPoint.BASE_URL
 import org.secfirst.umbrella.util.SchedulerProvider
@@ -24,6 +25,7 @@ import javax.inject.Singleton
 
 @Module
 class AppModule {
+
 
     @Provides
     @Singleton
@@ -40,19 +42,24 @@ class AppModule {
 @Module
 class RepositoryModule {
 
+    internal val tentDao
+        get() = object : TentStorageDao {}
+
     internal val standardDao
         get() = object : StandardDao {}
+
+
+    @Provides
+    @Singleton
+    fun appDatabase(context: Context) = TentConfig(context)
 
     @Provides
     @Singleton
     internal fun provideApiStandardRepo(): StandardRepo = StandardRepository(standardDao)
 
-    internal val tentDao
-        get() = object : TentDao {}
-
     @Provides
     @Singleton
-    internal fun provideTentGitInstance(context: Context): TentRepo = TentRepository(tentDao, context)
+    internal fun provideTentGitInstance(context: Context): TentStorageRepo = TentStorageRepository(tentDao, appDatabase(context))
 }
 
 @Module

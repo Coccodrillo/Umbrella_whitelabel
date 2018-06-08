@@ -11,7 +11,6 @@ import dagger.android.HasActivityInjector
 import net.sqlcipher.database.SQLiteDatabase
 import org.secfirst.umbrella.data.database.AppDatabase
 import org.secfirst.umbrella.data.database.SQLCipherHelperImpl
-import org.secfirst.umbrella.data.internal.TentDatabase
 import org.secfirst.umbrella.di.component.DaggerAppComponent
 import javax.inject.Inject
 
@@ -30,6 +29,7 @@ class UmbrellaApplication : Application(), HasActivityInjector {
         initDaggerComponent()
         initDatabase()
         initTentRepository()
+
     }
 
     private fun initDaggerComponent() {
@@ -56,7 +56,7 @@ class UmbrellaApplication : Application(), HasActivityInjector {
     }
 
     private fun initTentRepository() {
-        TentDatabase(applicationContext).initTentRepository()
+
     }
 
     override fun onTerminate() {

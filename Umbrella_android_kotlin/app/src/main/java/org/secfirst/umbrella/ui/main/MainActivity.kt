@@ -27,6 +27,10 @@ class MainActivity : BaseActivity(), HasSupportFragmentInjector {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+    }
+
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_home -> {

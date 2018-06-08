@@ -32,6 +32,7 @@ class StandardFragment : BaseFragment(), StandardBaseView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         presenter.onAttach(this)
         super.onViewCreated(view, savedInstanceState)
+
     }
 
     override fun setUp() {

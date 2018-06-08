@@ -7,7 +7,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.0-alpha15'
+        classpath 'com.android.tools.build:gradle:3.2.0-alpha17'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -52,7 +52,7 @@ ext {
     buildToolsVersion = '26.0.2'
     // android support
     supportLibraryVersion = '27.1.1'
-    supportConstraint = '1.1.0'
+    supportConstraint = '1.1.1'
     //Dependency Injection
     dagger2Version = '2.15'
     //test libraries
@@ -63,7 +63,6 @@ ext {
     rxAndroid = '2.0.2'
     rxJava = '2.1.14'
     //network and dependencies
-    rx2FastAndroidNetworking = '1.0.1'
     retrofit = '2.3.0'
     //OkHttp and dependencies
     okHttp = '3.10.0'
@@ -81,4 +80,7 @@ ext {
     //JGit and dependencies
     jgit = '3.7.1.201504261725-r'
     commonsIo = '2.5'
+    jackson_databind = '2.9.5'
+    jackson_yaml = '2.7.1'
+    jackson_module = '2.9.5'
 }
