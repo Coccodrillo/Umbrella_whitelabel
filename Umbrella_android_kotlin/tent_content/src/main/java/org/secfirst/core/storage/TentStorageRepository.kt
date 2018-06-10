@@ -9,7 +9,7 @@ class TentStorageRepository @Inject constructor(private val tentStorageDao: Tent
 
     override fun fetch(): Single<Git> = tentStorageDao.cloneRepository(tentConfig)
 
-    override fun parseFiles(): Single<Lesson> = tentStorageDao.tentSerialize(tentConfig)
+    override fun parseFiles(): Single<Root> = tentStorageDao.processElement(tentConfig)
 
 
 }
