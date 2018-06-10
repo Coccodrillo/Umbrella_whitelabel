@@ -1,17 +1,18 @@
 package org.secfirst.core.storage
 
 import android.util.Log
+import io.reactivex.Single
+import org.secfirst.core.storage.TentConfig.Companion.DELIMITER_CATEGORY
+import org.secfirst.core.storage.TentConfig.Companion.DELIMITER_SUBCATEGORY
 import java.io.File
 
 
 class CategoryAdapter(private val tentConfig: TentConfig) : TentConfig.Serializable {
 
     private val lesson: Lesson = Lesson()
-
-
     private val fileList: MutableList<File> = arrayListOf()
 
-    override fun serialize(): Lesson {
+    override fun serialize(): Single<Lesson> {
         File(tentConfig.getPathRepository())
                 .walk()
                 .filter { !it.path.contains(".git") }
@@ -20,9 +21,7 @@ class CategoryAdapter(private val tentConfig: TentConfig) : TentConfig.Serializa
 
         fileList.reverse()
         processCategory()
-
-        //processCategory("travel/kidnapping/beginner")
-        return lesson
+        return Single.just(lesson)
     }
 
     private fun processFile(currentFile: File) {
@@ -35,32 +34,6 @@ class CategoryAdapter(private val tentConfig: TentConfig) : TentConfig.Serializa
         }
     }
 
-    private fun processCategory(path: String): Category? {
-        val listOfDirectory = path.split("/".toRegex())
-
-        //The root category (in your example, communications)
-        var rootCategory: Category? = null
-        //A reminder of the current Category, so we can attach the next one to it
-        var currentCategory: Category? = null
-        listOfDirectory.forEach {
-            if (rootCategory == null) {
-                //First element, so I need to create the root category
-                rootCategory = Category(it)
-                currentCategory = rootCategory
-            } else {
-                //Other elements are simply created
-                val nextCategory = Category(it)
-                //Added as a subCategory of the previous category
-                currentCategory!!.subcategories.add(nextCategory)
-                //And we progress within the chain
-                currentCategory = nextCategory
-            }
-        }
-        //In the end, my root category will contain :
-        // Category("communications", Category("email", Category("Beginner", null)))
-        return rootCategory
-    }
-
     private fun processCheckList(currentFile: File) {
 
     }
@@ -70,7 +43,6 @@ class CategoryAdapter(private val tentConfig: TentConfig) : TentConfig.Serializa
     }
 
     private fun processCategory() {
-
         fileList.filter { file -> file.name == ".category.yml" }
                 .forEach { currentFile ->
                     val pwd = currentFile.path
@@ -78,47 +50,34 @@ class CategoryAdapter(private val tentConfig: TentConfig) : TentConfig.Serializa
                             .substringAfterLast("en/", "")
 
                     Log.i("test", "path - ${currentFile.absoluteFile}")
-                    var category: Category? = null
-                    val lastCategory: Category? = lesson.categories.lastOrNull()
-                    val lastSubcategory = lastCategory?.subcategories?.lastOrNull()
+                    val category = parseYmlFile(currentFile, Category::class)
                     val cleanDirectories = checkIfHasAnotherCategory(pwd.split("/").filter { it.isNotEmpty() })
-                    // directories = pwd.split("/").filter { it.isNotEmpty() }
-                    //if (lastCategory != null && lastCategory.rootDir == directories[0]) directories.drop(0)
-
-                    cleanDirectories.forEachIndexed { index, s ->
+                    cleanDirectories.forEachIndexed { index, _ ->
                         if (index == 0) {
-                            category = parseYmlFile(currentFile, Category::class)
-                            category!!.path = pwd
-                            category!!.rootDir = cleanDirectories[index]
+                            category.path = pwd
+                            category.rootDir = cleanDirectories[index]
                         } else {
-                            val subCategory = parseYmlFile(currentFile, Category::class)
-                            subCategory.path = pwd
-                            subCategory.rootDir = cleanDirectories[index]
-                            category!!.subcategories.add(subCategory)
+                            val subcategory = parseYmlFile(currentFile, Category::class)
+                            subcategory.path = pwd
+                            subcategory.rootDir = cleanDirectories[index]
+                            category.subcategories.add(subcategory)
                         }
                     }
-                    addCategory(category!!)
+                    addCategory(category)
                 }
     }
-
 
     private fun addCategory(category: Category) {
         val directories = category.path.split("/").filter { it.isNotEmpty() }
         val lastCategory = lesson.categories.lastOrNull()
         val lastSubcategory = lastCategory?.subcategories?.lastOrNull()
 
-
-        if (directories.size == 1) {
+        if (directories.size == DELIMITER_CATEGORY)
             lesson.categories.add(category)
-
-        } else if (directories.size == 2) {
-            if (lastCategory != null && directories[0] == lastCategory.rootDir) {
+        else if (directories.size == DELIMITER_SUBCATEGORY) {
+            if (lastCategory != null && directories[0] == lastCategory.rootDir)
                 lastCategory.subcategories.add(category)
-            }
-
-        } else {
-            lastSubcategory?.subcategories?.add(category)
-        }
+        } else lastSubcategory?.subcategories?.add(category)
     }
 
 
@@ -133,20 +92,28 @@ class CategoryAdapter(private val tentConfig: TentConfig) : TentConfig.Serializa
     }
 
 
+    /**
+     * Walk through last category and last subcategory of last category
+     * checking @param directories is already created.
+     *
+     * @return list of directories that need to be created.
+     */
     private fun checkIfHasAnotherCategory(directories: List<String>): List<String> {
+
         val auxList = arrayListOf<String>()
         val lastCategory = lesson.categories.lastOrNull()
         val lastSubcategory = lastCategory?.subcategories?.lastOrNull()
-        directories.forEachIndexed { index, direcoryName ->
+        val lastCategoryIndex = 0
 
-            if (index == 0) {
-                if (lastCategory != null && direcoryName != lastCategory.rootDir) {
-                    auxList.add(direcoryName)
+        directories.forEachIndexed { index, directoryName ->
+
+            if (index == lastCategoryIndex) {
+                if (lastCategory != null && directoryName != lastCategory.rootDir) {
+                    auxList.add(directoryName)
                 }
-            } else if (lastSubcategory == null || direcoryName != lastSubcategory.rootDir) {
-                auxList.add(direcoryName)
+            } else if (lastSubcategory == null || directoryName != lastSubcategory.rootDir) {
+                auxList.add(directoryName)
             }
-
         }
         return if (auxList.isEmpty()) directories else auxList
     }
