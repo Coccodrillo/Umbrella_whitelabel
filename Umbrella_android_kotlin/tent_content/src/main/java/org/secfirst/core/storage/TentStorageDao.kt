@@ -3,6 +3,7 @@ package org.secfirst.core.storage
 import io.reactivex.Single
 import org.eclipse.jgit.api.Git
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder
+import org.secfirst.core.logic.CategoryAdapter
 import java.io.File
 import java.util.*
 
@@ -10,9 +11,9 @@ interface TentStorageDao {
 
     fun cloneRepository(tentConfig: TentConfig): Single<Git> = cloneTentRepository(tentConfig)
 
-    private fun createLocalTentRepository() =
+    private fun createLocalTentRepository(path: String) =
             Single.fromCallable({
-                FileRepositoryBuilder().setGitDir(File(TentConfig.URI_REPOSITORY))
+                FileRepositoryBuilder().setGitDir(File(path))
                         .readEnvironment() // scan environment GIT_* variables
                         .findGitDir() // scan up the file system tree
                         .setMustExist(true)
@@ -35,6 +36,5 @@ interface TentStorageDao {
             Single.just(Git.open(File(tentConfig.getPathRepository())))
     }
 
-
-    fun tentSerialize(tentConfig: TentConfig) = CategoryAdapter(tentConfig).serialize()
+    fun processElement(tentConfig: TentConfig) = CategoryAdapter(tentConfig).serialize()
 }

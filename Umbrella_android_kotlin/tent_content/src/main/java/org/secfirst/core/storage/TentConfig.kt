@@ -23,15 +23,34 @@ class TentConfig(val context: Context) {
     fun getPathRepository(): String = context.cacheDir.path + "/repo/"
 
     interface Serializable {
-        fun serialize(): Single<Lesson>
+        fun serialize(): Single<Root>
         fun <T : Any> parseYmlFile(file: File, c: KClass<T>): T {
-            val mapper = ObjectMapper(YAMLFactory()) // Enable YAML parsing
-            mapper.registerModule(KotlinModule()) // Enable Kotlin support
+            val mapper = ObjectMapper(YAMLFactory())
+            mapper.registerModule(KotlinModule())
             return file.bufferedReader().use { mapper.readValue(it.readText(), c.java) }
+        }
+
+        /**
+         * Walk through last element and his children
+         * checking @param directories is already created.
+         *
+         * @return list of directories that needs to be created.
+         */
+        fun findElements(directories: List<String>, lastElement: Element?): String {
+            var dicName = ""
+            val lastSubcategory = lastElement?.children?.lastOrNull()
+            val lastCategoryIndex = 0
+            directories.forEachIndexed { index, name ->
+                if (index == lastCategoryIndex) {
+                    dicName = if (lastElement != null && name != lastElement.rootDir) name else name
+                } else if (lastSubcategory == null || name != lastSubcategory.rootDir) {
+                    dicName = name
+                }
+            }
+            return dicName
         }
     }
 }
-
 
 enum class TypeFile(val value: String) {
     CHECKLIST("c.yml"),
