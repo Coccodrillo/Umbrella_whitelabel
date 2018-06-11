@@ -14,8 +14,8 @@ class TentConfig(val context: Context) {
         const val BRANCH_NAME: String = "refs/heads/master"
         const val URI_REPOSITORY = "https://github.com/klaidliadon/umbrella-content.git"
         const val FORM_NAME = "forms"
-        const val DELIMITER_CATEGORY = 1
-        const val DELIMITER_SUBCATEGORY = 2
+        const val DELIMITER_ELEMENT = 1
+        const val DELIMITER_SUB_ELEMENT = 2
     }
 
     fun isRepositoryPath() = File(context.cacheDir.path + "/repo/").exists()
@@ -30,25 +30,14 @@ class TentConfig(val context: Context) {
             return file.bufferedReader().use { mapper.readValue(it.readText(), c.java) }
         }
 
-        /**
-         * Walk through last element and his children
-         * checking @param directories is already created.
-         *
-         * @return list of directories that needs to be created.
-         */
-        fun findElements(directories: List<String>, lastElement: Element?): String {
-            var dicName = ""
-            val lastSubcategory = lastElement?.children?.lastOrNull()
-            val lastCategoryIndex = 0
-            directories.forEachIndexed { index, name ->
-                if (index == lastCategoryIndex) {
-                    dicName = if (lastElement != null && name != lastElement.rootDir) name else name
-                } else if (lastSubcategory == null || name != lastSubcategory.rootDir) {
-                    dicName = name
-                }
-            }
-            return dicName
+        fun getLastDirectory(path: String): String {
+            val splitPath = path.split("/").filter { it.isNotEmpty() }
+            return splitPath[splitPath.lastIndex]
         }
+
+        fun getSplitPath(path: String) = path.split("/").filter { it.isNotEmpty() }
+
+        fun getLevelOfPath(path: String) = getSplitPath(path).size
     }
 }
 
