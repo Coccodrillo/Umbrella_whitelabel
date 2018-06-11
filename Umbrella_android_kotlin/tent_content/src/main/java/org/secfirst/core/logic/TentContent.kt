@@ -1,8 +1,9 @@
-package org.secfirst.core.`interface`
+package org.secfirst.core.logic
 
 import io.reactivex.Single
 import org.secfirst.core.storage.Root
 
+
 interface TentContent {
-    fun getContent(): Single<Root>
+    fun serialize(): Single<Root>
 }
