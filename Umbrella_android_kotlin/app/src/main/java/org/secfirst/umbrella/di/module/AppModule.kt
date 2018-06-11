@@ -7,6 +7,7 @@ import dagger.Provides
 import dagger.Reusable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import org.secfirst.core.logic.ElementAdapterImp
 import org.secfirst.core.storage.TentConfig
 import org.secfirst.core.storage.TentStorageDao
 import org.secfirst.core.storage.TentStorageRepo
@@ -36,6 +37,10 @@ class AppModule {
 
     @Provides
     internal fun provideCompositeDisposable(): CompositeDisposable = CompositeDisposable()
+
+    @Provides
+    @Singleton
+    internal fun provideTentContent(tentConfig: TentConfig) = ElementAdapterImp(tentConfig)
 
 }
 
