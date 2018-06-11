@@ -4,12 +4,12 @@ import io.reactivex.Single
 import org.secfirst.core.storage.Element
 import org.secfirst.core.storage.Root
 import org.secfirst.core.storage.TentConfig
-import org.secfirst.core.storage.TentConfig.Companion.DELIMITER_CATEGORY
-import org.secfirst.core.storage.TentConfig.Companion.DELIMITER_SUBCATEGORY
+import org.secfirst.core.storage.TentConfig.Companion.DELIMITER_ELEMENT
+import org.secfirst.core.storage.TentConfig.Companion.DELIMITER_SUB_ELEMENT
 import java.io.File
 
 
-class CategoryAdapter(private val tentConfig: TentConfig) : TentConfig.Serializable {
+class ElementAdapter(private val tentConfig: TentConfig) : TentConfig.Serializable {
 
     private val root: Root = Root()
     private val fileList: MutableList<File> = arrayListOf()
@@ -22,23 +22,21 @@ class CategoryAdapter(private val tentConfig: TentConfig) : TentConfig.Serializa
                 .forEach { file -> fileList.add(file) }
 
         fileList.reverse()
-        processCategory()
+        create()
         return Single.just(root)
     }
 
 
-    private fun processCategory() {
+    private fun create() {
         fileList.filter { file -> file.name == ".category.yml" }
                 .forEach { currentFile ->
                     val pwd = currentFile.path
                             .removeSuffix(".category.yml")
                             .substringAfterLast("en/", "")
 
-                    val splitPath = pwd.split("/").filter { it.isNotEmpty() }
-                    val directoryName = findElements(splitPath, root.elements.lastOrNull())
                     val element = parseYmlFile(currentFile, Element::class)
                     element.path = pwd
-                    element.rootDir = directoryName
+                    element.rootDir = getLastDirectory(pwd)
                     addElement(element)
                 }
     }
@@ -47,10 +45,9 @@ class CategoryAdapter(private val tentConfig: TentConfig) : TentConfig.Serializa
      * Add objects as a element or children of element in a list of element
      */
     private fun addElement(element: Element) {
-        val directories = element.path.split("/").filter { it.isNotEmpty() }
-        when (directories.size) {
-            DELIMITER_CATEGORY -> root.elements.add(element)
-            DELIMITER_SUBCATEGORY -> root.elements.last().children.add(element)
+        when (getLevelOfPath(element.path)) {
+            DELIMITER_ELEMENT -> root.elements.add(element)
+            DELIMITER_SUB_ELEMENT -> root.elements.last().children.add(element)
             else -> root.elements.last().children.last().children.add(element)
         }
     }
