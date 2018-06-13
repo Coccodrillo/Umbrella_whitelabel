@@ -9,23 +9,14 @@ import org.secfirst.core.storage.TentConfig.Companion.getDelimiter
 import org.secfirst.core.storage.TypeFile
 import java.io.File
 
-class ElementLoader(private val tentConfig: TentConfig) : Serialize {
+class ElementLoader : Serialize {
 
     private var root: Root = Root()
-    private val files: MutableList<File> = arrayListOf()
+    private var files = listOf<File>()
 
-    fun load(pRoot: Root): Root {
+    fun load(pRoot: Root, pFiles: List<File>): Root {
         root = pRoot
-        File(tentConfig.getPathRepository())
-                .walk()
-                .filter { file -> !file.path.contains(".git") }
-                .filter { file ->
-                    getDelimiter(file.name) == TypeFile.SEGMENT.value || getDelimiter(file.name) == TypeFile.CHECKLIST.value
-                }
-                .filter { it.isFile }
-                .forEach { file -> files.add(file) }
-
-        files.reverse()
+        files = pFiles
         create()
         return root
     }

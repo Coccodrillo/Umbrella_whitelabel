@@ -10,11 +10,11 @@ import io.reactivex.schedulers.Schedulers
 import org.secfirst.core.logic.ElementAdapter
 import org.secfirst.core.logic.ElementLoader
 import org.secfirst.core.logic.ElementSerializer
-import org.secfirst.core.logic.ElementViewer
 import org.secfirst.core.storage.TentConfig
 import org.secfirst.core.storage.TentStorageDao
 import org.secfirst.core.storage.TentStorageRepo
 import org.secfirst.core.storage.TentStorageRepository
+import org.secfirst.core.view.ElementViewer
 import org.secfirst.umbrella.data.database.standard.StandardDao
 import org.secfirst.umbrella.data.database.standard.StandardRepo
 import org.secfirst.umbrella.data.database.standard.StandardRepository
@@ -46,15 +46,18 @@ class TentContentModule {
 
     @Provides
     @Singleton
-    internal fun provideElementSerializer(tentConfig: TentConfig) = ElementSerializer(tentConfig)
+    internal fun provideElement() = ElementSerializer()
 
     @Provides
     @Singleton
-    internal fun provideElementLoader(tentConfig: TentConfig) = ElementLoader(tentConfig)
+    internal fun provideElementLoader() = ElementLoader()
 
     @Provides
     @Singleton
-    internal fun provideElementViewer(loader: ElementLoader, serializer: ElementSerializer): ElementViewer = ElementAdapter(serializer, loader)
+    internal fun provideElementViewer(
+            loader: ElementLoader,
+            serializer: ElementSerializer,
+            tentRepo: TentStorageRepo): ElementViewer = ElementAdapter(serializer, loader, tentRepo)
 
 }
 

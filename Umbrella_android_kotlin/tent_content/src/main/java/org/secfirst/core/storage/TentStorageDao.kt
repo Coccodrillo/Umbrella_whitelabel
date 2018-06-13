@@ -10,6 +10,36 @@ interface TentStorageDao {
 
     fun cloneRepository(tentConfig: TentConfig): Single<Git> = cloneTentRepository(tentConfig)
 
+    fun getLoadersFile(tentConfig: TentConfig): List<File> {
+        val files: MutableList<File> = arrayListOf()
+        File(tentConfig.getPathRepository())
+                .walk()
+                .filter { file -> !file.path.contains(".git") }
+                .filter { file ->
+                    TentConfig.getDelimiter(file.name) == TypeFile.SEGMENT.value
+                            || TentConfig.getDelimiter(file.name) == TypeFile.CHECKLIST.value
+                            || TentConfig.getDelimiter(file.name) == TypeFile.FORM.value
+                }
+                .filter { it.isFile }
+                .forEach { file ->
+                    files.add(file)
+                }
+        files.reverse()
+        return files
+    }
+
+    fun getSerializesFile(tentConfig: TentConfig): List<File> {
+        val files: MutableList<File> = arrayListOf()
+        File(tentConfig.getPathRepository())
+                .walk()
+                .filter { file -> !file.path.contains(".git") }
+                .filter { file -> file.name == ".category.yml" }
+                .filter { it.isFile }
+                .forEach { file -> files.add(file) }
+        files.reverse()
+        return files
+    }
+
     private fun createLocalTentRepository(path: String) =
             Single.fromCallable({
                 FileRepositoryBuilder().setGitDir(File(path))
@@ -34,4 +64,5 @@ interface TentStorageDao {
         else
             Single.just(Git.open(File(tentConfig.getPathRepository())))
     }
+
 }
