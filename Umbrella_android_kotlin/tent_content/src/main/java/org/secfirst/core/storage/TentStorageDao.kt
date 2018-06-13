@@ -3,7 +3,6 @@ package org.secfirst.core.storage
 import io.reactivex.Single
 import org.eclipse.jgit.api.Git
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder
-import org.secfirst.core.logic.ElementAdapterImp
 import java.io.File
 import java.util.*
 
@@ -35,6 +34,4 @@ interface TentStorageDao {
         else
             Single.just(Git.open(File(tentConfig.getPathRepository())))
     }
-
-    fun processElement(tentConfig: TentConfig) = ElementAdapterImp(tentConfig).serialize(TypeFile.SEGMENT, Root())
 }

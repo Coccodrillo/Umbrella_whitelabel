@@ -12,11 +12,18 @@ class TentConfig(val context: Context) {
         const val DELIMITER_ELEMENT = 1
         const val DELIMITER_SUB_ELEMENT = 2
         const val DELIMITER_SUB_SUB_ELEMENT = 3
+        fun getDelimiter(fileName: String): String {
+            return if (fileName == TypeFile.CATEGORY.value)
+                fileName
+            else
+                fileName.substringBeforeLast("_")
+        }
     }
 
     fun isRepositoryPath() = File(context.cacheDir.path + "/repo/").exists()
     fun isNotRepositoryPath() = !File(context.cacheDir.path + "/repo/").exists()
     fun getPathRepository(): String = context.cacheDir.path + "/repo/"
+
 }
 
 enum class TypeFile(val value: String) {

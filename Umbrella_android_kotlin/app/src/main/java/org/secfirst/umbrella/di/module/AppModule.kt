@@ -7,8 +7,10 @@ import dagger.Provides
 import dagger.Reusable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import org.secfirst.core.logic.ElementAdapterImp
-import org.secfirst.core.logic.SegmentAdapter
+import org.secfirst.core.logic.ElementAdapter
+import org.secfirst.core.logic.ElementLoader
+import org.secfirst.core.logic.ElementSerializer
+import org.secfirst.core.logic.ElementViewer
 import org.secfirst.core.storage.TentConfig
 import org.secfirst.core.storage.TentStorageDao
 import org.secfirst.core.storage.TentStorageRepo
@@ -28,7 +30,6 @@ import javax.inject.Singleton
 @Module
 class AppModule {
 
-
     @Provides
     @Singleton
     internal fun provideContext(application: Application): Context = application
@@ -38,16 +39,25 @@ class AppModule {
 
     @Provides
     internal fun provideCompositeDisposable(): CompositeDisposable = CompositeDisposable()
+}
+
+@Module
+class TentContentModule {
 
     @Provides
     @Singleton
-    internal fun provideElementAdapter(tentConfig: TentConfig) = ElementAdapterImp(tentConfig)
+    internal fun provideElementSerializer(tentConfig: TentConfig) = ElementSerializer(tentConfig)
 
     @Provides
     @Singleton
-    internal fun provideSegmentAdapter(tentConfig: TentConfig) = SegmentAdapter(tentConfig)
+    internal fun provideElementLoader(tentConfig: TentConfig) = ElementLoader(tentConfig)
+
+    @Provides
+    @Singleton
+    internal fun provideElementViewer(loader: ElementLoader, serializer: ElementSerializer): ElementViewer = ElementAdapter(serializer, loader)
 
 }
+
 
 @Module
 class RepositoryModule {
