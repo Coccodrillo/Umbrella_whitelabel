@@ -3,7 +3,7 @@ package org.secfirst.core.storage
 import android.content.Context
 import java.io.File
 
-class TentConfig (val context: Context) {
+class TentConfig(val context: Context) {
 
     companion object {
         const val BRANCH_NAME: String = "refs/heads/master"
@@ -11,6 +11,7 @@ class TentConfig (val context: Context) {
         const val FORM_NAME = "forms"
         const val DELIMITER_ELEMENT = 1
         const val DELIMITER_SUB_ELEMENT = 2
+        const val DELIMITER_SUB_SUB_ELEMENT = 3
     }
 
     fun isRepositoryPath() = File(context.cacheDir.path + "/repo/").exists()
@@ -19,9 +20,10 @@ class TentConfig (val context: Context) {
 }
 
 enum class TypeFile(val value: String) {
-    CHECKLIST("c.yml"),
-    FORM("f.yml"),
-    CATEGORY(".category.yml"),
+    CHECKLIST("c"),
+    FORM("f"),
+    CATEGORY(".category"),
+    SEGMENT("s"),
     NOUN("")
 }
 

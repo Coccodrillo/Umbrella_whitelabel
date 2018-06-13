@@ -36,5 +36,5 @@ interface TentStorageDao {
             Single.just(Git.open(File(tentConfig.getPathRepository())))
     }
 
-    fun processElement(tentConfig: TentConfig) = ElementAdapterImp(tentConfig).serialize()
+    fun processElement(tentConfig: TentConfig) = ElementAdapterImp(tentConfig).serialize(TypeFile.SEGMENT, Root())
 }
