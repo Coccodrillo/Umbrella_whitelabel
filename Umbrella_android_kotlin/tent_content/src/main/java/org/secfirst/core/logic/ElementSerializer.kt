@@ -1,22 +1,23 @@
 package org.secfirst.core.logic
 
 import android.util.Log
+import org.secfirst.core.PathUtils.Companion.getLastDirectory
+import org.secfirst.core.PathUtils.Companion.getLevelOfPath
+import org.secfirst.core.PathUtils.Companion.getWorkDirectory
 import org.secfirst.core.storage.Element
 import org.secfirst.core.storage.Root
 import org.secfirst.core.storage.TentConfig
 import org.secfirst.core.storage.TentConfig.Companion.DELIMITER_ELEMENT
 import org.secfirst.core.storage.TentConfig.Companion.DELIMITER_SUB_ELEMENT
-import org.secfirst.core.storage.TypeFile
 import java.io.File
 
 
-class ElementAdapterImp(private val tentConfig: TentConfig) : Serialize {
+class ElementSerializer(private val tentConfig: TentConfig) : Serialize {
 
     private val root: Root = Root()
     private val fileList: MutableList<File> = arrayListOf()
-    private val tempFileList: MutableList<File> = arrayListOf()
 
-    override fun serialize(typeFile: TypeFile, pRoot: Root): Root {
+    fun serialize(): Root {
         File(tentConfig.getPathRepository())
                 .walk()
                 .filter { !it.path.contains(".git") }

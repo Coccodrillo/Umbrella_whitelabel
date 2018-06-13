@@ -1,44 +1,45 @@
 package org.secfirst.core.logic
 
+import org.secfirst.core.PathUtils.Companion.getLevelOfPath
+import org.secfirst.core.PathUtils.Companion.getWorkDirectory
 import org.secfirst.core.storage.CheckList
 import org.secfirst.core.storage.Root
 import org.secfirst.core.storage.TentConfig
+import org.secfirst.core.storage.TentConfig.Companion.getDelimiter
 import org.secfirst.core.storage.TypeFile
 import java.io.File
 
-class SegmentAdapter(private val tentConfig: TentConfig) : Serialize {
+class ElementLoader(private val tentConfig: TentConfig) : Serialize {
 
     private var root: Root = Root()
-    private val segments: MutableList<File> = arrayListOf()
+    private val files: MutableList<File> = arrayListOf()
 
-    override fun serialize(typeFile: TypeFile, pRoot: Root): Root {
+    fun load(pRoot: Root): Root {
         root = pRoot
         File(tentConfig.getPathRepository())
                 .walk()
-                .filter { !it.path.contains(".git") }
+                .filter { file -> !file.path.contains(".git") }
                 .filter { file ->
-                    getDelimiter(file.name) == TypeFile.SEGMENT.value ||
-                            getDelimiter(file.name) == TypeFile.CHECKLIST.value
+                    getDelimiter(file.name) == TypeFile.SEGMENT.value || getDelimiter(file.name) == TypeFile.CHECKLIST.value
                 }
                 .filter { it.isFile }
-                .forEach { file -> segments.add(file) }
+                .forEach { file -> files.add(file) }
 
-        segments.reverse()
+        files.reverse()
         create()
         return root
     }
 
-    fun create() {
-        segments.forEach { currentFile ->
+    private fun create() {
+        files.forEach { currentFile ->
             val absolutePath = currentFile.path
                     .substringAfterLast("en/", "")
             val pwd = getWorkDirectory(absolutePath)
-
-            findProperties(pwd, currentFile)
+            addProperties(pwd, currentFile)
         }
     }
 
-    private fun findProperties(pwd: String, file: File) {
+    private fun addProperties(pwd: String, file: File) {
         when (getLevelOfPath(pwd)) {
             TentConfig.DELIMITER_ELEMENT -> {
                 root.elements.forEach {

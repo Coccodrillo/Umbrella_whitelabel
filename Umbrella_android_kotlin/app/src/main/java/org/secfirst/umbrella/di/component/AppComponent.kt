@@ -9,6 +9,7 @@ import org.secfirst.umbrella.di.builder.ActivityBuilder
 import org.secfirst.umbrella.di.module.AppModule
 import org.secfirst.umbrella.di.module.NetworkModule
 import org.secfirst.umbrella.di.module.RepositoryModule
+import org.secfirst.umbrella.di.module.TentContentModule
 import javax.inject.Singleton
 
 @Singleton
@@ -16,6 +17,7 @@ import javax.inject.Singleton
     (AppModule::class),
     (RepositoryModule::class),
     (NetworkModule::class),
+    (TentContentModule::class),
     (ActivityBuilder::class)])
 
 interface AppComponent {
