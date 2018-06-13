@@ -1,12 +1,15 @@
 package org.secfirst.core.logic
 
-import org.secfirst.core.PathUtils.Companion.getLevelOfPath
-import org.secfirst.core.PathUtils.Companion.getWorkDirectory
 import org.secfirst.core.storage.CheckList
+import org.secfirst.core.storage.Form
 import org.secfirst.core.storage.Root
-import org.secfirst.core.storage.TentConfig
-import org.secfirst.core.storage.TentConfig.Companion.getDelimiter
-import org.secfirst.core.storage.TypeFile
+import org.secfirst.core.utils.PathUtils.Companion.getLastDirectory
+import org.secfirst.core.utils.PathUtils.Companion.getLevelOfPath
+import org.secfirst.core.utils.PathUtils.Companion.getWorkDirectory
+import org.secfirst.core.utils.TentConfig
+import org.secfirst.core.utils.TentConfig.Companion.FORM_NAME
+import org.secfirst.core.utils.TentConfig.Companion.getDelimiter
+import org.secfirst.core.utils.TypeFile
 import java.io.File
 
 class ElementLoader : Serialize {
@@ -23,10 +26,9 @@ class ElementLoader : Serialize {
 
     private fun create() {
         files.forEach { currentFile ->
-            val absolutePath = currentFile.path
-                    .substringAfterLast("en/", "")
+            val absolutePath = currentFile.path.substringAfterLast("en/", "")
             val pwd = getWorkDirectory(absolutePath)
-            addProperties(pwd, currentFile)
+            if (getLastDirectory(pwd) == FORM_NAME) addForms(currentFile) else addProperties(pwd, currentFile)
         }
     }
 
@@ -70,5 +72,9 @@ class ElementLoader : Serialize {
                 }
             }
         }
+    }
+
+    private fun addForms(file: File) {
+        root.forms.add(parseYmlFile(file, Form::class))
     }
 }

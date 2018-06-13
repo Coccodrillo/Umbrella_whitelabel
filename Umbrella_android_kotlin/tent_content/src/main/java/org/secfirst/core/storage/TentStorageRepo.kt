@@ -5,7 +5,11 @@ import org.eclipse.jgit.api.Git
 import java.io.File
 
 interface TentStorageRepo {
+
     fun fetch(): Single<Git>
+
     fun getElementsFile(): List<File>
+
     fun getLoadersFile(): List<File>
+
 }

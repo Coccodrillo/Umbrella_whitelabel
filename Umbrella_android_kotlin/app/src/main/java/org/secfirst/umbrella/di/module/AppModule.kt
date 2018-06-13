@@ -10,7 +10,7 @@ import io.reactivex.schedulers.Schedulers
 import org.secfirst.core.logic.ElementAdapter
 import org.secfirst.core.logic.ElementLoader
 import org.secfirst.core.logic.ElementSerializer
-import org.secfirst.core.storage.TentConfig
+import org.secfirst.core.utils.TentConfig
 import org.secfirst.core.storage.TentStorageDao
 import org.secfirst.core.storage.TentStorageRepo
 import org.secfirst.core.storage.TentStorageRepository

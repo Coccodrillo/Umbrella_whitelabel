@@ -1,4 +1,4 @@
-package org.secfirst.core.storage
+package org.secfirst.core.utils
 
 import android.content.Context
 import java.io.File
