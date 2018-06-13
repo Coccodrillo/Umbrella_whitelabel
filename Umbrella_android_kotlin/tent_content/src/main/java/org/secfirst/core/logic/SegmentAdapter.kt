@@ -1,5 +1,6 @@
 package org.secfirst.core.logic
 
+import org.secfirst.core.storage.CheckList
 import org.secfirst.core.storage.Root
 import org.secfirst.core.storage.TentConfig
 import org.secfirst.core.storage.TypeFile
@@ -15,7 +16,10 @@ class SegmentAdapter(private val tentConfig: TentConfig) : Serialize {
         File(tentConfig.getPathRepository())
                 .walk()
                 .filter { !it.path.contains(".git") }
-                .filter { file -> getDelimiter(file.name) == TypeFile.SEGMENT.value }
+                .filter { file ->
+                    getDelimiter(file.name) == TypeFile.SEGMENT.value ||
+                            getDelimiter(file.name) == TypeFile.CHECKLIST.value
+                }
                 .filter { it.isFile }
                 .forEach { file -> segments.add(file) }
 
@@ -30,16 +34,19 @@ class SegmentAdapter(private val tentConfig: TentConfig) : Serialize {
                     .substringAfterLast("en/", "")
             val pwd = getWorkDirectory(absolutePath)
 
-            addSegments(pwd, currentFile)
+            findProperties(pwd, currentFile)
         }
     }
 
-    private fun addSegments(pwd: String, file: File) {
+    private fun findProperties(pwd: String, file: File) {
         when (getLevelOfPath(pwd)) {
             TentConfig.DELIMITER_ELEMENT -> {
                 root.elements.forEach {
                     if (it.path == pwd) {
-                        it.markdowns.add(file)
+                        when (getDelimiter(file.nameWithoutExtension)) {
+                            TypeFile.SEGMENT.value -> it.markdowns.add(file)
+                            TypeFile.CHECKLIST.value -> it.checklist.add(parseYmlFile(file, CheckList::class))
+                        }
                     }
                 }
             }
@@ -48,7 +55,10 @@ class SegmentAdapter(private val tentConfig: TentConfig) : Serialize {
                 root.elements.forEach { element ->
                     element.children.forEach { child ->
                         if (child.path == pwd) {
-                            child.markdowns.add(file)
+                            when (getDelimiter(file.nameWithoutExtension)) {
+                                TypeFile.SEGMENT.value -> child.markdowns.add(file)
+                                TypeFile.CHECKLIST.value -> child.checklist.add(parseYmlFile(file, CheckList::class))
+                            }
                         }
                     }
                 }
@@ -58,7 +68,10 @@ class SegmentAdapter(private val tentConfig: TentConfig) : Serialize {
                     element.children.forEach { child ->
                         child.children.forEach { grandchild ->
                             if (grandchild.path == pwd) {
-                                grandchild.markdowns.add(file)
+                                when (getDelimiter(file.nameWithoutExtension)) {
+                                    TypeFile.SEGMENT.value -> grandchild.markdowns.add(file)
+                                    TypeFile.CHECKLIST.value -> grandchild.checklist.add(parseYmlFile(file, CheckList::class))
+                                }
                             }
                         }
                     }
