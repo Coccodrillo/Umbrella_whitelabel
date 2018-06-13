@@ -1,4 +1,4 @@
-package org.secfirst.core
+package org.secfirst.core.utils
 
 abstract class PathUtils {
     companion object {
