@@ -7,6 +7,6 @@ interface TentStorageRepo {
 
     fun fetch(): Single<Git>
 
-    fun parseFiles(): Single<Root>
+    fun parseFiles(): Root
 
 }

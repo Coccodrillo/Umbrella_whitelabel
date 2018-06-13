@@ -3,13 +3,14 @@ package org.secfirst.core.storage
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonPropertyOrder
+import java.io.File
 
 data class Root(val elements: MutableList<Element> = arrayListOf())
 
 data class Element(var index: Int = 0,
                    var title: String = "",
                    var description: String = "",
-                   @JsonIgnoreProperties var markDowns: MutableList<String> = arrayListOf(),
+                   @JsonIgnoreProperties var markdowns: MutableList<File> = arrayListOf(),
                    @JsonIgnoreProperties var children: MutableList<Element> = arrayListOf(),
                    @JsonIgnoreProperties var forms: MutableList<Form> = arrayListOf(),
                    @JsonIgnoreProperties var checklist: MutableList<CheckList> = arrayListOf(),

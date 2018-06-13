@@ -8,6 +8,7 @@ import dagger.Reusable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import org.secfirst.core.logic.ElementAdapterImp
+import org.secfirst.core.logic.SegmentAdapter
 import org.secfirst.core.storage.TentConfig
 import org.secfirst.core.storage.TentStorageDao
 import org.secfirst.core.storage.TentStorageRepo
@@ -40,7 +41,11 @@ class AppModule {
 
     @Provides
     @Singleton
-    internal fun provideTentContent(tentConfig: TentConfig) = ElementAdapterImp(tentConfig)
+    internal fun provideElementAdapter(tentConfig: TentConfig) = ElementAdapterImp(tentConfig)
+
+    @Provides
+    @Singleton
+    internal fun provideSegmentAdapter(tentConfig: TentConfig) = SegmentAdapter(tentConfig)
 
 }
 
