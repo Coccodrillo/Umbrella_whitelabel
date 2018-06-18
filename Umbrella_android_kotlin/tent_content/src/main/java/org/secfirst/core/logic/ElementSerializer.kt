@@ -6,8 +6,8 @@ import org.secfirst.core.storage.Root
 import org.secfirst.core.utils.PathUtils.Companion.getLastDirectory
 import org.secfirst.core.utils.PathUtils.Companion.getLevelOfPath
 import org.secfirst.core.utils.PathUtils.Companion.getWorkDirectory
-import org.secfirst.core.utils.TentConfig.Companion.DELIMITER_ELEMENT
-import org.secfirst.core.utils.TentConfig.Companion.DELIMITER_SUB_ELEMENT
+import org.secfirst.core.utils.TentConfig.Companion.HIERARCHY_ELEMENT
+import org.secfirst.core.utils.TentConfig.Companion.HIERARCHY_SUB_ELEMENT
 import java.io.File
 
 
@@ -39,8 +39,8 @@ class ElementSerializer : Serialize {
         element.path = pwd
         element.rootDir = getLastDirectory(pwd)
         when (getLevelOfPath(element.path)) {
-            DELIMITER_ELEMENT -> root.elements.add(element)
-            DELIMITER_SUB_ELEMENT -> root.elements.last().children.add(element)
+            HIERARCHY_ELEMENT -> root.elements.add(element)
+            HIERARCHY_SUB_ELEMENT -> root.elements.last().children.add(element)
             else -> root.elements.last().children.last().children.add(element)
         }
     }

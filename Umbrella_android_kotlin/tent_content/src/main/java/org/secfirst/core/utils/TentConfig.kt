@@ -1,17 +1,16 @@
 package org.secfirst.core.utils
 
-import android.content.Context
 import java.io.File
 
-class TentConfig(val context: Context) {
+class TentConfig(val repoPath: String) {
 
     companion object {
         const val BRANCH_NAME: String = "refs/heads/master"
         const val URI_REPOSITORY = "https://github.com/klaidliadon/umbrella-content.git"
         const val FORM_NAME = "forms"
-        const val DELIMITER_ELEMENT = 1
-        const val DELIMITER_SUB_ELEMENT = 2
-        const val DELIMITER_SUB_SUB_ELEMENT = 3
+        const val HIERARCHY_ELEMENT = 1
+        const val HIERARCHY_SUB_ELEMENT = 2
+        const val HIERARCHY_SUB_SUB_ELEMENT = 3
         fun getDelimiter(fileName: String): String {
             return if (fileName == TypeFile.CATEGORY.value)
                 fileName
@@ -20,9 +19,9 @@ class TentConfig(val context: Context) {
         }
     }
 
-    fun isRepositoryPath() = File(context.cacheDir.path + "/repo/").exists()
-    fun isNotRepositoryPath() = !File(context.cacheDir.path + "/repo/").exists()
-    fun getPathRepository(): String = context.cacheDir.path + "/repo/"
+    fun isRepositoryPath() = File(repoPath).exists()
+    fun isNotRepositoryPath() = !File(repoPath).exists()
+    fun getPathRepository(): String = repoPath
 
 }
 
