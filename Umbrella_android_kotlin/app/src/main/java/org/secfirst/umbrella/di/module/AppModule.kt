@@ -10,10 +10,10 @@ import io.reactivex.schedulers.Schedulers
 import org.secfirst.core.logic.ElementAdapter
 import org.secfirst.core.logic.ElementLoader
 import org.secfirst.core.logic.ElementSerializer
-import org.secfirst.core.utils.TentConfig
 import org.secfirst.core.storage.TentStorageDao
 import org.secfirst.core.storage.TentStorageRepo
 import org.secfirst.core.storage.TentStorageRepository
+import org.secfirst.core.utils.TentConfig
 import org.secfirst.core.view.ElementViewer
 import org.secfirst.umbrella.data.database.standard.StandardDao
 import org.secfirst.umbrella.data.database.standard.StandardRepo
@@ -74,7 +74,7 @@ class RepositoryModule {
 
     @Provides
     @Singleton
-    fun appDatabase(context: Context) = TentConfig(context)
+    internal fun provideTentConfig(context: Context) = TentConfig(context.cacheDir.path + "/repo/")
 
     @Provides
     @Singleton
@@ -82,7 +82,7 @@ class RepositoryModule {
 
     @Provides
     @Singleton
-    internal fun provideTentGitInstance(context: Context): TentStorageRepo = TentStorageRepository(tentDao, appDatabase(context))
+    internal fun provideTentGitInstance(context: Context): TentStorageRepo = TentStorageRepository(tentDao, provideTentConfig(context))
 }
 
 @Module

@@ -43,26 +43,26 @@ interface TentStorageDao {
     }
 
     private fun createLocalTentRepository(path: String) =
-            Single.fromCallable({
+            Single.fromCallable {
                 FileRepositoryBuilder().setGitDir(File(path))
                         .readEnvironment() // scan environment GIT_* variables
                         .findGitDir() // scan up the file system tree
                         .setMustExist(true)
                         .build()
-            }).subscribe()
+            }.subscribe()
 
 
     private fun cloneTentRepository(tentConfig: TentConfig): Single<Git> {
 
         return if (tentConfig.isNotRepositoryPath())
-            Single.fromCallable({
+            Single.fromCallable {
                 Git.cloneRepository()
                         .setURI(TentConfig.URI_REPOSITORY)
                         .setDirectory(File(tentConfig.getPathRepository()))
                         .setBranchesToClone(Arrays.asList(TentConfig.BRANCH_NAME))
                         .setBranch(TentConfig.BRANCH_NAME)
                         .call()
-            })
+            }
         else
             Single.just(Git.open(File(tentConfig.getPathRepository())))
     }

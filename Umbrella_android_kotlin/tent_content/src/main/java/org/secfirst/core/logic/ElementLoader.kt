@@ -34,7 +34,7 @@ class ElementLoader : Serialize {
 
     private fun addProperties(pwd: String, file: File) {
         when (getLevelOfPath(pwd)) {
-            TentConfig.DELIMITER_ELEMENT -> {
+            TentConfig.HIERARCHY_ELEMENT -> {
                 root.elements.forEach {
                     if (it.path == pwd) {
                         when (getDelimiter(file.nameWithoutExtension)) {
@@ -45,7 +45,7 @@ class ElementLoader : Serialize {
                 }
             }
 
-            TentConfig.DELIMITER_SUB_ELEMENT -> {
+            TentConfig.HIERARCHY_SUB_ELEMENT -> {
                 root.elements.forEach { element ->
                     element.children.forEach { child ->
                         if (child.path == pwd) {
@@ -57,7 +57,7 @@ class ElementLoader : Serialize {
                     }
                 }
             }
-            TentConfig.DELIMITER_SUB_SUB_ELEMENT -> {
+            TentConfig.HIERARCHY_SUB_SUB_ELEMENT -> {
                 root.elements.forEach { element ->
                     element.children.forEach { child ->
                         child.children.forEach { grandchild ->
