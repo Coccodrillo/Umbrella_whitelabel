@@ -18,6 +18,10 @@ android {
         }
     }
 
+    lintOptions {
+        abortOnError false
+    }
+
     defaultConfig {
         applicationId "org.secfirst.umbrella"
         minSdkVersion 15

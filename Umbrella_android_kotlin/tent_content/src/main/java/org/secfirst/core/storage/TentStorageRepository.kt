@@ -9,9 +9,9 @@ import javax.inject.Inject
 class TentStorageRepository @Inject constructor(private val tentStorageDao: TentStorageDao,
                                                 private val tentConfig: TentConfig) : TentStorageRepo {
 
-    override fun getElementsFile(): List<File> = tentStorageDao.getSerializesFile(tentConfig)
+    override fun getElementsFile(): List<File> = tentStorageDao.filterBySubElement(tentConfig)
 
-    override fun getLoadersFile(): List<File> = tentStorageDao.getLoadersFile(tentConfig)
+    override fun getLoadersFile(): List<File> = tentStorageDao.filterByElement(tentConfig)
 
     override fun fetch(): Single<Git> = tentStorageDao.cloneRepository(tentConfig)
 }

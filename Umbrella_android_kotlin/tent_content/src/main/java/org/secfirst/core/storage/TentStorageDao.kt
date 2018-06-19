@@ -12,7 +12,7 @@ interface TentStorageDao {
 
     fun cloneRepository(tentConfig: TentConfig): Single<Git> = cloneTentRepository(tentConfig)
 
-    fun getLoadersFile(tentConfig: TentConfig): List<File> {
+    fun filterByElement(tentConfig: TentConfig): List<File> {
         val files: MutableList<File> = arrayListOf()
         File(tentConfig.getPathRepository())
                 .walk()
@@ -30,7 +30,11 @@ interface TentStorageDao {
         return files
     }
 
-    fun getSerializesFile(tentConfig: TentConfig): List<File> {
+//    private fun fileFilter(typeFiles: List<TypeFile>, file: File){
+//        val files: MutableList<File> = arrayListOf()
+//    }
+
+    fun filterBySubElement(tentConfig: TentConfig): List<File> {
         val files: MutableList<File> = arrayListOf()
         File(tentConfig.getPathRepository())
                 .walk()

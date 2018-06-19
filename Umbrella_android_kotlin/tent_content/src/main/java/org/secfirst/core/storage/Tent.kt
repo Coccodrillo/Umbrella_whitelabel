@@ -21,10 +21,12 @@ class CheckList(
         @JsonProperty("list") var content: MutableList<Content> = arrayListOf())
 
 
+data class Form(@JsonProperty("screens") var screens: MutableList<Screen> = arrayListOf())
+
+
 class Content(@JsonProperty("check") var check: String = "",
               @JsonProperty("label") var label: String = "")
 
-data class Form(@JsonProperty("screens") var screens: MutableList<Screen> = arrayListOf())
 
 data class Screen(
         @JsonProperty("name") var name: String = "",

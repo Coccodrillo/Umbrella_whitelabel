@@ -1,0 +1,72 @@
+ext {
+    final minSdkVersion = 14
+    final targetSdkVersion = 26
+    final compileSdkVersion = 26
+    final buildToolsVersion = '26.0.2'
+    final supportLib = '27.1.1'
+    final supportConstraint = '1.1.1'
+    final dagger2Version = '2.16'
+    final runnerVersion = '1.0.1'
+    final espressoVersion = '3.0.1'
+    final junitVersion = '4.12'
+    final rxAndroid = '2.0.2'
+    final rxJava = '2.1.14'
+    final retrofit = '2.3.0'
+    final okHttp = '3.10.0'
+    final interceptor = '3.9.1'
+    final moshiKotlin = '1.5.0'
+    final dbflow_version = '4.2.4'
+    final sqlcipher_version = '3.5.9'
+    final gsonVersion = '2.8.0'
+    final anko_version = '0.10.4'
+    final okHttpLog = '3.9.1'
+    final jgit = '3.7.1.201504261725-r'
+    final commonsIo = '2.5'
+    final jackson_databind = '2.9.5'
+    final jackson_yaml = '2.7.1'
+    final jackson_module = '2.9.5'
+    final multidex = '1.0.3'
+
+    dependencies = [
+            jacksonDatabind  : "com.fasterxml.jackson.core:jackson-databind:$jackson_databind",
+            jacksonDataFormat: "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:$jackson_yaml",
+            jacksonModule    : "com.fasterxml.jackson.module:jackson-module-kotlin:$jackson_module",
+            appCompat        : "com.android.support:appcompat-v7:$supportLib",
+            supportDesing    : "com.android.support:design:$supportLib",
+            constraintLayout : "com.android.support.constraint:constraint-layout:$supportConstraint",
+            vectorDrawable   : "com.android.support:support-vector-drawable:$supportLib",
+            rxAndroid        : "io.reactivex.rxjava2:rxandroid:$rxAndroid",
+            rxJava           : "io.reactivex.rxjava2:rxjava:$rxJava",
+            retrofit         : "com.squareup.retrofit2:retrofit:$retrofit",
+            rxRetrofit       : "com.squareup.retrofit2:adapter-rxjava2:$retrofit",
+            moshiRetrofit    : "com.squareup.retrofit2:converter-moshi:$retrofit",
+            dagger2          : "com.google.dagger:dagger:$dagger2Version",
+            daggerAdnroid    : "com.google.dagger:dagger-android-support:$dagger2Version",
+            daggerCompile    : "com.google.dagger:dagger-compiler:$dagger2Version",
+            daggerProcessor  : "com.google.dagger:dagger-android-processor:$dagger2Version",
+            gson             : "com.google.code.gson:gson:$gsonVersion",
+            kotlin           : "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version",
+            kotlinSdk        : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version",
+            kotlinReflect    : "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version",
+            anko             : "org.jetbrains.anko:anko-commons:$anko_version",
+            multidex         : "com.android.support:multidex:$multidex",
+            dbFlowProcess    : "com.github.Raizlabs.DBFlow:dbflow-processor:${dbflow_version}",
+            dbFlowCore       : "com.github.Raizlabs.DBFlow:dbflow-core:${dbflow_version}",
+            dbFlow           : "com.github.Raizlabs.DBFlow:dbflow:${dbflow_version}",
+            rx2DbFlow        : "com.github.Raizlabs.DBFlow:dbflow-rx2-kotlinextensions:${dbflow_version}",
+            dbFlowExtensions : "com.github.Raizlabs.DBFlow:dbflow-kotlinextensions:${dbflow_version}",
+            dbFlowSqlCipher  : "com.github.Raizlabs.DBFlow:dbflow-sqlcipher:${dbflow_version}",
+            sqlCipher        : "net.zetetic:android-database-sqlcipher:${sqlcipher_version}@aar",
+            commonsIo        : "commons-io:commons-io:$commonsIo",
+            jgit             : "org.eclipse.jgit:org.eclipse.jgit:$jgit",
+            tentModule       : project(':tent_content')
+    ]
+
+    testDependencies = [
+            junit       : "junit:junit:$junitVersion",
+            runner      : "com.android.support.test:runner:$runnerVersion",
+            espresso    : "com.android.support.test.espresso:espresso-core:$espressoVersion",
+            hamcrestCore: "org.hamcrest:hamcrest-core:1.3",
+            hamcrestLib : "org.hamcrest:hamcrest-library:1.3",
+    ]
+}

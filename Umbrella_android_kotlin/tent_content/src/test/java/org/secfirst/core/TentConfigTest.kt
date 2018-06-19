@@ -16,9 +16,6 @@ import org.secfirst.core.utils.TypeFile
 
 @RunWith(MockitoJUnitRunner::class)
 class TentConfigTest {
-    private val tentDao
-        get() = object : TentStorageDao {}
-
     @Mock
     private lateinit var tentConfig: TentConfig
 
@@ -103,6 +100,11 @@ class TentConfigTest {
     fun invalidFileName() {
         val delimiter = TentConfig.getDelimiter(TentConfig.getDelimiter("something.unknown"))
         assertEquals(delimiter, "something.unknown")
+    }
+    @Test
+    fun nameWithTwoUnderscore(){
+        val delimiter = TentConfig.getDelimiter(TentConfig.getDelimiter("f_how_can.unknown"))
+        assertEquals(delimiter, "f")
     }
 
     @Test
