@@ -4,7 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Umbrella_android_kotlin.iml" filepath="$PROJECT_DIR$/Umbrella_android_kotlin.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/tent_content/tent_content.iml" filepath="$PROJECT_DIR$/tent_content/tent_content.iml" />
     </modules>
   </component>
 </project>

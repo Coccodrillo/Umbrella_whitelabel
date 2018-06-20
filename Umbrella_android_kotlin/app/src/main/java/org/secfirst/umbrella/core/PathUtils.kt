@@ -1,4 +1,4 @@
-package org.secfirst.core.utils
+package org.secfirst.umbrella.core
 
 abstract class PathUtils {
     companion object {
@@ -17,6 +17,5 @@ abstract class PathUtils {
                 pwd += splitPath[i] + "/"
             return pwd
         }
-
     }
 }
