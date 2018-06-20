@@ -1,4 +1,4 @@
-package org.secfirst.core
+package org.secfirst.umbrella
 
 import junit.framework.Assert
 import org.junit.Test
@@ -6,8 +6,8 @@ import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.junit.MockitoJUnitRunner
-import org.secfirst.core.storage.TentStorageDao
-import org.secfirst.core.utils.TentConfig
+import org.secfirst.umbrella.data.storage.TentConfig
+import org.secfirst.umbrella.data.storage.TentStorageDao
 import java.io.File
 
 @RunWith(MockitoJUnitRunner::class)

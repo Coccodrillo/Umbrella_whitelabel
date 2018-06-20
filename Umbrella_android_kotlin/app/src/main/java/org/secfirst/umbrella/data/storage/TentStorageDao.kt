@@ -1,10 +1,8 @@
-package org.secfirst.core.storage
+package org.secfirst.umbrella.data.storage
 
 import io.reactivex.Single
 import org.eclipse.jgit.api.Git
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder
-import org.secfirst.core.utils.TentConfig
-import org.secfirst.core.utils.TypeFile
 import java.io.File
 import java.util.*
 

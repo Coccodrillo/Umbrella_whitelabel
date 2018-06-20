@@ -1,10 +1,11 @@
-package org.secfirst.core.storage
+package org.secfirst.umbrella.data.storage
 
 import io.reactivex.Single
 import org.eclipse.jgit.api.Git
 import java.io.File
 
-interface TentStorageRepo {
+
+interface   TentStorageRepo {
 
     fun fetch(): Single<Git>
 

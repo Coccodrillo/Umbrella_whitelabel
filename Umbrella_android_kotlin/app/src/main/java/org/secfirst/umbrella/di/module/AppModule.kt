@@ -7,19 +7,19 @@ import dagger.Provides
 import dagger.Reusable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import org.secfirst.core.logic.ElementAdapter
-import org.secfirst.core.logic.ElementLoader
-import org.secfirst.core.logic.ElementSerializer
-import org.secfirst.core.storage.TentStorageDao
-import org.secfirst.core.storage.TentStorageRepo
-import org.secfirst.core.storage.TentStorageRepository
-import org.secfirst.core.utils.TentConfig
-import org.secfirst.core.view.ElementViewer
 import org.secfirst.umbrella.data.database.standard.StandardDao
 import org.secfirst.umbrella.data.database.standard.StandardRepo
 import org.secfirst.umbrella.data.database.standard.StandardRepository
 import org.secfirst.umbrella.data.network.ApiHelper
 import org.secfirst.umbrella.data.network.NetworkEndPoint.BASE_URL
+import org.secfirst.umbrella.data.storage.TentConfig
+import org.secfirst.umbrella.data.storage.TentStorageDao
+import org.secfirst.umbrella.data.storage.TentStorageRepo
+import org.secfirst.umbrella.data.storage.TentStorageRepository
+import org.secfirst.umbrella.core.serialize.ElementAdapter
+import org.secfirst.umbrella.core.serialize.ElementLoader
+import org.secfirst.umbrella.core.serialize.ElementSerializer
+import org.secfirst.umbrella.core.serialize.ElementViewer
 import org.secfirst.umbrella.util.SchedulerProvider
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -82,7 +82,7 @@ class RepositoryModule {
 
     @Provides
     @Singleton
-    internal fun provideTentGitInstance(context: Context): TentStorageRepo = TentStorageRepository(tentDao, provideTentConfig(context))
+    internal fun provideTentGitInstance(context: Context, tentConfig: TentConfig): TentStorageRepo = TentStorageRepository(tentDao, tentConfig)
 }
 
 @Module
