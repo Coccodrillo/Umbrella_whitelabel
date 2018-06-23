@@ -1,4 +1,4 @@
-package org.secfirst.umbrella
+package org.secfirst.content
 
 import junit.framework.Assert.assertEquals
 import org.junit.Test
@@ -6,13 +6,12 @@ import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.junit.MockitoJUnitRunner
-
-import org.secfirst.umbrella.data.storage.ExtensionFile
-import org.secfirst.umbrella.data.storage.TentConfig
-import org.secfirst.umbrella.data.storage.TentConfig.Companion.HIERARCHY_ELEMENT
-import org.secfirst.umbrella.data.storage.TentConfig.Companion.HIERARCHY_SUB_ELEMENT
-import org.secfirst.umbrella.data.storage.TentConfig.Companion.HIERARCHY_SUB_SUB_ELEMENT
-import org.secfirst.umbrella.data.storage.TypeFile
+import org.secfirst.content.storage.ExtensionFile
+import org.secfirst.content.storage.TentConfig
+import org.secfirst.content.storage.TentConfig.Companion.HIERARCHY_ELEMENT
+import org.secfirst.content.storage.TentConfig.Companion.HIERARCHY_SUB_ELEMENT
+import org.secfirst.content.storage.TentConfig.Companion.HIERARCHY_SUB_SUB_ELEMENT
+import org.secfirst.content.storage.TypeFile
 
 @RunWith(MockitoJUnitRunner::class)
 class TentConfigTest {

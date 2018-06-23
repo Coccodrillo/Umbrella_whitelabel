@@ -1,4 +1,4 @@
-package org.secfirst.umbrella.data.storage
+package org.secfirst.content.storage
 
 import java.io.File
 
