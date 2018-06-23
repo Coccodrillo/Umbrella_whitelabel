@@ -16,8 +16,8 @@ import org.secfirst.umbrella.data.storage.TentConfig
 import org.secfirst.umbrella.data.storage.TentStorageDao
 import org.secfirst.umbrella.data.storage.TentStorageRepo
 import org.secfirst.umbrella.data.storage.TentStorageRepository
-import org.secfirst.umbrella.feature.content.ElementLoader
-import org.secfirst.umbrella.feature.content.ElementSerializer
+import org.secfirst.umbrella.serialize.ElementLoader
+import org.secfirst.umbrella.serialize.ElementSerializer
 import org.secfirst.umbrella.util.SchedulerProvider
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory

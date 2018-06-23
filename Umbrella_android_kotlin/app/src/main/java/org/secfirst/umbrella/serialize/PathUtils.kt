@@ -1,4 +1,4 @@
-package org.secfirst.umbrella.feature.content
+package org.secfirst.umbrella.serialize
 
 abstract class PathUtils {
     companion object {
