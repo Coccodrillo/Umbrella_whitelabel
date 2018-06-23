@@ -1,4 +1,4 @@
-package org.secfirst.umbrella.feature.content
+package org.secfirst.umbrella.serialize
 
 import org.secfirst.umbrella.data.CheckList
 import org.secfirst.umbrella.data.Form
@@ -8,9 +8,9 @@ import org.secfirst.umbrella.data.storage.TentConfig
 import org.secfirst.umbrella.data.storage.TentConfig.Companion.FORM_NAME
 import org.secfirst.umbrella.data.storage.TentConfig.Companion.getDelimiter
 import org.secfirst.umbrella.data.storage.TypeFile
-import org.secfirst.umbrella.feature.content.PathUtils.Companion.getLastDirectory
-import org.secfirst.umbrella.feature.content.PathUtils.Companion.getLevelOfPath
-import org.secfirst.umbrella.feature.content.PathUtils.Companion.getWorkDirectory
+import org.secfirst.umbrella.serialize.PathUtils.Companion.getLastDirectory
+import org.secfirst.umbrella.serialize.PathUtils.Companion.getLevelOfPath
+import org.secfirst.umbrella.serialize.PathUtils.Companion.getWorkDirectory
 import java.io.File
 
 class ElementLoader : Serializer {

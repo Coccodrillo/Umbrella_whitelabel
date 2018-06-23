@@ -5,8 +5,8 @@ import org.secfirst.umbrella.data.database.content.ContentRepo
 import org.secfirst.umbrella.data.network.ApiHelper
 import org.secfirst.umbrella.data.storage.TentStorageRepo
 import org.secfirst.umbrella.feature.base.interactor.BaseInteractorImp
-import org.secfirst.umbrella.feature.content.ElementLoader
-import org.secfirst.umbrella.feature.content.ElementSerializer
+import org.secfirst.umbrella.serialize.ElementLoader
+import org.secfirst.umbrella.serialize.ElementSerializer
 import javax.inject.Inject
 
 class ContentInteractorImp @Inject constructor(apiHelper: ApiHelper,

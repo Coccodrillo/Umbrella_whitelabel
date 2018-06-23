@@ -1,13 +1,13 @@
-package org.secfirst.umbrella.feature.content
+package org.secfirst.umbrella.serialize
 
 import android.util.Log
 import org.secfirst.umbrella.data.Category
 import org.secfirst.umbrella.data.Lesson
 import org.secfirst.umbrella.data.storage.TentConfig.Companion.HIERARCHY_ELEMENT
 import org.secfirst.umbrella.data.storage.TentConfig.Companion.HIERARCHY_SUB_ELEMENT
-import org.secfirst.umbrella.feature.content.PathUtils.Companion.getLastDirectory
-import org.secfirst.umbrella.feature.content.PathUtils.Companion.getLevelOfPath
-import org.secfirst.umbrella.feature.content.PathUtils.Companion.getWorkDirectory
+import org.secfirst.umbrella.serialize.PathUtils.Companion.getLastDirectory
+import org.secfirst.umbrella.serialize.PathUtils.Companion.getLevelOfPath
+import org.secfirst.umbrella.serialize.PathUtils.Companion.getWorkDirectory
 import java.io.File
 
 
