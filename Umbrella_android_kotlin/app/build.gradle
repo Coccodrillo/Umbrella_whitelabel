@@ -96,7 +96,7 @@ dependencies {
     implementation "org.jetbrains.anko:anko-commons:$anko_version"
     implementation 'com.android.support:multidex:1.0.3'
 
-    //init - database
+    //initParser - database
     kapt "com.github.Raizlabs.DBFlow:dbflow-processor:${dbflow_version}"
     implementation "com.github.Raizlabs.DBFlow:dbflow-core:${dbflow_version}"
     implementation "com.github.Raizlabs.DBFlow:dbflow:${dbflow_version}"
@@ -110,5 +110,4 @@ dependencies {
     //JGit
     implementation "commons-io:commons-io:$commonsIo"
     implementation "org.eclipse.jgit:org.eclipse.jgit:$jgit"
-    implementation project(':content')
 }
