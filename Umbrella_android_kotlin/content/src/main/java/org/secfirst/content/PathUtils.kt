@@ -1,4 +1,4 @@
-package org.secfirst.umbrella.core
+package org.secfirst.content
 
 abstract class PathUtils {
     companion object {
@@ -6,7 +6,8 @@ abstract class PathUtils {
             val splitPath = path.split("/").filter { it.isNotEmpty() }
             return splitPath[splitPath.lastIndex]
         }
-        fun getSplitPath(path: String) = path.split("/").filter { it.isNotEmpty() }
+
+        private fun getSplitPath(path: String) = path.split("/").filter { it.isNotEmpty() }
 
         fun getLevelOfPath(path: String) = getSplitPath(path).size
 

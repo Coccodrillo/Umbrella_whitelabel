@@ -1,4 +1,4 @@
-package org.secfirst.umbrella.data.storage
+package org.secfirst.content.storage
 
 import io.reactivex.Single
 import org.eclipse.jgit.api.Git

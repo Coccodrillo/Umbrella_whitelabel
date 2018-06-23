@@ -1,4 +1,4 @@
-package org.secfirst.umbrella.core.serialize
+package org.secfirst.content.serialize
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory

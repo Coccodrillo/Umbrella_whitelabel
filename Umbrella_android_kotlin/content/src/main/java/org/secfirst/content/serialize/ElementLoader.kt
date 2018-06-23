@@ -1,12 +1,11 @@
-package org.secfirst.umbrella.core.serialize
+package org.secfirst.content.serialize
 
-import org.secfirst.umbrella.data.storage.*
-import org.secfirst.umbrella.data.storage.TentConfig.Companion.FORM_NAME
-import org.secfirst.umbrella.data.storage.TentConfig.Companion.getDelimiter
-import org.secfirst.umbrella.core.PathUtils.Companion.getLastDirectory
-import org.secfirst.umbrella.core.PathUtils.Companion.getLevelOfPath
-import org.secfirst.umbrella.core.PathUtils.Companion.getWorkDirectory
-
+import org.secfirst.content.PathUtils.Companion.getLastDirectory
+import org.secfirst.content.PathUtils.Companion.getLevelOfPath
+import org.secfirst.content.PathUtils.Companion.getWorkDirectory
+import org.secfirst.content.storage.*
+import org.secfirst.content.storage.TentConfig.Companion.FORM_NAME
+import org.secfirst.content.storage.TentConfig.Companion.getDelimiter
 import java.io.File
 
 class ElementLoader : Serialize {
@@ -35,7 +34,7 @@ class ElementLoader : Serialize {
                 root.elements.forEach {
                     if (it.path == pwd) {
                         when (getDelimiter(file.nameWithoutExtension)) {
-                            TypeFile.SEGMENT.value -> it.markdowns.add(file)
+                            TypeFile.SEGMENT.value -> it.markdowns.add(Markdown(file.readText()))
                             TypeFile.CHECKLIST.value -> it.checklist.add(parseYmlFile(file, CheckList::class))
                         }
                     }
@@ -47,7 +46,7 @@ class ElementLoader : Serialize {
                     element.children.forEach { child ->
                         if (child.path == pwd) {
                             when (getDelimiter(file.nameWithoutExtension)) {
-                                TypeFile.SEGMENT.value -> child.markdowns.add(file)
+                                TypeFile.SEGMENT.value -> child.markdowns.add(Markdown(file.readText()))
                                 TypeFile.CHECKLIST.value -> child.checklist.add(parseYmlFile(file, CheckList::class))
                             }
                         }
@@ -60,7 +59,7 @@ class ElementLoader : Serialize {
                         child.children.forEach { grandchild ->
                             if (grandchild.path == pwd) {
                                 when (getDelimiter(file.nameWithoutExtension)) {
-                                    TypeFile.SEGMENT.value -> grandchild.markdowns.add(file)
+                                    TypeFile.SEGMENT.value -> grandchild.markdowns.add(Markdown(file.readText()))
                                     TypeFile.CHECKLIST.value -> grandchild.checklist.add(parseYmlFile(file, CheckList::class))
                                 }
                             }
