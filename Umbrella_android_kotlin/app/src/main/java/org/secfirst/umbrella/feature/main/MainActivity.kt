@@ -13,7 +13,6 @@ import javax.inject.Inject
 
 class MainActivity : BaseActivity(), HasSupportFragmentInjector {
 
-
     @Inject
     internal lateinit var fragmentDispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
 

@@ -1,7 +1,6 @@
 package org.secfirst.umbrella.feature.content.presenter
 
 import io.reactivex.disposables.CompositeDisposable
-import org.secfirst.umbrella.data.Lesson
 import org.secfirst.umbrella.feature.base.presenter.BasePresenterImp
 import org.secfirst.umbrella.feature.content.interactor.ContentBaseInteractor
 import org.secfirst.umbrella.feature.content.view.ContentBaseView
@@ -17,6 +16,11 @@ class ContentPresenterImp<V : ContentBaseView, I : ContentBaseInteractor>
         schedulerProvider = schedulerProvider,
         compositeDisposable = disposable), ContentBasePresenter<V, I> {
 
+    override fun validateLoadAllLesson() {
+        interactor?.let {
+            getView()?.downloadContent(it.getAllLesson())
+        }
+    }
 
     override fun manageContent() {
         interactor?.let { contentInteractor ->
@@ -24,13 +28,6 @@ class ContentPresenterImp<V : ContentBaseView, I : ContentBaseInteractor>
                     .compose(schedulerProvider.ioToMainSingleScheduler())
                     .doAfterSuccess { contentInteractor.persist(contentInteractor.initParser()) }
                     .subscribe()
-
-
         }
     }
-
-    override fun prepareLoadContent(lesson: Lesson) {
-        interactor?.persist(lesson)
-    }
-
 }

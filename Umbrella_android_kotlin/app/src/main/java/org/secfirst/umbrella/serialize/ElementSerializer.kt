@@ -13,14 +13,14 @@ import java.io.File
 
 class ElementSerializer : Serializer {
 
-    private val lesson: Lesson = Lesson()
+    private val root: Lesson = Lesson()
     private var fileList = listOf<File>()
 
 
     fun serialize(pFiles: List<File>): Lesson {
         fileList = pFiles
         create()
-        return lesson
+        return root
     }
 
     private fun create() {
@@ -39,9 +39,9 @@ class ElementSerializer : Serializer {
         element.path = pwd
         element.rootDir = getLastDirectory(pwd)
         when (getLevelOfPath(element.path)) {
-            HIERARCHY_ELEMENT -> lesson.categories.add(element)
-            HIERARCHY_SUB_ELEMENT -> lesson.categories.last().children.add(element)
-            else -> lesson.categories.last().children.last().children.add(element)
+            HIERARCHY_ELEMENT -> root.categories.add(element)
+            HIERARCHY_SUB_ELEMENT -> root.categories.last().children.add(element)
+            else -> root.categories.last().children.last().children.add(element)
         }
     }
 
