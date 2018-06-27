@@ -53,7 +53,6 @@ interface TentStorageDao {
                         .build()
             }.subscribe()
 
-
     private fun cloneTentRepository(tentConfig: TentConfig): Single<Git> {
 
         return if (tentConfig.isNotRepositoryPath())

@@ -15,14 +15,14 @@ import java.io.File
 
 class ElementLoader : Serializer {
 
-    private var lesson: Lesson = Lesson()
+    private var root: Lesson = Lesson()
     private var files = listOf<File>()
 
     fun load(pRoot: Lesson, pFiles: List<File>): Lesson{
-        lesson = pRoot
+        root = pRoot
         files = pFiles
         create()
-        return lesson
+        return root
     }
 
     private fun create() {
@@ -36,7 +36,7 @@ class ElementLoader : Serializer {
     private fun addProperties(pwd: String, file: File) {
         when (getLevelOfPath(pwd)) {
             TentConfig.HIERARCHY_ELEMENT -> {
-                lesson.categories.forEach {
+                root.categories.forEach {
                     if (it.path == pwd) {
                         when (getDelimiter(file.nameWithoutExtension)) {
                             TypeFile.SEGMENT.value -> it.markdowns.add(Markdown(file.readText()))
@@ -47,7 +47,7 @@ class ElementLoader : Serializer {
             }
 
             TentConfig.HIERARCHY_SUB_ELEMENT -> {
-                lesson.categories.forEach { element ->
+                root.categories.forEach { element ->
                     element.children.forEach { child ->
                         if (child.path == pwd) {
                             when (getDelimiter(file.nameWithoutExtension)) {
@@ -59,7 +59,7 @@ class ElementLoader : Serializer {
                 }
             }
             TentConfig.HIERARCHY_SUB_SUB_ELEMENT -> {
-                lesson.categories.forEach { element ->
+                root.categories.forEach { element ->
                     element.children.forEach { child ->
                         child.children.forEach { grandchild ->
                             if (grandchild.path == pwd) {
@@ -76,6 +76,6 @@ class ElementLoader : Serializer {
     }
 
     private fun addForms(file: File) {
-        lesson.forms.add(parseYmlFile(file, Form::class))
+        root.forms.add(parseYmlFile(file, Form::class))
     }
 }

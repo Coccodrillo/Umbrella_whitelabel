@@ -22,15 +22,15 @@ class TentDaoTest {
 
     private fun randomicLisOfFiles(): List<File> {
         val file1 = File("/travel/kidnapping/beginner/close.png")
-        val file2 = File("/travel/.category.yml")
-        val file3 = File("/travel/kidnapping/beginner/.category.yml")
+        val file2 = File("/travel/.foreingkey.yml")
+        val file3 = File("/travel/kidnapping/beginner/.foreingkey.yml")
         val file4 = File("/travel/kidnapping/beginner/c_checklist.yml")
-        val file5 = File("/travel/kidnapping/.category.yml")
-        val file6 = File("/travel/kidnapping/intermediate/.category.yml")
+        val file5 = File("/travel/kidnapping/.foreingkey.yml")
+        val file6 = File("/travel/kidnapping/intermediate/.foreingkey.yml")
         val file7 = File("/travel/kidnapping/intermediate/s_segments.yml")
-        val file8 = File("/travel/kidnapping/advanced/.category.yml")
+        val file8 = File("/travel/kidnapping/advanced/.foreingkey.yml")
         val file9 = File("/email/how_to_learn.md")
-        val file10 = File("/about/.category.yml")
+        val file10 = File("/about/.foreingkey.yml")
         val file11 = File("/something/hello.xml")
         val file12 = File("/form/f_first_form.yml")
 
@@ -52,12 +52,12 @@ class TentDaoTest {
 
     private fun validFileOfElement(): List<File> {
         val files = arrayListOf<File>()
-        val file1 = File("/about/.category.yml")
-        val file2 = File("/travel/.category.yml")
-        val file3 = File("/travel/kidnapping/.category.yml")
-        val file4 = File("/travel/kidnapping/beginner/.category.yml")
-        val file5 = File("/travel/kidnapping/intermediate/.category.yml")
-        val file6 = File("/travel/kidnapping/advanced/.category.yml")
+        val file1 = File("/about/.foreingkey.yml")
+        val file2 = File("/travel/.foreingkey.yml")
+        val file3 = File("/travel/kidnapping/.foreingkey.yml")
+        val file4 = File("/travel/kidnapping/beginner/.foreingkey.yml")
+        val file5 = File("/travel/kidnapping/intermediate/.foreingkey.yml")
+        val file6 = File("/travel/kidnapping/advanced/.foreingkey.yml")
 
         files.add(file1)
         files.add(file2)

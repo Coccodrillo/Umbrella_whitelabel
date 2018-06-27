@@ -13,6 +13,6 @@ interface ContentBaseInteractor : BaseInteractor {
 
     fun initParser(): Lesson
 
-    fun getLesson(): Lesson
+    fun getAllLesson(): Lesson
 
 }

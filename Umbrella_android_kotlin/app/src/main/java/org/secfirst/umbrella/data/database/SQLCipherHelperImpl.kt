@@ -10,6 +10,6 @@ class SQLCipherHelperImpl(
         databaseHelperListener: DatabaseHelperListener?) : SQLCipherOpenHelper(databaseDefinition, databaseHelperListener) {
 
     override fun getCipherSecret(): String {
-        return "password"
+        return "1"
     }
 }

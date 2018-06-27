@@ -4,11 +4,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/songs"
+    <Button
+        android:id="@+id/test"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center_vertical|center_horizontal"
-        android:text="Songs" />
+        android:layout_height="wrap_content"
+        android:text="export db" />
 
 </LinearLayout>

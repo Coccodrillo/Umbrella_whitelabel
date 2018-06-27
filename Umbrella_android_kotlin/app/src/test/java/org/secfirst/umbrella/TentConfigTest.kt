@@ -20,8 +20,8 @@ class TentConfigTest {
 
     @Test
     fun categoryValidDelimiter() {
-        val delimiter = TentConfig.getDelimiter(TentConfig.getDelimiter(".category.yml"))
-        assertEquals(delimiter, ".category.yml")
+        val delimiter = TentConfig.getDelimiter(TentConfig.getDelimiter(".foreingkey.yml"))
+        assertEquals(delimiter, ".foreingkey.yml")
     }
 
     @Test
@@ -38,7 +38,7 @@ class TentConfigTest {
 
     @Test
     fun prefixOfCategory() {
-        assertEquals(TypeFile.CATEGORY.value, ".category")
+        assertEquals(TypeFile.CATEGORY.value, ".foreingkey")
     }
 
     @Test
