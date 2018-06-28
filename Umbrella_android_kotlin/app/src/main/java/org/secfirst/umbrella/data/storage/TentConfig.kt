@@ -6,7 +6,7 @@ class TentConfig(val repoPath: String) {
 
     companion object {
         const val BRANCH_NAME: String = "refs/heads/master"
-        const val URI_REPOSITORY = "https://github.com/klaidliadon/umbrella-content.git"
+        const val URI_REPOSITORY = "https://github.com/douglasalipio/umbrella-content.git"
         const val FORM_NAME = "forms"
         const val HIERARCHY_ELEMENT = 1
         const val HIERARCHY_SUB_ELEMENT = 2
