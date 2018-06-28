@@ -49,8 +49,8 @@ class ContentFragment : BaseFragment(), ContentBaseView {
     }
 
     override fun setUp() {
-        // presenter.manageContent()
-        presenter.validateLoadAllLesson()
+        presenter.manageContent()
+        //presenter.validateLoadAllLesson()
     }
 
     override fun downloadContent(lesson: Lesson) {
