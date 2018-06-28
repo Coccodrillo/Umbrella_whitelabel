@@ -11,7 +11,6 @@ class Lesson(val categories: MutableList<Category> = arrayListOf(), val forms: M
 @Table(database = AppDatabase::class)
 data class Category(
         @PrimaryKey(autoincrement = true)
-        @Column
         var id: Long = 0,
         @ForeignKey(onUpdate = ForeignKeyAction.CASCADE,
                 onDelete = ForeignKeyAction.CASCADE,
@@ -70,7 +69,6 @@ data class Category(
 @Table(database = AppDatabase::class, allFields = true)
 data class Markdown(
         @PrimaryKey(autoincrement = true)
-        @Column
         var id: Long = 0,
         @ForeignKey(onUpdate = ForeignKeyAction.CASCADE,
                 onDelete = ForeignKeyAction.CASCADE,
@@ -84,7 +82,6 @@ data class Markdown(
 @Table(database = AppDatabase::class)
 class CheckList(
         @PrimaryKey(autoincrement = true)
-        @Column
         var id: Long = 0,
         @Column
         var index: Int = 0,
@@ -111,7 +108,6 @@ class CheckList(
 @Table(database = AppDatabase::class)
 class Content(
         @PrimaryKey(autoincrement = true)
-        @Column
         var id: Long = 0,
         var check: String = "",
         @ForeignKey(onUpdate = ForeignKeyAction.CASCADE,
@@ -125,7 +121,6 @@ class Content(
 @Table(database = AppDatabase::class)
 data class Form(
         @PrimaryKey(autoincrement = true)
-        @Column
         var id: Long = 0,
         var screens: MutableList<Screen> = arrayListOf()) : BaseModel() {
 
@@ -144,7 +139,6 @@ data class Form(
 @Table(database = AppDatabase::class)
 data class Screen(
         @PrimaryKey(autoincrement = true)
-        @Column
         var id: Long = 0,
         @Column
         var name: String = "",
@@ -170,7 +164,6 @@ data class Screen(
 @Table(database = AppDatabase::class)
 data class Item(
         @PrimaryKey(autoincrement = true)
-        @Column
         var id: Long = 0,
         @Column
         var name: String = "",
