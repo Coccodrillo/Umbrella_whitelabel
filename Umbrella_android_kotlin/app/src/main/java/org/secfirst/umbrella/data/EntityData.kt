@@ -26,12 +26,11 @@ data class Category(
         var description: String = "",
         var markdowns: MutableList<Markdown> = arrayListOf(),
         var children: MutableList<Category> = arrayListOf(),
-        var forms: MutableList<Form> = arrayListOf(),
         var checklist: MutableList<CheckList> = arrayListOf(),
         @Column
         var rootDir: String = "",
         @Column
-        var path: String = "") : BaseQuery() {
+        var path: String = "") : BaseModel() {
 
 
     @OneToMany(methods = [(OneToMany.Method.ALL)], variableName = "markdowns")
@@ -76,9 +75,9 @@ data class Markdown(
         @ForeignKey(onUpdate = ForeignKeyAction.CASCADE,
                 onDelete = ForeignKeyAction.CASCADE,
                 stubbedRelationship = true)
-        @ForeignKeyReference(foreignKeyColumnName = "id", columnName = "subcategory_id")
+        @ForeignKeyReference(foreignKeyColumnName = "id", columnName = "category_id")
         var category: Category? = null,
-        var text: String = "") : BaseQuery() {
+        var text: String = "") : BaseModel() {
     constructor(text: String) : this(0, null, text)
 }
 
@@ -89,10 +88,13 @@ class CheckList(
         var id: Long = 0,
         @Column
         var index: Int = 0,
-        @ForeignKey(stubbedRelationship = true)
+        @ForeignKey(onUpdate = ForeignKeyAction.CASCADE,
+                onDelete = ForeignKeyAction.CASCADE,
+                stubbedRelationship = true)
+        @ForeignKeyReference(foreignKeyColumnName = "id", columnName = "category_id")
         var category: Category? = null,
         @JsonProperty("list")
-        var content: MutableList<Content> = arrayListOf()) : BaseQuery() {
+        var content: MutableList<Content> = arrayListOf()) : BaseModel() {
 
     @OneToMany(methods = [(OneToMany.Method.ALL)], variableName = "content")
     fun oneToManyContent(): MutableList<Content> {
@@ -118,14 +120,14 @@ class Content(
         @ForeignKeyReference(foreignKeyColumnName = "id", columnName = "checklist_id")
         var checklist: CheckList? = null,
         @Column
-        var label: String = "") : BaseQuery()
+        var label: String = "") : BaseModel()
 
 @Table(database = AppDatabase::class)
 data class Form(
         @PrimaryKey(autoincrement = true)
         @Column
         var id: Long = 0,
-        var screens: MutableList<Screen> = arrayListOf()) : BaseQuery() {
+        var screens: MutableList<Screen> = arrayListOf()) : BaseModel() {
 
     @OneToMany(methods = [(OneToMany.Method.ALL)], variableName = "screens")
     fun oneToManyScreens(): MutableList<Screen> {
@@ -151,7 +153,7 @@ data class Screen(
                 stubbedRelationship = true)
         @ForeignKeyReference(foreignKeyColumnName = "id", columnName = "form_id")
         var form: Form? = null,
-        var items: MutableList<Item> = arrayListOf()) : BaseQuery() {
+        var items: MutableList<Item> = arrayListOf()) : BaseModel() {
 
     @OneToMany(methods = [(OneToMany.Method.ALL)], variableName = "items")
     fun oneToManyItems(): MutableList<Item> {
@@ -183,7 +185,7 @@ data class Item(
         var screen: Screen? = null,
         var options: MutableList<Option> = arrayListOf(),
         @Column
-        var hint: String = "") : BaseQuery() {
+        var hint: String = "") : BaseModel() {
 
     @OneToMany(methods = [(OneToMany.Method.ALL)], variableName = "options")
     fun oneToManyOptions(): MutableList<Option> {
@@ -208,7 +210,7 @@ data class Option(
                 stubbedRelationship = true)
         @ForeignKeyReference(foreignKeyColumnName = "id", columnName = "item_id")
         var item: Item? = null,
-        var value: String = "") : BaseQuery()
+        var value: String = "") : BaseModel()
 
 
 
