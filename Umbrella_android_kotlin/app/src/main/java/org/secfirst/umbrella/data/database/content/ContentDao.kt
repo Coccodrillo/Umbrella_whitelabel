@@ -14,12 +14,6 @@ import org.secfirst.umbrella.data.database.AppDatabase
 interface ContentDao {
 
     fun insert(lesson: Lesson) {
-//        modelAdapter<Element>().load(lesson.elements.last())
-
-//        FlowManager.getDatabase(AppDatabase::class.java).executeTransaction { databaseWrapper ->
-//            lesson.elements.last().save(databaseWrapper)
-//        }
-
         FlowManager.getDatabase(AppDatabase.NAME)
                 .beginTransactionAsync(ProcessModelTransaction.Builder<Category>(
                         ProcessModelTransaction.ProcessModel<Category> { model, _ ->

@@ -2,7 +2,7 @@ package org.secfirst.umbrella.data
 
 import com.raizlabs.android.dbflow.rx2.structure.BaseRXModel
 
-open class BaseQuery : BaseRXModel() {
+open class BaseModel : BaseRXModel() {
     fun associateForeignKey(category: Category) {
 
         associateMarkdowns(category.markdowns, category)
