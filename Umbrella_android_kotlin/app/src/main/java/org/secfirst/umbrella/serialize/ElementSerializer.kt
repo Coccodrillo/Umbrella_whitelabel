@@ -1,7 +1,7 @@
 package org.secfirst.umbrella.serialize
 
 import android.util.Log
-import org.secfirst.umbrella.data.Category
+import org.secfirst.umbrella.data.Element
 import org.secfirst.umbrella.data.Lesson
 import org.secfirst.umbrella.data.storage.TentConfig.Companion.HIERARCHY_ELEMENT
 import org.secfirst.umbrella.data.storage.TentConfig.Companion.HIERARCHY_SUB_ELEMENT
@@ -35,7 +35,7 @@ class ElementSerializer : Serializer {
 
     private fun addElement(pwd: String, currentFile: File) {
 
-        val element = parseYmlFile(currentFile, Category::class)
+        val element = parseYmlFile(currentFile, Element::class)
         element.path = pwd
         element.rootDir = getLastDirectory(pwd)
         when (getLevelOfPath(element.path)) {

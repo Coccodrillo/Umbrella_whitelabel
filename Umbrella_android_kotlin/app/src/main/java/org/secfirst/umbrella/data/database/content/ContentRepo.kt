@@ -7,6 +7,6 @@ interface ContentRepo {
 
     fun insertAllLessons(lesson: Lesson)
 
-    fun loadAllLesson(): Lesson
+    fun loadAllLesson(): New
 
 }

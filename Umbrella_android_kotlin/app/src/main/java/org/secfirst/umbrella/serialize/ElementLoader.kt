@@ -1,6 +1,6 @@
 package org.secfirst.umbrella.serialize
 
-import org.secfirst.umbrella.data.CheckList
+import org.secfirst.umbrella.data.Checklist
 import org.secfirst.umbrella.data.Form
 import org.secfirst.umbrella.data.Lesson
 import org.secfirst.umbrella.data.Markdown
@@ -40,7 +40,7 @@ class ElementLoader : Serializer {
                     if (it.path == pwd) {
                         when (getDelimiter(file.nameWithoutExtension)) {
                             TypeFile.SEGMENT.value -> it.markdowns.add(Markdown(file.readText()))
-                            TypeFile.CHECKLIST.value -> it.checklist.add(parseYmlFile(file, CheckList::class))
+                            TypeFile.CHECKLIST.value -> it.checklist.add(parseYmlFile(file, Checklist::class))
                         }
                     }
                 }
@@ -52,7 +52,7 @@ class ElementLoader : Serializer {
                         if (child.path == pwd) {
                             when (getDelimiter(file.nameWithoutExtension)) {
                                 TypeFile.SEGMENT.value -> child.markdowns.add(Markdown(file.readText()))
-                                TypeFile.CHECKLIST.value -> child.checklist.add(parseYmlFile(file, CheckList::class))
+                                TypeFile.CHECKLIST.value -> child.checklist.add(parseYmlFile(file, Checklist::class))
                             }
                         }
                     }
@@ -65,7 +65,7 @@ class ElementLoader : Serializer {
                             if (grandchild.path == pwd) {
                                 when (getDelimiter(file.nameWithoutExtension)) {
                                     TypeFile.SEGMENT.value -> grandchild.markdowns.add(Markdown(file.readText()))
-                                    TypeFile.CHECKLIST.value -> grandchild.checklist.add(parseYmlFile(file, CheckList::class))
+                                    TypeFile.CHECKLIST.value -> grandchild.checklist.add(parseYmlFile(file, Checklist::class))
                                 }
                             }
                         }
