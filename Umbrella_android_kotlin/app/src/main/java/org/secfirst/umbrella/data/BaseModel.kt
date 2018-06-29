@@ -1,33 +1,24 @@
 package org.secfirst.umbrella.data
 
 import com.raizlabs.android.dbflow.rx2.structure.BaseRXModel
+import org.secfirst.umbrella.data.database.content.Category
+import org.secfirst.umbrella.data.database.content.Child
 
 open class BaseModel : BaseRXModel() {
     fun associateForeignKey(category: Category) {
 
-        associateMarkdowns(category.markdowns, category)
-        associateChecklist(category.checklist, category)
-        category.children.forEach { subcategory ->
-            subcategory.subcategory = category
-            associateChecklist(subcategory.checklist, subcategory)
-            associateMarkdowns(subcategory.markdowns, subcategory)
+        category.subCategories.forEach { subcategory ->
+            subcategory.category = category
             subcategory.children.forEach { child ->
                 child.subcategory = subcategory
                 associateChecklist(child.checklist, child)
-                associateMarkdowns(child.markdowns, child)
             }
         }
     }
 
-    private fun associateMarkdowns(markdown: MutableList<Markdown>, foreignKey: Category) {
-        markdown.forEach { it ->
-            it.category = foreignKey
-        }
-    }
-
-    private fun associateChecklist(checklists: MutableList<CheckList>, foreignKey: Category) {
+    private fun associateChecklist(checklists: MutableList<Checklist>, foreignKey: Child) {
         checklists.forEach { checklist ->
-            checklist.category = foreignKey
+            checklist.child = foreignKey
             checklist.content.forEach { content ->
                 content.checklist = checklist
             }

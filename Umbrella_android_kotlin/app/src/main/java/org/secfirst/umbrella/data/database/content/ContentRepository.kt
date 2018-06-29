@@ -5,7 +5,7 @@ import javax.inject.Inject
 
 class ContentRepository @Inject constructor(private val contentDao: ContentDao) : ContentRepo {
 
-    override fun loadAllLesson(): Lesson = contentDao.getAllContent()
+    override fun loadAllLesson(): New = contentDao.getAllContent()
 
     override fun insertAllLessons(lesson: Lesson) = contentDao.insert(lesson)
 
