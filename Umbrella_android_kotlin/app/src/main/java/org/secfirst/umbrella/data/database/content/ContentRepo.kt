@@ -1,12 +1,12 @@
 package org.secfirst.umbrella.data.database.content
 
-import org.secfirst.umbrella.data.Lesson
+import org.secfirst.umbrella.data.Root
 
 
 interface ContentRepo {
 
-    fun insertAllLessons(lesson: Lesson)
+    fun insertAllLessons(root: Root)
 
-    fun loadAllLesson(): New
+    fun loadAllLesson(): Lesson
 
 }

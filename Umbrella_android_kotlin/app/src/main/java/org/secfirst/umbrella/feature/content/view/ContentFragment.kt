@@ -13,7 +13,7 @@ import android.widget.Button
 import android.widget.Toast
 import org.secfirst.umbrella.R
 import org.secfirst.umbrella.data.database.AppDatabase
-import org.secfirst.umbrella.data.database.content.New
+import org.secfirst.umbrella.data.database.content.Lesson
 import org.secfirst.umbrella.feature.base.view.BaseFragment
 import org.secfirst.umbrella.feature.content.interactor.ContentBaseInteractor
 import org.secfirst.umbrella.feature.content.presenter.ContentBasePresenter
@@ -53,7 +53,7 @@ class ContentFragment : BaseFragment(), ContentBaseView {
         //presenter.validateLoadAllLesson()
     }
 
-    override fun downloadContent(lesson: New) {
+    override fun downloadContent(lesson: Lesson) {
         lesson.categories.forEach { Log.e("test", "object -  $it") }
     }
 
