@@ -6,7 +6,7 @@ import org.secfirst.umbrella.data.*
 import org.secfirst.umbrella.data.database.AppDatabase
 
 
-class New(val categories: MutableList<Category> = arrayListOf(), val forms: MutableList<Form> = arrayListOf())
+class Lesson(val categories: MutableList<Category> = arrayListOf(), val forms: MutableList<Form> = arrayListOf())
 
 @Table(database = AppDatabase::class)
 data class Category(
@@ -144,7 +144,7 @@ data class Child(
         @Column
         var rootDir: String = "",
         @Column
-        var path: String = "") : BaseModel() {
+        var path: String = "") : BaseModel(){
 
 
     @OneToMany(methods = [(OneToMany.Method.ALL)], variableName = "markdowns")

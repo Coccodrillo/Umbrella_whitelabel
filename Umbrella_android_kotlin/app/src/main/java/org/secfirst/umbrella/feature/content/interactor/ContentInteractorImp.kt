@@ -1,6 +1,6 @@
 package org.secfirst.umbrella.feature.content.interactor
 
-import org.secfirst.umbrella.data.Lesson
+import org.secfirst.umbrella.data.Root
 import org.secfirst.umbrella.data.database.content.ContentRepo
 import org.secfirst.umbrella.data.network.ApiHelper
 import org.secfirst.umbrella.data.storage.TentStorageRepo
@@ -21,12 +21,12 @@ class ContentInteractorImp @Inject constructor(apiHelper: ApiHelper,
     override fun fetchData() = tentStorageRepo.fetch()
 
 
-    override fun initParser(): Lesson {
+    override fun initParser(): Root {
         val deserializeObj = elementSerializer.serialize(tentRepo.getElementsFile())
         return elementLoader.load(deserializeObj, tentRepo.getLoadersFile())
     }
 
-    override fun persist(lesson: Lesson) = contentRepo.insertAllLessons(lesson)
+    override fun persist(root: Root) = contentRepo.insertAllLessons(root)
 
     override fun getAllLesson() = contentRepo.loadAllLesson()
 

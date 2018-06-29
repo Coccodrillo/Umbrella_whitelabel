@@ -6,69 +6,21 @@ import com.raizlabs.android.dbflow.sql.language.SQLite
 import org.secfirst.umbrella.data.database.AppDatabase
 import org.secfirst.umbrella.data.database.content.Category
 import org.secfirst.umbrella.data.database.content.Child
+import org.secfirst.umbrella.data.database.content.Subcategory
 
 
-class Lesson(val categories: MutableList<Element> = arrayListOf(), val forms: MutableList<Form> = arrayListOf())
+class Root(val categories: MutableList<Element> = arrayListOf(), val forms: MutableList<Form> = arrayListOf())
 
-//@Table(database = AppDatabase::class, name = "category_old")
 data class Element(
-        //@PrimaryKey(autoincrement = true)
         var id: Long = 0,
-//        @ForeignKey(onUpdate = ForeignKeyAction.CASCADE,
-//                onDelete = ForeignKeyAction.CASCADE,
-//                stubbedRelationship = true)
-        // @ForeignKeyReference(foreignKeyColumnName = "id", columnName = "subcategory_id")
-        // var subcategory: Element? = null,
-        // @Column
         var index: Int = 0,
-        // @Column
         var title: String = "",
-        // @Column
         var description: String = "",
         var markdowns: MutableList<Markdown> = arrayListOf(),
         var children: MutableList<Element> = arrayListOf(),
         var checklist: MutableList<Checklist> = arrayListOf(),
-        // @Column
         var rootDir: String = "",
-        //@Column
-        var path: String = "") {
-
-
-//    @OneToMany(methods = [(OneToMany.Method.ALL)], variableName = "markdowns")
-//    fun oneToManyMarkdowns(): MutableList<Markdown> {
-//        if (markdowns.isEmpty()) {
-//            markdowns = SQLite.select()
-//                    .from(Markdown::class.java)
-//                    .where(Markdown_Table.category_id.eq(id))
-//                    .queryList()
-//        }
-//        return markdowns
-//    }
-
-//    @OneToMany(methods = [(OneToMany.Method.ALL)], variableName = "children")
-//    fun oneToManyChildren(): MutableList<Category> {
-//        if (children.isEmpty()) {
-//            children = SQLite.select()
-//                    .from(Category::class.java)
-//                    .where(Category_Table.subcategory_id.eq(id))
-//                    .queryList()
-//        }
-//        return children
-//    }
-//
-//
-//    @OneToMany(methods = [(OneToMany.Method.ALL)], variableName = "checklist")
-//    fun oneToManyChecklist(): MutableList<Checklist> {
-//        if (checklist.isEmpty()) {
-//            checklist = SQLite.select()
-//                    .from(Checklist::class.java)
-//                    .where(Checklist_Table.category_id.eq(id))
-//                    .queryList()
-//        }
-//        return checklist
-//    }
-
-}
+        var path: String = "")
 
 @Table(database = AppDatabase::class, allFields = true)
 data class Markdown(
@@ -225,4 +177,42 @@ data class Option(
         var value: String = "") : BaseModel()
 
 
+val Element.convertToCategory: Category
+    get() {
+        val category = Category()
+        category.checklist = this.checklist
+        category.index = this.index
+        category.description = this.description
+        category.markdowns = this.markdowns
+        category.path = this.path
+        category.rootDir = this.rootDir
+        category.title = this.title
+        return category
+    }
+
+val Element.convertToSubCategory: Subcategory
+    get() {
+        val subcategory = Subcategory()
+        subcategory.checklist = this.checklist
+        subcategory.index = this.index
+        subcategory.description = this.description
+        subcategory.markdowns = this.markdowns
+        subcategory.path = this.path
+        subcategory.rootDir = this.rootDir
+        subcategory.title = this.title
+        return subcategory
+    }
+
+val Element.convertToChild: Child
+    get() {
+        val child = Child()
+        child.checklist = this.checklist
+        child.index = this.index
+        child.description = this.description
+        child.markdowns = this.markdowns
+        child.path = this.path
+        child.rootDir = this.rootDir
+        child.title = this.title
+        return child
+    }
 

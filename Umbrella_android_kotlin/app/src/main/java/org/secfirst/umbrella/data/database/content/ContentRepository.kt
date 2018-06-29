@@ -1,13 +1,13 @@
 package org.secfirst.umbrella.data.database.content
 
-import org.secfirst.umbrella.data.Lesson
+import org.secfirst.umbrella.data.Root
 import javax.inject.Inject
 
 class ContentRepository @Inject constructor(private val contentDao: ContentDao) : ContentRepo {
 
-    override fun loadAllLesson(): New = contentDao.getAllContent()
+    override fun loadAllLesson(): Lesson = contentDao.getAllContent()
 
-    override fun insertAllLessons(lesson: Lesson) = contentDao.insert(lesson)
+    override fun insertAllLessons(root: Root) = contentDao.insert(root)
 
 
 }

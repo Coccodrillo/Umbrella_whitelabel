@@ -2,8 +2,8 @@ package org.secfirst.umbrella.serialize
 
 import org.secfirst.umbrella.data.Checklist
 import org.secfirst.umbrella.data.Form
-import org.secfirst.umbrella.data.Lesson
 import org.secfirst.umbrella.data.Markdown
+import org.secfirst.umbrella.data.Root
 import org.secfirst.umbrella.data.storage.TentConfig
 import org.secfirst.umbrella.data.storage.TentConfig.Companion.FORM_NAME
 import org.secfirst.umbrella.data.storage.TentConfig.Companion.getDelimiter
@@ -15,10 +15,10 @@ import java.io.File
 
 class ElementLoader : Serializer {
 
-    private var root: Lesson = Lesson()
+    private var root: Root = Root()
     private var files = listOf<File>()
 
-    fun load(pRoot: Lesson, pFiles: List<File>): Lesson{
+    fun load(pRoot: Root, pFiles: List<File>): Root {
         root = pRoot
         files = pFiles
         create()

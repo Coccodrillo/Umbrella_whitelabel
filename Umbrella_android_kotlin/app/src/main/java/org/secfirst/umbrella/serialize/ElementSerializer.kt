@@ -2,7 +2,7 @@ package org.secfirst.umbrella.serialize
 
 import android.util.Log
 import org.secfirst.umbrella.data.Element
-import org.secfirst.umbrella.data.Lesson
+import org.secfirst.umbrella.data.Root
 import org.secfirst.umbrella.data.storage.TentConfig.Companion.HIERARCHY_ELEMENT
 import org.secfirst.umbrella.data.storage.TentConfig.Companion.HIERARCHY_SUB_ELEMENT
 import org.secfirst.umbrella.serialize.PathUtils.Companion.getLastDirectory
@@ -13,11 +13,11 @@ import java.io.File
 
 class ElementSerializer : Serializer {
 
-    private val root: Lesson = Lesson()
+    private val root: Root = Root()
     private var fileList = listOf<File>()
 
 
-    fun serialize(pFiles: List<File>): Lesson {
+    fun serialize(pFiles: List<File>): Root {
         fileList = pFiles
         create()
         return root
@@ -44,5 +44,4 @@ class ElementSerializer : Serializer {
             else -> root.categories.last().children.last().children.add(element)
         }
     }
-
 }
