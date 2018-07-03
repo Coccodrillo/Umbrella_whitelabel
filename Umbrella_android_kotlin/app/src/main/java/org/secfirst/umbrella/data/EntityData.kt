@@ -10,13 +10,14 @@ import org.secfirst.umbrella.data.database.content.Lesson
 import org.secfirst.umbrella.data.database.content.Subcategory
 
 
-class Root(val categories: MutableList<Element> = arrayListOf(), val forms: MutableList<Form> = arrayListOf()) {
+class Root(val elements: MutableList<Element> = arrayListOf(), val forms: MutableList<Form> = arrayListOf()) {
+
     fun convertRootToLesson(): Lesson {
         val categories: MutableList<Category> = mutableListOf()
         var subCategories: MutableList<Subcategory> = mutableListOf()
         var children: MutableList<Child> = mutableListOf()
 
-        this.categories.forEach { element ->
+        this.elements.forEach { element ->
             val category = element.convertToCategory
             categories.add(category)
             element.children.forEach { subElement ->
@@ -31,7 +32,7 @@ class Root(val categories: MutableList<Element> = arrayListOf(), val forms: Muta
                 subCategory.children = children
                 children = mutableListOf()
             }
-            category.subCategories = subCategories
+            category.subcategories = subCategories
             subCategories = mutableListOf()
         }
         return Lesson(categories)
@@ -262,4 +263,18 @@ val Element.convertToChild: Child
         child.title = this.title
         return child
     }
+
+inline fun MutableList<Element>.walkSubElement(action: (Element) -> Unit) {
+    this.forEach { element ->
+        element.children.forEach(action)
+    }
+}
+
+inline fun MutableList<Element>.walkChild(action: (Element) -> Unit) {
+    this.forEach { element ->
+        element.children.forEach { subElement ->
+            subElement.children.forEach(action)
+        }
+    }
+}
 

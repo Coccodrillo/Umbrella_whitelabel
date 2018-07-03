@@ -19,7 +19,7 @@ data class Category(
         @Column
         var description: String = "",
         var markdowns: MutableList<Markdown> = arrayListOf(),
-        var subCategories: MutableList<Subcategory> = arrayListOf(),
+        var subcategories: MutableList<Subcategory> = arrayListOf(),
         var checklist: MutableList<Checklist> = arrayListOf(),
         @Column
         var rootDir: String = "",
@@ -38,15 +38,15 @@ data class Category(
         return markdowns
     }
 
-    @OneToMany(methods = [(OneToMany.Method.ALL)], variableName = "subCategories")
+    @OneToMany(methods = [(OneToMany.Method.ALL)], variableName = "subcategories")
     fun oneToManySubcategory(): MutableList<Subcategory> {
-        if (subCategories.isEmpty()) {
-            subCategories = SQLite.select()
+        if (subcategories.isEmpty()) {
+            subcategories = SQLite.select()
                     .from(Subcategory::class.java)
                     .where(Subcategory_Table.category_id.eq(id))
                     .queryList()
         }
-        return subCategories
+        return subcategories
     }
 
 

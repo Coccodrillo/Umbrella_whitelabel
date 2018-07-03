@@ -11,7 +11,7 @@ open class BaseModel : BaseRXModel() {
         associateMarkdown(category.markdowns, category)
         associateChecklist(category.checklist, category)
 
-        category.subCategories.forEach { subcategory ->
+        category.subcategories.forEach { subcategory ->
             subcategory.category = category
             associateMarkdown(subcategory.markdowns, subcategory)
             associateChecklist(subcategory.checklist, subcategory)

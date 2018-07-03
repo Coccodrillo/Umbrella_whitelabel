@@ -1,9 +1,6 @@
 package org.secfirst.umbrella.serialize
 
-import org.secfirst.umbrella.data.Checklist
-import org.secfirst.umbrella.data.Form
-import org.secfirst.umbrella.data.Markdown
-import org.secfirst.umbrella.data.Root
+import org.secfirst.umbrella.data.*
 import org.secfirst.umbrella.data.storage.TentConfig.Companion.FORM_NAME
 import org.secfirst.umbrella.data.storage.TentConfig.Companion.HIERARCHY_CHILD
 import org.secfirst.umbrella.data.storage.TentConfig.Companion.HIERARCHY_ELEMENT
@@ -25,7 +22,6 @@ class ElementLoader @Inject constructor(private val tentStorageRepo: TentStorage
         files = tentStorageRepo.getLoadersFile()
         root = pRoot
         create()
-        ignoreFormAsCategory()
         return root
     }
 
@@ -38,13 +34,14 @@ class ElementLoader @Inject constructor(private val tentStorageRepo: TentStorage
                 addForms(currentFile)
             else addProperties(pwd, currentFile)
         }
+        ignoreFormAsElement()
     }
 
-    private fun ignoreFormAsCategory() {
-        val categoriesIterator = root.categories.iterator()
-        for (form in categoriesIterator) {
+    private fun ignoreFormAsElement() {
+        val elementsIterator = root.elements.iterator()
+        for (form in elementsIterator) {
             if (form.rootDir == FORM_NAME) {
-                categoriesIterator.remove()
+                elementsIterator.remove()
                 continue
             }
         }
@@ -53,7 +50,7 @@ class ElementLoader @Inject constructor(private val tentStorageRepo: TentStorage
     private fun addProperties(pwd: String, file: File) {
         when (getLevelOfPath(pwd)) {
             HIERARCHY_ELEMENT -> {
-                root.categories.forEach {
+                root.elements.forEach {
                     if (it.path == pwd) {
                         when (getDelimiter(file.nameWithoutExtension)) {
                             TypeFile.SEGMENT.value -> it.markdowns.add(Markdown(file.readText()))
@@ -64,27 +61,22 @@ class ElementLoader @Inject constructor(private val tentStorageRepo: TentStorage
             }
 
             HIERARCHY_SUB_ELEMENT -> {
-                root.categories.forEach { element ->
-                    element.children.forEach { child ->
-                        if (child.path == pwd) {
-                            when (getDelimiter(file.nameWithoutExtension)) {
-                                TypeFile.SEGMENT.value -> child.markdowns.add(Markdown(file.readText()))
-                                TypeFile.CHECKLIST.value -> child.checklist.add(parseYmlFile(file, Checklist::class))
-                            }
+                root.elements.walkSubElement { subElement ->
+                    if (subElement.path == pwd) {
+                        when (getDelimiter(file.nameWithoutExtension)) {
+                            TypeFile.SEGMENT.value -> subElement.markdowns.add(Markdown(file.readText()))
+                            TypeFile.CHECKLIST.value -> subElement.checklist.add(parseYmlFile(file, Checklist::class))
                         }
                     }
                 }
             }
+
             HIERARCHY_CHILD -> {
-                root.categories.forEach { element ->
-                    element.children.forEach { child ->
-                        child.children.forEach { grandchild ->
-                            if (grandchild.path == pwd) {
-                                when (getDelimiter(file.nameWithoutExtension)) {
-                                    TypeFile.SEGMENT.value -> grandchild.markdowns.add(Markdown(file.readText()))
-                                    TypeFile.CHECKLIST.value -> grandchild.checklist.add(parseYmlFile(file, Checklist::class))
-                                }
-                            }
+                root.elements.walkChild { child ->
+                    if (child.path == pwd) {
+                        when (getDelimiter(file.nameWithoutExtension)) {
+                            TypeFile.SEGMENT.value -> child.markdowns.add(Markdown(file.readText()))
+                            TypeFile.CHECKLIST.value -> child.checklist.add(parseYmlFile(file, Checklist::class))
                         }
                     }
                 }
