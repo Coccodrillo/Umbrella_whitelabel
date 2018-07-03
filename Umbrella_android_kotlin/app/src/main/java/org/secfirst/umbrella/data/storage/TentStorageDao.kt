@@ -28,10 +28,6 @@ interface TentStorageDao {
         return files
     }
 
-//    private fun fileFilter(typeFiles: List<TypeFile>, file: File){
-//        val files: MutableList<File> = arrayListOf()
-//    }
-
     fun filterBySubElement(tentConfig: TentConfig): List<File> {
         val files: MutableList<File> = arrayListOf()
         File(tentConfig.getPathRepository())
@@ -54,7 +50,6 @@ interface TentStorageDao {
             }.subscribe()
 
     private fun cloneTentRepository(tentConfig: TentConfig): Single<Git> {
-
         return if (tentConfig.isNotRepositoryPath())
             Single.fromCallable {
                 Git.cloneRepository()

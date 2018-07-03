@@ -6,10 +6,37 @@ import com.raizlabs.android.dbflow.sql.language.SQLite
 import org.secfirst.umbrella.data.database.AppDatabase
 import org.secfirst.umbrella.data.database.content.Category
 import org.secfirst.umbrella.data.database.content.Child
+import org.secfirst.umbrella.data.database.content.Lesson
 import org.secfirst.umbrella.data.database.content.Subcategory
 
 
-class Root(val categories: MutableList<Element> = arrayListOf(), val forms: MutableList<Form> = arrayListOf())
+class Root(val categories: MutableList<Element> = arrayListOf(), val forms: MutableList<Form> = arrayListOf()) {
+    fun convertRootToLesson(): Lesson {
+        val categories: MutableList<Category> = mutableListOf()
+        var subCategories: MutableList<Subcategory> = mutableListOf()
+        var children: MutableList<Child> = mutableListOf()
+
+        this.categories.forEach { element ->
+            val category = element.convertToCategory
+            categories.add(category)
+            element.children.forEach { subElement ->
+
+                val subCategory = subElement.convertToSubCategory
+                subCategories.add(subCategory)
+                subElement.children.forEach { subElementChild ->
+
+                    val child = subElementChild.convertToChild
+                    children.add(child)
+                }
+                subCategory.children = children
+                children = mutableListOf()
+            }
+            category.subCategories = subCategories
+            subCategories = mutableListOf()
+        }
+        return Lesson(categories)
+    }
+}
 
 data class Element(
         var id: Long = 0,
@@ -32,8 +59,22 @@ data class Markdown(
                 onDelete = ForeignKeyAction.CASCADE,
                 stubbedRelationship = true)
         var category: Category? = null,
+
+        @ForeignKeyReference(foreignKeyColumnName = "id", columnName = "subcategory_id")
+        @ForeignKey(onUpdate = ForeignKeyAction.CASCADE,
+                onDelete = ForeignKeyAction.CASCADE,
+                stubbedRelationship = true)
+        var subcategory: Subcategory? = null,
+
+        @ForeignKeyReference(foreignKeyColumnName = "id", columnName = "child_id")
+        @ForeignKey(onUpdate = ForeignKeyAction.CASCADE,
+                onDelete = ForeignKeyAction.CASCADE,
+                stubbedRelationship = true)
+        var child: Child? = null,
+
+
         var text: String = "") : BaseModel() {
-    constructor(text: String) : this(0, null, text)
+    constructor(text: String) : this(0, null, null, null, text)
 }
 
 @Table(database = AppDatabase::class)
@@ -49,6 +90,12 @@ data class Checklist(
                 onDelete = ForeignKeyAction.CASCADE,
                 stubbedRelationship = true)
         var category: Category? = null,
+
+        @ForeignKeyReference(foreignKeyColumnName = "id", columnName = "subcategory_id")
+        @ForeignKey(onUpdate = ForeignKeyAction.CASCADE,
+                onDelete = ForeignKeyAction.CASCADE,
+                stubbedRelationship = true)
+        var subcategory: Subcategory? = null,
 
 
         @ForeignKeyReference(foreignKeyColumnName = "id", columnName = "child_id")

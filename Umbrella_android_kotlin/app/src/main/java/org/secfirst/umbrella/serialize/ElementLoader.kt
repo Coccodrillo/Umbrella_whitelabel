@@ -4,24 +4,28 @@ import org.secfirst.umbrella.data.Checklist
 import org.secfirst.umbrella.data.Form
 import org.secfirst.umbrella.data.Markdown
 import org.secfirst.umbrella.data.Root
-import org.secfirst.umbrella.data.storage.TentConfig
 import org.secfirst.umbrella.data.storage.TentConfig.Companion.FORM_NAME
+import org.secfirst.umbrella.data.storage.TentConfig.Companion.HIERARCHY_CHILD
+import org.secfirst.umbrella.data.storage.TentConfig.Companion.HIERARCHY_ELEMENT
+import org.secfirst.umbrella.data.storage.TentConfig.Companion.HIERARCHY_SUB_ELEMENT
 import org.secfirst.umbrella.data.storage.TentConfig.Companion.getDelimiter
+import org.secfirst.umbrella.data.storage.TentStorageRepo
 import org.secfirst.umbrella.data.storage.TypeFile
 import org.secfirst.umbrella.serialize.PathUtils.Companion.getLastDirectory
 import org.secfirst.umbrella.serialize.PathUtils.Companion.getLevelOfPath
 import org.secfirst.umbrella.serialize.PathUtils.Companion.getWorkDirectory
 import java.io.File
+import javax.inject.Inject
 
-class ElementLoader : Serializer {
+class ElementLoader @Inject constructor(private val tentStorageRepo: TentStorageRepo) : Serializer {
 
-    private var root: Root = Root()
+    private var root = Root()
     private var files = listOf<File>()
-
-    fun load(pRoot: Root, pFiles: List<File>): Root {
+    fun load(pRoot: Root): Root {
+        files = tentStorageRepo.getLoadersFile()
         root = pRoot
-        files = pFiles
         create()
+        ignoreFormAsCategory()
         return root
     }
 
@@ -29,13 +33,26 @@ class ElementLoader : Serializer {
         files.forEach { currentFile ->
             val absolutePath = currentFile.path.substringAfterLast("en/", "")
             val pwd = getWorkDirectory(absolutePath)
-            if (getLastDirectory(pwd) == FORM_NAME) addForms(currentFile) else addProperties(pwd, currentFile)
+
+            if (getLastDirectory(pwd) == FORM_NAME)
+                addForms(currentFile)
+            else addProperties(pwd, currentFile)
+        }
+    }
+
+    private fun ignoreFormAsCategory() {
+        val categoriesIterator = root.categories.iterator()
+        for (form in categoriesIterator) {
+            if (form.rootDir == FORM_NAME) {
+                categoriesIterator.remove()
+                continue
+            }
         }
     }
 
     private fun addProperties(pwd: String, file: File) {
         when (getLevelOfPath(pwd)) {
-            TentConfig.HIERARCHY_ELEMENT -> {
+            HIERARCHY_ELEMENT -> {
                 root.categories.forEach {
                     if (it.path == pwd) {
                         when (getDelimiter(file.nameWithoutExtension)) {
@@ -46,7 +63,7 @@ class ElementLoader : Serializer {
                 }
             }
 
-            TentConfig.HIERARCHY_SUB_ELEMENT -> {
+            HIERARCHY_SUB_ELEMENT -> {
                 root.categories.forEach { element ->
                     element.children.forEach { child ->
                         if (child.path == pwd) {
@@ -58,7 +75,7 @@ class ElementLoader : Serializer {
                     }
                 }
             }
-            TentConfig.HIERARCHY_SUB_SUB_ELEMENT -> {
+            HIERARCHY_CHILD -> {
                 root.categories.forEach { element ->
                     element.children.forEach { child ->
                         child.children.forEach { grandchild ->

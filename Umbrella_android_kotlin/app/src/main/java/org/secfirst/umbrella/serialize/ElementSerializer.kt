@@ -5,20 +5,21 @@ import org.secfirst.umbrella.data.Element
 import org.secfirst.umbrella.data.Root
 import org.secfirst.umbrella.data.storage.TentConfig.Companion.HIERARCHY_ELEMENT
 import org.secfirst.umbrella.data.storage.TentConfig.Companion.HIERARCHY_SUB_ELEMENT
+import org.secfirst.umbrella.data.storage.TentStorageRepo
 import org.secfirst.umbrella.serialize.PathUtils.Companion.getLastDirectory
 import org.secfirst.umbrella.serialize.PathUtils.Companion.getLevelOfPath
 import org.secfirst.umbrella.serialize.PathUtils.Companion.getWorkDirectory
 import java.io.File
+import javax.inject.Inject
 
 
-class ElementSerializer : Serializer {
+class ElementSerializer @Inject constructor(private val tentStorageRepo: TentStorageRepo) : Serializer {
 
     private val root: Root = Root()
     private var fileList = listOf<File>()
 
-
-    fun serialize(pFiles: List<File>): Root {
-        fileList = pFiles
+    fun serialize(): Root {
+        fileList = tentStorageRepo.getElementsFile()
         create()
         return root
     }

@@ -11,7 +11,6 @@ import javax.inject.Inject
 
 class ContentInteractorImp @Inject constructor(apiHelper: ApiHelper,
                                                private val tentStorageRepo: TentStorageRepo,
-                                               private val tentRepo: TentStorageRepo,
                                                private val contentRepo: ContentRepo,
                                                private val elementSerializer: ElementSerializer,
                                                private val elementLoader: ElementLoader)
@@ -20,15 +19,9 @@ class ContentInteractorImp @Inject constructor(apiHelper: ApiHelper,
 
     override fun fetchData() = tentStorageRepo.fetch()
 
-
-    override fun initParser(): Root {
-        val deserializeObj = elementSerializer.serialize(tentRepo.getElementsFile())
-        return elementLoader.load(deserializeObj, tentRepo.getLoadersFile())
-    }
+    override fun initParser() = elementLoader.load(elementSerializer.serialize())
 
     override fun persist(root: Root) = contentRepo.insertAllLessons(root)
 
     override fun getAllLesson() = contentRepo.loadAllLesson()
-
-
 }
