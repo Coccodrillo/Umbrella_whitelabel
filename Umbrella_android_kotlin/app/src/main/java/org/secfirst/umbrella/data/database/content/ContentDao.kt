@@ -16,7 +16,7 @@ interface ContentDao {
             modelAdapter<Category>().save(category)
         }
         dataLesson.categories.forEach { category ->
-            category.subCategories.forEach { subCategory ->
+            category.subcategories.forEach { subCategory ->
                 subCategory.children.forEach { child ->
                     modelAdapter<Child>().save(child)
                     insertChecklistContent(child.checklist)

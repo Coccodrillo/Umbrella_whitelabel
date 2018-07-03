@@ -40,9 +40,9 @@ class ElementSerializer @Inject constructor(private val tentStorageRepo: TentSto
         element.path = pwd
         element.rootDir = getLastDirectory(pwd)
         when (getLevelOfPath(element.path)) {
-            HIERARCHY_ELEMENT -> root.categories.add(element)
-            HIERARCHY_SUB_ELEMENT -> root.categories.last().children.add(element)
-            else -> root.categories.last().children.last().children.add(element)
+            HIERARCHY_ELEMENT -> root.elements.add(element)
+            HIERARCHY_SUB_ELEMENT -> root.elements.last().children.add(element)
+            else -> root.elements.last().children.last().children.add(element)
         }
     }
 }
