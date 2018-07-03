@@ -40,11 +40,12 @@ class AppModule {
 
     @Provides
     @Singleton
-    internal fun provideElement() = ElementSerializer()
+    internal fun provideElementSerializer(tentRep: TentStorageRepo) = ElementSerializer(tentRep)
 
     @Provides
     @Singleton
-    internal fun provideElementLoader() = ElementLoader()
+    internal fun provideElementLoader(tentRep: TentStorageRepo) = ElementLoader(tentRep)
+
 }
 
 @Module

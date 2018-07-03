@@ -6,8 +6,8 @@ import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.junit.MockitoJUnitRunner
-import org.secfirst.content.storage.TentConfig
-import org.secfirst.content.storage.TentStorageDao
+import org.secfirst.umbrella.data.storage.TentConfig
+import org.secfirst.umbrella.data.storage.TentStorageDao
 import java.io.File
 
 @RunWith(MockitoJUnitRunner::class)

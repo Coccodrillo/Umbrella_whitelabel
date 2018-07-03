@@ -2,7 +2,7 @@ package org.secfirst.umbrella.data.storage
 
 import java.io.File
 
-class TentConfig(val repoPath: String) {
+class TentConfig(private val repoPath: String) {
 
     companion object {
         const val BRANCH_NAME: String = "refs/heads/master"
@@ -10,7 +10,7 @@ class TentConfig(val repoPath: String) {
         const val FORM_NAME = "forms"
         const val HIERARCHY_ELEMENT = 1
         const val HIERARCHY_SUB_ELEMENT = 2
-        const val HIERARCHY_SUB_SUB_ELEMENT = 3
+        const val HIERARCHY_CHILD = 3
         fun getDelimiter(fileName: String): String {
             return if (fileName == TypeFile.CATEGORY.value)
                 fileName

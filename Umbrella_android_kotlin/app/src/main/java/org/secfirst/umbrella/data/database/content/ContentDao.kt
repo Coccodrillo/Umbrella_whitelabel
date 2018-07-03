@@ -9,13 +9,12 @@ interface ContentDao {
 
     fun insert(root: Root) {
 
-        val dataLesson = Translate().test(root)
+        val dataLesson = root.convertRootToLesson()
 
         dataLesson.categories.forEach { category ->
             category.associateForeignKey(category)
             modelAdapter<Category>().save(category)
         }
-
         dataLesson.categories.forEach { category ->
             category.subCategories.forEach { subCategory ->
                 subCategory.children.forEach { child ->
