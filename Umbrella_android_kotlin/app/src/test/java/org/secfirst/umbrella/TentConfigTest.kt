@@ -8,9 +8,9 @@ import org.mockito.Mockito
 import org.mockito.junit.MockitoJUnitRunner
 import org.secfirst.umbrella.data.storage.ExtensionFile
 import org.secfirst.umbrella.data.storage.TentConfig
-import org.secfirst.umbrella.data.storage.TentConfig.Companion.HIERARCHY_CHILD
-import org.secfirst.umbrella.data.storage.TentConfig.Companion.HIERARCHY_ELEMENT
-import org.secfirst.umbrella.data.storage.TentConfig.Companion.HIERARCHY_SUB_ELEMENT
+import org.secfirst.umbrella.data.storage.TentConfig.Companion.CHILD_LEVEL
+import org.secfirst.umbrella.data.storage.TentConfig.Companion.ELEMENT_LEVEL
+import org.secfirst.umbrella.data.storage.TentConfig.Companion.SUB_ELEMENT_LEVEL
 import org.secfirst.umbrella.data.storage.TypeFile
 
 
@@ -20,105 +20,106 @@ class TentConfigTest {
     private lateinit var tentConfig: TentConfig
 
     @Test
-    fun categoryValidDelimiter() {
+    fun `should return a valid delimiter for Category`() {
         val delimiter = TentConfig.getDelimiter(TentConfig.getDelimiter(".foreingkey.yml"))
         assertEquals(delimiter, ".foreingkey.yml")
     }
 
     @Test
-    fun segmentValidDelimiter() {
+    fun `should return a valid delimiter for Segment`() {
         val delimiter = TentConfig.getDelimiter(TentConfig.getDelimiter("s_something.yml"))
         assertEquals(delimiter, "s")
     }
 
     @Test
-    fun checklistValidDelimiter() {
+    fun `should return a valid delimiter for Checklist`() {
         val delimiter = TentConfig.getDelimiter(TentConfig.getDelimiter("c_checklist.yml"))
         assertEquals(delimiter, "c")
     }
 
     @Test
-    fun prefixOfCategory() {
-        assertEquals(TypeFile.CATEGORY.value, ".foreingkey")
+    fun `should return a valid prefix Of the Category`() {
+        assertEquals(TypeFile.CATEGORY.value, ".category")
     }
 
     @Test
-    fun prefixOfForm() {
+    fun `should return a valid prefix of the Form`() {
         assertEquals(TypeFile.FORM.value, "f")
     }
 
 
     @Test
-    fun prefixOfChecklist() {
+    fun `should return a valid prefix of the Checklist`() {
         assertEquals(TypeFile.CHECKLIST.value, "c")
     }
 
     @Test
-    fun prefixOfSegment() {
+    fun `should return a valid prefix of the Segment`() {
         assertEquals(TypeFile.SEGMENT.value, "s")
     }
 
     @Test
-    fun ymlExtension() {
+    fun `should return a YML value`() {
         assertEquals(ExtensionFile.YML.value, "yml")
     }
 
 
     @Test
-    fun mdlExtension() {
+    fun `should return a MD value`() {
         assertEquals(ExtensionFile.MD.value, "md")
     }
 
     @Test
-    fun isTentRepository() {
+    fun `Verify if exist Tent repository`() {
         Mockito.`when`(tentConfig.isNotRepositoryPath()).thenReturn(true)
         val value = tentConfig.isNotRepositoryPath()
         assertEquals(true, value)
     }
 
     @Test
-    fun isNotTentRepository() {
+    fun `Verify if not exist Tent repository`() {
         Mockito.`when`(tentConfig.isNotRepositoryPath()).thenReturn(false)
         val value = tentConfig.isNotRepositoryPath()
         assertEquals(false, value)
     }
 
     @Test
-    fun getTentPathOfRepository() {
+    fun `Should be able to return path of the repository`() {
         Mockito.`when`(tentConfig.getPathRepository()).thenReturn("/path/")
         val value = tentConfig.getPathRepository()
         assertEquals("/path/", value)
     }
 
     @Test
-    fun formValidDelimiter() {
+    fun `should return a valid delimiter of the Form`() {
         val delimiter = TentConfig.getDelimiter(TentConfig.getDelimiter("f_form.yml"))
         assertEquals(delimiter, "f")
     }
 
     @Test
-    fun invalidFileName() {
+    fun `should return a invalid delimiter name`() {
         val delimiter = TentConfig.getDelimiter(TentConfig.getDelimiter("something.unknown"))
         assertEquals(delimiter, "something.unknown")
     }
+
     @Test
-    fun nameWithTwoUnderscore(){
+    fun `should return a prefix of a file`() {
         val delimiter = TentConfig.getDelimiter(TentConfig.getDelimiter("f_how_can.unknown"))
         assertEquals(delimiter, "f")
     }
 
     @Test
-    fun hierarchyOfCategory() {
-        assertEquals(HIERARCHY_ELEMENT, 1)
+    fun `should return a level of element`() {
+        assertEquals(ELEMENT_LEVEL, 1)
     }
 
     @Test
-    fun hierarchyOfSubcategory() {
-        assertEquals(HIERARCHY_SUB_ELEMENT, 2)
+    fun `should return a level of sub element`() {
+        assertEquals(SUB_ELEMENT_LEVEL, 2)
     }
 
     @Test
-    fun hierarchyOfSubSubcategory() {
-        assertEquals(HIERARCHY_CHILD, 3)
+    fun `should return a level of child`() {
+        assertEquals(CHILD_LEVEL, 3)
     }
 }

@@ -1,10 +1,10 @@
 package org.secfirst.umbrella.serialize
 
 import org.secfirst.umbrella.data.*
+import org.secfirst.umbrella.data.storage.TentConfig.Companion.CHILD_LEVEL
+import org.secfirst.umbrella.data.storage.TentConfig.Companion.ELEMENT_LEVEL
 import org.secfirst.umbrella.data.storage.TentConfig.Companion.FORM_NAME
-import org.secfirst.umbrella.data.storage.TentConfig.Companion.HIERARCHY_CHILD
-import org.secfirst.umbrella.data.storage.TentConfig.Companion.HIERARCHY_ELEMENT
-import org.secfirst.umbrella.data.storage.TentConfig.Companion.HIERARCHY_SUB_ELEMENT
+import org.secfirst.umbrella.data.storage.TentConfig.Companion.SUB_ELEMENT_LEVEL
 import org.secfirst.umbrella.data.storage.TentConfig.Companion.getDelimiter
 import org.secfirst.umbrella.data.storage.TentStorageRepo
 import org.secfirst.umbrella.data.storage.TypeFile
@@ -49,7 +49,7 @@ class ElementLoader @Inject constructor(private val tentStorageRepo: TentStorage
 
     private fun addProperties(pwd: String, file: File) {
         when (getLevelOfPath(pwd)) {
-            HIERARCHY_ELEMENT -> {
+            ELEMENT_LEVEL -> {
                 root.elements.forEach {
                     if (it.path == pwd) {
                         when (getDelimiter(file.nameWithoutExtension)) {
@@ -60,7 +60,7 @@ class ElementLoader @Inject constructor(private val tentStorageRepo: TentStorage
                 }
             }
 
-            HIERARCHY_SUB_ELEMENT -> {
+            SUB_ELEMENT_LEVEL -> {
                 root.elements.walkSubElement { subElement ->
                     if (subElement.path == pwd) {
                         when (getDelimiter(file.nameWithoutExtension)) {
@@ -71,7 +71,7 @@ class ElementLoader @Inject constructor(private val tentStorageRepo: TentStorage
                 }
             }
 
-            HIERARCHY_CHILD -> {
+            CHILD_LEVEL -> {
                 root.elements.walkChild { child ->
                     if (child.path == pwd) {
                         when (getDelimiter(file.nameWithoutExtension)) {
