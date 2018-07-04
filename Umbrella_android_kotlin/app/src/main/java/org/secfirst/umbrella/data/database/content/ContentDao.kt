@@ -4,7 +4,6 @@ import com.raizlabs.android.dbflow.kotlinextensions.modelAdapter
 import com.raizlabs.android.dbflow.sql.language.SQLite
 import org.secfirst.umbrella.data.*
 
-
 interface ContentDao {
 
     fun insert(root: Root) {
@@ -15,14 +14,12 @@ interface ContentDao {
             category.associateForeignKey(category)
             modelAdapter<Category>().save(category)
         }
-        dataLesson.categories.forEach { category ->
-            category.subcategories.forEach { subCategory ->
-                subCategory.children.forEach { child ->
-                    modelAdapter<Child>().save(child)
-                    insertChecklistContent(child.checklist)
-                }
-            }
+
+        dataLesson.categories.walkChild { child ->
+            modelAdapter<Child>().save(child)
+            insertChecklistContent(child.checklist)
         }
+
         insertForms(root.forms)
     }
 

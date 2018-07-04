@@ -144,7 +144,7 @@ data class Child(
         @Column
         var rootDir: String = "",
         @Column
-        var path: String = "") : BaseModel(){
+        var path: String = "") : BaseModel() {
 
 
     @OneToMany(methods = [(OneToMany.Method.ALL)], variableName = "markdowns")
@@ -170,4 +170,11 @@ data class Child(
     }
 }
 
+inline fun MutableList<Category>.walkChild(action: (Child) -> Unit) {
+    this.forEach { category ->
+        category.subcategories.forEach { subcategory ->
+            subcategory.children.forEach(action)
+        }
+    }
+}
 

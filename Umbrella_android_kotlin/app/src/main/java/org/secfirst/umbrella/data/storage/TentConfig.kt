@@ -8,9 +8,9 @@ class TentConfig(private val repoPath: String) {
         const val BRANCH_NAME: String = "refs/heads/master"
         const val URI_REPOSITORY = "https://github.com/douglasalipio/umbrella-content.git"
         const val FORM_NAME = "forms"
-        const val HIERARCHY_ELEMENT = 1
-        const val HIERARCHY_SUB_ELEMENT = 2
-        const val HIERARCHY_CHILD = 3
+        const val ELEMENT_LEVEL = 1
+        const val SUB_ELEMENT_LEVEL = 2
+        const val CHILD_LEVEL = 3
         fun getDelimiter(fileName: String): String {
             return if (fileName == TypeFile.CATEGORY.value)
                 fileName

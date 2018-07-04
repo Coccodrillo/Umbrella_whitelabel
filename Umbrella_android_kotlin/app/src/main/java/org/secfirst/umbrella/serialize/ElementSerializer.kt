@@ -3,8 +3,8 @@ package org.secfirst.umbrella.serialize
 import android.util.Log
 import org.secfirst.umbrella.data.Element
 import org.secfirst.umbrella.data.Root
-import org.secfirst.umbrella.data.storage.TentConfig.Companion.HIERARCHY_ELEMENT
-import org.secfirst.umbrella.data.storage.TentConfig.Companion.HIERARCHY_SUB_ELEMENT
+import org.secfirst.umbrella.data.storage.TentConfig.Companion.ELEMENT_LEVEL
+import org.secfirst.umbrella.data.storage.TentConfig.Companion.SUB_ELEMENT_LEVEL
 import org.secfirst.umbrella.data.storage.TentStorageRepo
 import org.secfirst.umbrella.serialize.PathUtils.Companion.getLastDirectory
 import org.secfirst.umbrella.serialize.PathUtils.Companion.getLevelOfPath
@@ -40,8 +40,8 @@ class ElementSerializer @Inject constructor(private val tentStorageRepo: TentSto
         element.path = pwd
         element.rootDir = getLastDirectory(pwd)
         when (getLevelOfPath(element.path)) {
-            HIERARCHY_ELEMENT -> root.elements.add(element)
-            HIERARCHY_SUB_ELEMENT -> root.elements.last().children.add(element)
+            ELEMENT_LEVEL -> root.elements.add(element)
+            SUB_ELEMENT_LEVEL -> root.elements.last().children.add(element)
             else -> root.elements.last().children.last().children.add(element)
         }
     }

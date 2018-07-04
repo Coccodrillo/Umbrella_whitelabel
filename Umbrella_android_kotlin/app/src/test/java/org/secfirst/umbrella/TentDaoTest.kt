@@ -20,7 +20,7 @@ class TentDaoTest {
     private lateinit var tentConfig: TentConfig
 
 
-    private fun randomicLisOfFiles(): List<File> {
+    private fun `randomic list of files`(): List<File> {
         val file1 = File("/travel/kidnapping/beginner/close.png")
         val file2 = File("/travel/.foreingkey.yml")
         val file3 = File("/travel/kidnapping/beginner/.foreingkey.yml")
@@ -50,7 +50,7 @@ class TentDaoTest {
         return files
     }
 
-    private fun validFileOfElement(): List<File> {
+    private fun `valid list of element`(): List<File> {
         val files = arrayListOf<File>()
         val file1 = File("/about/.foreingkey.yml")
         val file2 = File("/travel/.foreingkey.yml")
@@ -68,7 +68,7 @@ class TentDaoTest {
         return files
     }
 
-    private fun validFilesOfSubElement(): List<File> {
+    private fun `valid list of files`(): List<File> {
 
         val file1 = File("/travel/kidnapping/intermediate/s_segments.yml")
         val file2 = File("/travel/kidnapping/beginner/c_checklist.yml")
@@ -83,18 +83,18 @@ class TentDaoTest {
     }
 
     @Test
-    fun filterSubElements() {
-        Mockito.`when`(tentDao.filterBySubElement(tentConfig)).thenReturn(validFilesOfSubElement())
+    fun `should return a valid list of sub elements`() {
+        Mockito.`when`(tentDao.filterBySubElement(tentConfig)).thenReturn(`valid list of files`())
         val files = tentDao.filterBySubElement(tentConfig)
-        val numberOfFileFiltered = randomicLisOfFiles().size - validFilesOfSubElement().size
-        Assert.assertEquals(files.size, randomicLisOfFiles().size - numberOfFileFiltered)
+        val numberOfFileFiltered = `randomic list of files`().size - `valid list of files`().size
+        Assert.assertEquals(files.size, `randomic list of files`().size - numberOfFileFiltered)
     }
 
     @Test
-    fun filterElements() {
-        Mockito.`when`(tentDao.filterByElement(tentConfig)).thenReturn(validFileOfElement())
+    fun `should return a valid list of elements`() {
+        Mockito.`when`(tentDao.filterByElement(tentConfig)).thenReturn(`valid list of element`())
         val files = tentDao.filterByElement(tentConfig)
-        val numberOfFileFiltered = randomicLisOfFiles().size - validFileOfElement().size
+        val numberOfFileFiltered = `randomic list of files`().size - `valid list of element`().size
         Assert.assertEquals(files.size, numberOfFileFiltered)
     }
 }
