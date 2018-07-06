@@ -1,5 +1,6 @@
 package org.secfirst.umbrella.data
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.raizlabs.android.dbflow.annotation.*
 import com.raizlabs.android.dbflow.sql.language.SQLite
@@ -141,6 +142,8 @@ class Content(
 data class Form(
         @PrimaryKey(autoincrement = true)
         var id: Long = 0,
+        @Column
+        var title: String = "",
         var screens: MutableList<Screen> = arrayListOf()) : BaseModel() {
 
     @OneToMany(methods = [(OneToMany.Method.ALL)], variableName = "screens")
@@ -160,7 +163,8 @@ data class Screen(
         @PrimaryKey(autoincrement = true)
         var id: Long = 0,
         @Column
-        var name: String = "",
+        var title: String = "",
+        @JsonIgnore
         @ForeignKey(onUpdate = ForeignKeyAction.CASCADE,
                 onDelete = ForeignKeyAction.CASCADE,
                 stubbedRelationship = true)

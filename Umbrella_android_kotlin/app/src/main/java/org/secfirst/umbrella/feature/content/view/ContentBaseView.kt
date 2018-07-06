@@ -6,4 +6,5 @@ import org.secfirst.umbrella.feature.base.view.BaseView
 interface ContentBaseView : BaseView {
 
     fun downloadContent(lesson: Lesson)
+    fun onErrorContentNotFound()
 }

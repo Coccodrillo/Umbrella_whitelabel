@@ -25,6 +25,9 @@ import javax.inject.Inject
 
 
 class ContentFragment : BaseFragment(), ContentBaseView {
+    override fun onErrorContentNotFound() {
+        Toast.makeText(context, "Content not found", Toast.LENGTH_LONG).show()
+    }
 
     @Inject
     internal lateinit var presenter: ContentBasePresenter<ContentBaseView, ContentBaseInteractor>

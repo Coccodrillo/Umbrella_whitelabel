@@ -1,4 +1,4 @@
-package org.secfirst.umbrella
+package org.secfirst.umbrella.storage
 
 import junit.framework.Assert
 import org.junit.Test
