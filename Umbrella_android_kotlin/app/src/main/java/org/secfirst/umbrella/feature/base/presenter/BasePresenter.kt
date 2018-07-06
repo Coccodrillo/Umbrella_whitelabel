@@ -10,5 +10,4 @@ interface BasePresenter<V : BaseView, I : BaseInteractor> {
     fun onDetach()
 
     fun getView(): V?
-
 }

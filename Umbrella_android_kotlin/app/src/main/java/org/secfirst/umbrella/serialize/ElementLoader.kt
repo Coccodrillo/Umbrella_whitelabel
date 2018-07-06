@@ -3,12 +3,10 @@ package org.secfirst.umbrella.serialize
 import org.secfirst.umbrella.data.*
 import org.secfirst.umbrella.data.storage.TentConfig.Companion.CHILD_LEVEL
 import org.secfirst.umbrella.data.storage.TentConfig.Companion.ELEMENT_LEVEL
-import org.secfirst.umbrella.data.storage.TentConfig.Companion.FORM_NAME
 import org.secfirst.umbrella.data.storage.TentConfig.Companion.SUB_ELEMENT_LEVEL
 import org.secfirst.umbrella.data.storage.TentConfig.Companion.getDelimiter
 import org.secfirst.umbrella.data.storage.TentStorageRepo
 import org.secfirst.umbrella.data.storage.TypeFile
-import org.secfirst.umbrella.serialize.PathUtils.Companion.getLastDirectory
 import org.secfirst.umbrella.serialize.PathUtils.Companion.getLevelOfPath
 import org.secfirst.umbrella.serialize.PathUtils.Companion.getWorkDirectory
 import java.io.File
@@ -29,21 +27,8 @@ class ElementLoader @Inject constructor(private val tentStorageRepo: TentStorage
         files.forEach { currentFile ->
             val absolutePath = currentFile.path.substringAfterLast("en/", "")
             val pwd = getWorkDirectory(absolutePath)
-
-            if (getLastDirectory(pwd) == FORM_NAME)
-                addForms(currentFile)
-            else addProperties(pwd, currentFile)
-        }
-        ignoreFormAsElement()
-    }
-
-    private fun ignoreFormAsElement() {
-        val elementsIterator = root.elements.iterator()
-        for (form in elementsIterator) {
-            if (form.rootDir == FORM_NAME) {
-                elementsIterator.remove()
-                continue
-            }
+            addProperties(pwd, currentFile)
+            addForms(currentFile)
         }
     }
 
@@ -85,6 +70,7 @@ class ElementLoader @Inject constructor(private val tentStorageRepo: TentStorage
     }
 
     private fun addForms(file: File) {
-        root.forms.add(parseYmlFile(file, Form::class))
+        if (getDelimiter(file.nameWithoutExtension) == TypeFile.FORM.value)
+            root.forms.add(parseYmlFile(file, Form::class))
     }
 }

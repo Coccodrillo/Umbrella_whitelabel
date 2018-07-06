@@ -6,7 +6,7 @@ class TentConfig(private val repoPath: String) {
 
     companion object {
         const val BRANCH_NAME: String = "refs/heads/master"
-        const val URI_REPOSITORY = "https://github.com/douglasalipio/umbrella-content.git"
+        const val URI_REPOSITORY = "https://github.com/douglasalipio/umbrella-content"
         const val FORM_NAME = "forms"
         const val ELEMENT_LEVEL = 1
         const val SUB_ELEMENT_LEVEL = 2
@@ -19,8 +19,8 @@ class TentConfig(private val repoPath: String) {
         }
     }
 
-    fun isRepositoryPath() = File(repoPath).exists()
-    fun isNotRepositoryPath() = !File(repoPath).exists()
+    fun isRepository() = File(repoPath).exists()
+    fun isNotRepository() = !File(repoPath).exists()
     fun getPathRepository(): String = repoPath
 
 }

@@ -1,4 +1,4 @@
-package org.secfirst.umbrella
+package org.secfirst.umbrella.storage
 
 import junit.framework.Assert.assertEquals
 import org.junit.Test
@@ -71,15 +71,15 @@ class TentConfigTest {
 
     @Test
     fun `Verify if exist Tent repository`() {
-        Mockito.`when`(tentConfig.isNotRepositoryPath()).thenReturn(true)
-        val value = tentConfig.isNotRepositoryPath()
+        Mockito.`when`(tentConfig.isNotRepository()).thenReturn(true)
+        val value = tentConfig.isNotRepository()
         assertEquals(true, value)
     }
 
     @Test
     fun `Verify if not exist Tent repository`() {
-        Mockito.`when`(tentConfig.isNotRepositoryPath()).thenReturn(false)
-        val value = tentConfig.isNotRepositoryPath()
+        Mockito.`when`(tentConfig.isNotRepository()).thenReturn(false)
+        val value = tentConfig.isNotRepository()
         assertEquals(false, value)
     }
 
