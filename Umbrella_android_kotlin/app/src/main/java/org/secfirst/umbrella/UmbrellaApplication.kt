@@ -2,6 +2,7 @@ package org.secfirst.umbrella
 
 import android.app.Activity
 import android.app.Application
+import com.facebook.stetho.Stetho
 import com.raizlabs.android.dbflow.config.DatabaseConfig
 import com.raizlabs.android.dbflow.config.FlowConfig
 import com.raizlabs.android.dbflow.config.FlowLog
@@ -29,6 +30,7 @@ class UmbrellaApplication : Application(), HasActivityInjector {
         initDaggerComponent()
         initDatabase()
         initTentRepository()
+        initStetho()
 
     }
 
@@ -53,6 +55,10 @@ class UmbrellaApplication : Application(), HasActivityInjector {
 
         FlowManager.init(dbConfig)
         FlowLog.setMinimumLoggingLevel(FlowLog.Level.V)
+    }
+
+    private fun initStetho(){
+        Stetho.initializeWithDefaults(this);
     }
 
     private fun initTentRepository() {

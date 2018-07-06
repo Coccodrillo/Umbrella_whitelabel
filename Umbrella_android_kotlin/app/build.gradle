@@ -103,10 +103,13 @@ dependencies {
     implementation "com.github.Raizlabs.DBFlow:dbflow-kotlinextensions:${dbflow_version}"
     implementation "com.github.Raizlabs.DBFlow:dbflow-sqlcipher:${dbflow_version}"
     implementation "net.zetetic:android-database-sqlcipher:${sqlcipher_version}@aar"
-
     //end - database
 
     //JGit
     implementation "commons-io:commons-io:$commonsIo"
     implementation "org.eclipse.jgit:org.eclipse.jgit:$jgit"
+
+    //Debug lib
+    implementation "com.facebook.stetho:stetho:$stetho"
+
 }
