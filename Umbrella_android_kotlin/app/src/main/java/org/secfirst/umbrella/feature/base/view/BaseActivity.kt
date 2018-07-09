@@ -3,9 +3,9 @@ package org.secfirst.umbrella.feature.base.view
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import dagger.android.AndroidInjection
+import org.secfirst.umbrella.util.removeFragment
 
 abstract class BaseActivity : AppCompatActivity(), BaseView, BaseFragment.CallBack {
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -13,13 +13,17 @@ abstract class BaseActivity : AppCompatActivity(), BaseView, BaseFragment.CallBa
     }
 
     override fun hideProgress() {
-        //stuff
     }
 
     override fun showProgress() {
-        //stuff
+    }
+
+    override fun onFragmentAttached() {
+    }
+
+    override fun onFragmentDetached(tag: String) {
+        supportFragmentManager.removeFragment(tag = tag)
     }
 
     private fun performDI() = AndroidInjection.inject(this)
-
 }

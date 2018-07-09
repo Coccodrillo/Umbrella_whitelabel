@@ -10,6 +10,7 @@ import org.secfirst.umbrella.R
 import org.secfirst.umbrella.feature.base.view.BaseActivity
 import org.secfirst.umbrella.feature.content.view.ContentFragment
 import org.secfirst.umbrella.feature.form.view.FormFragment
+import org.secfirst.umbrella.util.addOrReplaceFragment
 import javax.inject.Inject
 
 class MainActivity : BaseActivity(), HasSupportFragmentInjector {
@@ -19,31 +20,23 @@ class MainActivity : BaseActivity(), HasSupportFragmentInjector {
 
     override fun supportFragmentInjector() = fragmentDispatchingAndroidInjector
 
-    override fun onFragmentAttached() {
+    private val navigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
 
-    }
-
-    override fun onFragmentDetached(tag: String) {
-
-    }
-
-    override fun onResume() {
-        super.onResume()
-    }
-
-    private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_home -> {
                 message.setText(R.string.title_home)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_dashboard -> {
-                openFragment(ContentFragment.newInstance())
+                supportFragmentManager.addOrReplaceFragment(R.id.main_container,
+                        ContentFragment.newInstance(), ContentFragment::class.java.name)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_notifications -> {
                 message.setText(R.string.title_notifications)
-                openFragment(FormFragment.newInstance())
+                supportFragmentManager.addOrReplaceFragment(R.id.main_container,
+                        FormFragment.newInstance(), FormFragment::class.java.name)
+
                 return@OnNavigationItemSelectedListener true
             }
         }
@@ -53,14 +46,7 @@ class MainActivity : BaseActivity(), HasSupportFragmentInjector {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
-    }
-
-    private fun openFragment(fragment: Fragment) {
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.main_container, fragment)
-        transaction.addToBackStack(null)
-        transaction.commit()
+        navigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener)
     }
 }
 
