@@ -2,11 +2,12 @@ package org.secfirst.umbrella.data.database.content
 
 import com.raizlabs.android.dbflow.kotlinextensions.modelAdapter
 import com.raizlabs.android.dbflow.sql.language.SQLite
+import io.reactivex.Single
 import org.secfirst.umbrella.data.*
 
 interface ContentDao {
 
-    fun insert(root: Root) {
+    fun insertAllLessons(root: Root) {
 
         val dataLesson = root.convertRootToLesson()
 
@@ -46,5 +47,7 @@ interface ContentDao {
         }
     }
 
-    fun getAllContent() = Lesson(SQLite.select().from(Category::class.java).queryList())
+    fun getForms(): Single<List<Form>> = Single.just(SQLite.select().from(Form::class.java).queryList())
+
+    fun getContents() = Lesson(SQLite.select().from(Category::class.java).queryList())
 }

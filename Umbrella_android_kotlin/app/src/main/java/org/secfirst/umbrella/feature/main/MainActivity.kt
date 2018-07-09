@@ -9,6 +9,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import org.secfirst.umbrella.R
 import org.secfirst.umbrella.feature.base.view.BaseActivity
 import org.secfirst.umbrella.feature.content.view.ContentFragment
+import org.secfirst.umbrella.feature.form.view.FormFragment
 import javax.inject.Inject
 
 class MainActivity : BaseActivity(), HasSupportFragmentInjector {
@@ -42,6 +43,7 @@ class MainActivity : BaseActivity(), HasSupportFragmentInjector {
             }
             R.id.navigation_notifications -> {
                 message.setText(R.string.title_notifications)
+                openFragment(FormFragment.newInstance())
                 return@OnNavigationItemSelectedListener true
             }
         }

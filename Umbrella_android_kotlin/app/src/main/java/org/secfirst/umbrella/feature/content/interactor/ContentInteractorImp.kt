@@ -23,5 +23,5 @@ class ContentInteractorImp @Inject constructor(apiHelper: ApiHelper,
 
     override fun persist(root: Root) = contentRepo.insertAllLessons(root)
 
-    override fun getAllLesson() = contentRepo.loadAllLesson()
+    override fun getAllLesson() = contentRepo.loadLessons()
 }
