@@ -1,6 +1,8 @@
 package org.secfirst.umbrella.feature.form.presenter
 
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import org.secfirst.umbrella.feature.base.presenter.BasePresenterImp
 import org.secfirst.umbrella.feature.form.interactor.FormBaseInteractor
 import org.secfirst.umbrella.feature.form.view.FormBaseView
@@ -20,7 +22,8 @@ class FormPresenterImp<V : FormBaseView, I : FormBaseInteractor>
     override fun loadForms() {
         interactor?.let {
             it.fetchForm()
-                    .compose(schedulerProvider.ioToMainSingleScheduler())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
                     .trackException()
                     .map { forms -> getView()?.showForms(forms) }
                     .subscribe()

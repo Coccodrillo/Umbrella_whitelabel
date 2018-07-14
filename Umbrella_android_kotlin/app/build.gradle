@@ -24,7 +24,7 @@ android {
 
     defaultConfig {
         applicationId "org.secfirst.umbrella"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
@@ -113,4 +113,9 @@ dependencies {
     //Debug lib
     implementation "com.facebook.stetho:stetho:$stetho"
 
+    implementation 'com.bluelinelabs:conductor:2.1.4'
+    implementation 'com.bluelinelabs:conductor-rxlifecycle2:2.1.4'
+
+    implementation 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 }
