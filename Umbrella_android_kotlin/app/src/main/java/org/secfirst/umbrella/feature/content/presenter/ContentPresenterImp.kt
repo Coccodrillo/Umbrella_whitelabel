@@ -2,7 +2,9 @@ package org.secfirst.umbrella.feature.content.presenter
 
 import android.util.Log
 import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import org.secfirst.umbrella.data.Root
 import org.secfirst.umbrella.data.database.content.Lesson
 import org.secfirst.umbrella.feature.base.presenter.BasePresenterImp
@@ -31,9 +33,16 @@ class ContentPresenterImp<V : ContentBaseView, I : ContentBaseInteractor>
     override fun manageContent() {
         interactor?.let { contentInteractor ->
             Single.fromCallable { validateFetch(contentInteractor.fetchData()) }
-                    .compose(schedulerProvider.ioToMainSingleScheduler())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
                     .trackException()
-                    .doAfterSuccess { validateData().trackException().subscribe() }
+                    .doAfterSuccess {
+                        validateData()
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .trackException()
+                                .subscribe()
+                    }
                     .subscribe()
         }
     }

@@ -1,4 +1,6 @@
+import android.content.Context
 import android.util.Log
+import org.secfirst.umbrella.UmbrellaApplication
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
@@ -39,3 +41,6 @@ class Extensions {
         }
     }
 }
+
+val Context.myApp: UmbrellaApplication
+    get() = applicationContext as UmbrellaApplication

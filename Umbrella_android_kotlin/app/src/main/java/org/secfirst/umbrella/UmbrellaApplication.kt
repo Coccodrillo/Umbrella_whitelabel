@@ -21,12 +21,16 @@ class UmbrellaApplication : Application(), HasActivityInjector {
     @Inject
     internal lateinit var activityDispatchingAndroidInjector: DispatchingAndroidInjector<Activity>
 
-
     override fun activityInjector() = activityDispatchingAndroidInjector
+
+    companion object {
+        lateinit var instance: UmbrellaApplication
+            private set
+    }
 
     override fun onCreate() {
         super.onCreate()
-
+        instance = this
         initDaggerComponent()
         initDatabase()
         initTentRepository()
@@ -57,7 +61,7 @@ class UmbrellaApplication : Application(), HasActivityInjector {
         FlowLog.setMinimumLoggingLevel(FlowLog.Level.V)
     }
 
-    private fun initStetho(){
+    private fun initStetho() {
         Stetho.initializeWithDefaults(this);
     }
 

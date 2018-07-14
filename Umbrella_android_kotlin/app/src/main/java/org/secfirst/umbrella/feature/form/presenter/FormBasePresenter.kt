@@ -5,6 +5,5 @@ import org.secfirst.umbrella.feature.form.interactor.FormBaseInteractor
 import org.secfirst.umbrella.feature.form.view.FormBaseView
 
 interface FormBasePresenter<V : FormBaseView, I : FormBaseInteractor> : BasePresenter<V, I> {
-
     fun loadForms()
 }
