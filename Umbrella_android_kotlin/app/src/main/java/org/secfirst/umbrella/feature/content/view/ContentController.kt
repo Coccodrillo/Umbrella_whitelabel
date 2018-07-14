@@ -22,7 +22,7 @@ import org.secfirst.umbrella.feature.content.presenter.ContentBasePresenter
 import javax.inject.Inject
 
 
-class ContentFragment : BaseController(), ContentBaseView {
+class ContentController : BaseController(), ContentBaseView {
 
     @Inject
     internal lateinit var presenter: ContentBasePresenter<ContentBaseView, ContentBaseInteractor>
@@ -48,7 +48,7 @@ class ContentFragment : BaseController(), ContentBaseView {
     }
 
     companion object {
-        fun newInstance(): ContentFragment = ContentFragment()
+        fun newInstance(): ContentController = ContentController()
     }
 
     override fun downloadContent(lesson: Lesson) {

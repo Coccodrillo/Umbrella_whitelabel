@@ -1,6 +1,8 @@
 <resources>
-    <string name="app_name">Umbrella Mobile</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="app_name">Umbrella</string>
+    <string name="menu_title_feed">Feed</string>
+    <string name="menu_title_forms">Forms</string>
+    <string name="menu_title_checklists">Checklists</string>
+    <string name="menu_title_lessons">Lessons</string>
+    <string name="menu_title_account">Account</string>
 </resources>

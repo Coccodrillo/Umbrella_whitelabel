@@ -10,9 +10,9 @@ import com.bluelinelabs.conductor.RouterTransaction
 import dagger.android.AndroidInjection
 import org.secfirst.umbrella.R
 import org.secfirst.umbrella.feature.base.view.BaseView
-import org.secfirst.umbrella.feature.content.view.ContentFragment
 import org.secfirst.umbrella.feature.form.view.FormController
 import org.secfirst.umbrella.feature.main.SampleController
+
 
 class MainActivity : AppCompatActivity(), BaseView {
 
@@ -39,17 +39,24 @@ class MainActivity : AppCompatActivity(), BaseView {
     private val navigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
 
         when (item.itemId) {
-            R.id.navigation_home -> {
+            R.id.navigation_feeds -> {
                 router.pushController(RouterTransaction.with(SampleController()))
                 return@OnNavigationItemSelectedListener true
             }
-            R.id.navigation_dashboard -> {
-                //openFragment(ContentFragment.newInstance())
-                router.pushController(RouterTransaction.with(ContentFragment()))
+            R.id.navigation_forms -> {
+                router.pushController(RouterTransaction.with(FormController()))
                 return@OnNavigationItemSelectedListener true
             }
-            R.id.navigation_notifications -> {
+            R.id.navigation_checklists -> {
                 router.pushController(RouterTransaction.with(FormController()))
+                return@OnNavigationItemSelectedListener true
+            }
+            R.id.navigation_lessons -> {
+                //router.pushController(RouterTransaction.with(ContentController()))
+                return@OnNavigationItemSelectedListener true
+            }
+            R.id.navigation_account -> {
+                //router.pushController(RouterTransaction.with(FormController()))
                 return@OnNavigationItemSelectedListener true
             }
         }
