@@ -16,7 +16,7 @@ import org.secfirst.umbrella.feature.content.interactor.ContentInteractorImp
 import org.secfirst.umbrella.feature.content.presenter.ContentBasePresenter
 import org.secfirst.umbrella.feature.content.presenter.ContentPresenterImp
 import org.secfirst.umbrella.feature.content.view.ContentBaseView
-import org.secfirst.umbrella.feature.content.view.ContentFragment
+import org.secfirst.umbrella.feature.content.view.ContentController
 import javax.inject.Singleton
 
 
@@ -51,5 +51,5 @@ interface ContentComponent {
         fun build(): ContentComponent
     }
 
-    fun inject(contentController: ContentFragment)
+    fun inject(contentController: ContentController)
 }
