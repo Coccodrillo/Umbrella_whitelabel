@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="org.secfirst.umbrella.feature.main.SampleController">
+    tools:context="org.secfirst.umbrella.feature.feed.FeedController">
 
     <com.bluelinelabs.conductor.ChangeHandlerFrameLayout
         android:id="@+id/baseContainer"

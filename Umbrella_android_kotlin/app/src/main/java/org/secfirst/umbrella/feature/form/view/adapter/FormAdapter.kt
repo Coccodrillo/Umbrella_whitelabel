@@ -5,14 +5,14 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import kotlinx.android.synthetic.main.form_item.view.*
+import kotlinx.android.synthetic.main.form_item_view.view.*
 import org.secfirst.umbrella.R
 import org.secfirst.umbrella.data.Form
 
 class FormAdapter(private val forms: List<Form>, private val context: Context) : RecyclerView.Adapter<ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(context).inflate(R.layout.form_item, parent, false)
+        val view = LayoutInflater.from(context).inflate(R.layout.form_item_view, parent, false)
 
         return ViewHolder(view)
     }
