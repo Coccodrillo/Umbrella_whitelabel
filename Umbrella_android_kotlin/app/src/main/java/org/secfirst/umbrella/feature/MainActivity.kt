@@ -9,9 +9,12 @@ import com.bluelinelabs.conductor.Router
 import com.bluelinelabs.conductor.RouterTransaction
 import dagger.android.AndroidInjection
 import org.secfirst.umbrella.R
+import org.secfirst.umbrella.feature.account.AccountController
 import org.secfirst.umbrella.feature.base.view.BaseView
+import org.secfirst.umbrella.feature.content.view.ContentController
+import org.secfirst.umbrella.feature.feed.FeedController
 import org.secfirst.umbrella.feature.form.view.FormController
-import org.secfirst.umbrella.feature.main.SampleController
+import org.secfirst.umbrella.feature.lesson.LessonController
 
 
 class MainActivity : AppCompatActivity(), BaseView {
@@ -21,7 +24,7 @@ class MainActivity : AppCompatActivity(), BaseView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_base)
+        setContentView(R.layout.main_view)
         performDI()
         initRoute(savedInstanceState)
     }
@@ -32,7 +35,7 @@ class MainActivity : AppCompatActivity(), BaseView {
         navigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener)
         router = Conductor.attachRouter(this, container, savedInstanceState)
         if (!router.hasRootController()) {
-            router.setRoot(RouterTransaction.with(SampleController()))
+            router.setRoot(RouterTransaction.with(FeedController()))
         }
     }
 
@@ -40,7 +43,7 @@ class MainActivity : AppCompatActivity(), BaseView {
 
         when (item.itemId) {
             R.id.navigation_feeds -> {
-                router.pushController(RouterTransaction.with(SampleController()))
+                router.pushController(RouterTransaction.with(FeedController()))
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_forms -> {
@@ -48,15 +51,15 @@ class MainActivity : AppCompatActivity(), BaseView {
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_checklists -> {
-                router.pushController(RouterTransaction.with(FormController()))
+                router.pushController(RouterTransaction.with(ContentController()))
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_lessons -> {
-                //router.pushController(RouterTransaction.with(ContentController()))
+                router.pushController(RouterTransaction.with(LessonController()))
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_account -> {
-                //router.pushController(RouterTransaction.with(FormController()))
+                router.pushController(RouterTransaction.with(AccountController()))
                 return@OnNavigationItemSelectedListener true
             }
         }

@@ -32,7 +32,7 @@ class TentDaoTest {
         val file9 = File("/email/how_to_learn.md")
         val file10 = File("/about/.foreingkey.yml")
         val file11 = File("/something/hello.xml")
-        val file12 = File("/form/f_first_form.yml")
+        val file12 = File("/form_view/f_first_form.yml")
 
         val files = arrayListOf<File>()
         files.add(file1)
@@ -72,7 +72,7 @@ class TentDaoTest {
 
         val file1 = File("/travel/kidnapping/intermediate/s_segments.yml")
         val file2 = File("/travel/kidnapping/beginner/c_checklist.yml")
-        val file3 = File("/form/f_first_form.yml")
+        val file3 = File("/form_view/f_first_form.yml")
 
         val files = arrayListOf<File>()
         files.add(file1)

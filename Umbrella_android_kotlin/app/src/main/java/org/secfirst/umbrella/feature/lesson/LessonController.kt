@@ -1,4 +1,4 @@
-package org.secfirst.umbrella.feature.main
+package org.secfirst.umbrella.feature.lesson
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,13 +6,8 @@ import android.view.ViewGroup
 import com.bluelinelabs.conductor.Controller
 import org.secfirst.umbrella.R
 
-
-class SampleController : Controller() {
-
-
+class LessonController() : Controller() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
-        val view = inflater.inflate(R.layout.activity_main, container, false)
-        return view
+        return inflater.inflate(R.layout.lesson_view, container, false)
     }
 }
-

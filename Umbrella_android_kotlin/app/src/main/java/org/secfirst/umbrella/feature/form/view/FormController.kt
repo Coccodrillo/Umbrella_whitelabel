@@ -6,7 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import kotlinx.android.synthetic.main.form.*
+import kotlinx.android.synthetic.main.form_view.*
 import org.secfirst.umbrella.R
 import org.secfirst.umbrella.UmbrellaApplication
 import org.secfirst.umbrella.data.Form
@@ -35,7 +35,7 @@ class FormController : BaseController(), FormBaseView {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
-        val view = inflater.inflate(R.layout.form, container, false)
+        val view = inflater.inflate(R.layout.form_view, container, false)
         presenter.onAttach(this)
         presenter.loadForms()
 
