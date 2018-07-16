@@ -5,4 +5,7 @@
     <string name="menu_title_checklists">Checklists</string>
     <string name="menu_title_lessons">Lessons</string>
     <string name="menu_title_account">Account</string>
+    <string name="message_title_active_list_form">Active</string>
+    <string name="message_title_all_list_form">All</string>
+    <string name="message_body_form_new">NEW</string>
 </resources>
