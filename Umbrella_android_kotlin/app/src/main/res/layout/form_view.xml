@@ -1,40 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#e5e5e5"
     android:orientation="vertical">
 
 
     <TextView
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Active"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp" />
+        android:layout_marginBottom="4dp"
+        android:padding="5dp"
+        android:layout_marginLeft="5dp"
+        android:text="@string/message_title_all_list_form"
+        app:layout_constraintBottom_toTopOf="@+id/allFormRecycleView_"
+        app:layout_constraintStart_toStartOf="@+id/allFormRecycleView_"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="5dp" />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/activeFormRecycleView"
-        android:layout_width="match_parent"
-        android:layout_height="199dp"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="23dp" />
+        android:id="@+id/allFormRecycleView_"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
 
     <TextView
+        android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="All"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="222dp" />
+        android:layout_marginBottom="270dp"
+        android:padding="5dp"
+        android:layout_marginLeft="5dp"
+        android:text="@string/message_title_active_list_form"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/allFormRecycleView_"
+        app:layout_constraintTop_toBottomOf="@+id/allFormRecycleView_"
+        android:layout_marginStart="5dp" />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/formRecycleView"
-        android:layout_width="match_parent"
+        android:id="@+id/ActiveFormRecycleView"
+        android:layout_width="0dp"
         android:layout_height="242dp"
         android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_editor_absoluteX="0dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
