@@ -9,6 +9,7 @@ import org.secfirst.umbrella.data.database.content.Category
 import org.secfirst.umbrella.data.database.content.Child
 import org.secfirst.umbrella.data.database.content.Lesson
 import org.secfirst.umbrella.data.database.content.Subcategory
+import java.io.Serializable
 
 
 class Root(val elements: MutableList<Element> = arrayListOf(), val forms: MutableList<Form> = arrayListOf()) {
@@ -144,7 +145,7 @@ data class Form(
         var id: Long = 0,
         @Column
         var title: String = "",
-        var screens: MutableList<Screen> = arrayListOf()) : BaseModel() {
+        var screens: MutableList<Screen> = arrayListOf()) : BaseModel(), Serializable{
 
     @OneToMany(methods = [(OneToMany.Method.ALL)], variableName = "screens")
     fun oneToManyScreens(): MutableList<Screen> {
@@ -159,7 +160,7 @@ data class Form(
 }
 
 @Table(database = AppDatabase::class)
-data class Screen(
+data class Screen (
         @PrimaryKey(autoincrement = true)
         var id: Long = 0,
         @Column
@@ -170,7 +171,7 @@ data class Screen(
                 stubbedRelationship = true)
         @ForeignKeyReference(foreignKeyColumnName = "id", columnName = "form_id")
         var form: Form? = null,
-        var items: MutableList<Item> = arrayListOf()) : BaseModel() {
+        var items: MutableList<Item> = arrayListOf()) : BaseModel(), Serializable {
 
     @OneToMany(methods = [(OneToMany.Method.ALL)], variableName = "items")
     fun oneToManyItems(): MutableList<Item> {
@@ -201,7 +202,7 @@ data class Item(
         var screen: Screen? = null,
         var options: MutableList<Option> = arrayListOf(),
         @Column
-        var hint: String = "") : BaseModel() {
+        var hint: String = "") : BaseModel() , Serializable{
 
     @OneToMany(methods = [(OneToMany.Method.ALL)], variableName = "options")
     fun oneToManyOptions(): MutableList<Option> {
@@ -226,7 +227,7 @@ data class Option(
                 stubbedRelationship = true)
         @ForeignKeyReference(foreignKeyColumnName = "id", columnName = "item_id")
         var item: Item? = null,
-        var value: String = "") : BaseModel()
+        var value: String = "") : BaseModel(), Serializable
 
 
 val Element.convertToCategory: Category

@@ -94,11 +94,11 @@ class ContentController : BaseController(), ContentBaseView {
         Extensions.copyFile()
     }
 
-    override fun showProgress() {
+    override fun hiddenBottomMenu() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun hideProgress() {
+    override fun showBottomMenu() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 

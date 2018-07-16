@@ -3,11 +3,14 @@ package org.secfirst.umbrella.feature
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import com.bluelinelabs.conductor.Conductor
 import com.bluelinelabs.conductor.Router
 import com.bluelinelabs.conductor.RouterTransaction
 import dagger.android.AndroidInjection
+import kotlinx.android.synthetic.main.main_view.*
 import org.secfirst.umbrella.R
 import org.secfirst.umbrella.feature.account.AccountController
 import org.secfirst.umbrella.feature.base.view.BaseView
@@ -66,13 +69,20 @@ class MainActivity : AppCompatActivity(), BaseView {
         false
     }
 
+
     override fun onBackPressed() {
         if (!router.handleBack()) {
             super.onBackPressed()
         }
     }
 
-    override fun hideProgress() {}
-    override fun showProgress() {}
+    override fun showBottomMenu() {
+        navigation.visibility = VISIBLE
+    }
+
+    override fun hiddenBottomMenu() {
+        navigation.visibility = INVISIBLE
+    }
+
     private fun performDI() = AndroidInjection.inject(this)
 }
