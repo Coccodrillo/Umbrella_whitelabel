@@ -1,11 +1,12 @@
 package org.secfirst.umbrella.feature.base.view
 
+import android.os.Bundle
 import android.view.View
 import com.bluelinelabs.conductor.Controller
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.*
 
-abstract class BaseController : Controller(), LayoutContainer {
+abstract class BaseController(private val bundle: Bundle = Bundle()) : Controller(bundle), LayoutContainer {
 
     init {
         inject()

@@ -45,10 +45,10 @@ class FormController : BaseController(), FormBaseView {
 
     override fun showForms(forms: List<Form>) {
         forms.forEach { Log.e("test", "forms -  $it") }
-        allFormRecycleView_.adapter = FormAdapter(forms, context)
+        allFormRecycleView_.adapter = FormAdapter(forms, router)
     }
 
-    override fun showProgress() {}
+    override fun hiddenBottomMenu() {}
 
-    override fun hideProgress() {}
+    override fun showBottomMenu() {}
 }
