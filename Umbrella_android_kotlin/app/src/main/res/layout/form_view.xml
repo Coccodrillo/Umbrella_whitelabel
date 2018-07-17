@@ -8,30 +8,30 @@
 
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/titleAllForm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
         android:padding="5dp"
         android:layout_marginLeft="5dp"
         android:text="@string/message_title_all_list_form"
-        app:layout_constraintBottom_toTopOf="@+id/allFormRecycleView_"
-        app:layout_constraintStart_toStartOf="@+id/allFormRecycleView_"
+        app:layout_constraintBottom_toTopOf="@+id/allFormRecycleView"
+        app:layout_constraintStart_toStartOf="@+id/allFormRecycleView"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginStart="5dp" />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/allFormRecycleView_"
+        android:id="@+id/allFormRecycleView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/textView2"
+        app:layout_constraintBottom_toTopOf="@+id/titleActiveForm"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/titleAllForm" />
 
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/titleActiveForm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="270dp"
@@ -39,8 +39,8 @@
         android:layout_marginLeft="5dp"
         android:text="@string/message_title_active_list_form"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/allFormRecycleView_"
-        app:layout_constraintTop_toBottomOf="@+id/allFormRecycleView_"
+        app:layout_constraintStart_toStartOf="@+id/allFormRecycleView"
+        app:layout_constraintTop_toBottomOf="@+id/allFormRecycleView"
         android:layout_marginStart="5dp" />
 
     <android.support.v7.widget.RecyclerView

@@ -85,4 +85,6 @@ class MainActivity : AppCompatActivity(), BaseView {
     }
 
     private fun performDI() = AndroidInjection.inject(this)
+
+    fun getRouter() = router
 }

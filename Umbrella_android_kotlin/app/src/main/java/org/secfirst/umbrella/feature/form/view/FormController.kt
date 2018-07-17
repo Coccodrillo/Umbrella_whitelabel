@@ -32,7 +32,7 @@ class FormController : BaseController(), FormBaseView {
     override fun onAttach(view: View) {
         super.onAttach(view)
         ActiveFormRecycleView.layoutManager = LinearLayoutManager(context)
-        allFormRecycleView_.layoutManager = LinearLayoutManager(context)
+        allFormRecycleView.layoutManager = LinearLayoutManager(context)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
@@ -45,7 +45,7 @@ class FormController : BaseController(), FormBaseView {
 
     override fun showForms(forms: List<Form>) {
         forms.forEach { Log.e("test", "forms -  $it") }
-        allFormRecycleView_.adapter = FormAdapter(forms, router)
+        allFormRecycleView.adapter = FormAdapter(forms, router)
     }
 
     override fun hiddenBottomMenu() {}

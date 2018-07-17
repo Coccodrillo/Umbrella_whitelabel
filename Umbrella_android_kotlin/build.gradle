@@ -58,7 +58,7 @@ ext {
     dagger2Version = '2.16'
     //test libraries
     runnerVersion = '1.0.1'
-    espressoVersion = '3.0.1'
+    espressoVersion = '3.0.2'
     junitVersion = '4.12'
     //RxAndroid RxJava and dependencies
     rxAndroid = '2.0.2'
