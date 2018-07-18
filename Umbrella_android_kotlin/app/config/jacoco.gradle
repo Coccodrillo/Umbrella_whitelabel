@@ -1,7 +1,7 @@
 apply plugin: 'jacoco'
 
 ext {
-    coverageSourceDirs = 'src/test/java'
+    coverageSourceDirs = "$project.projectDir/src/main/java"
 }
 
 jacoco {
@@ -9,7 +9,7 @@ jacoco {
     reportsDir = file("$buildDir/reports")
 }
 
-task jacocoTestReport(type:JacocoReport, dependsOn: "testDebugUnitTest") {
+task jacocoTestReport(type: JacocoReport, dependsOn: "testDebugUnitTest") {
     group = "Reporting"
     description = "Generate Jacoco coverage reports for Debug build"
     classDirectories = fileTree(
@@ -32,11 +32,13 @@ task jacocoTestReport(type:JacocoReport, dependsOn: "testDebugUnitTest") {
     }
     additionalSourceDirs = files(coverageSourceDirs)
     sourceDirectories = files(coverageSourceDirs)
-    executionData = files("$buildDir/jacoco/testDebugUnitTest.exec")
+    executionData =  fileTree(dir: project.buildDir, includes: [
+            'jacoco/testDebugUnitTest.exec', 'outputs/code-coverage/connected/*coverage.ec'
+    ])
     // Bit hacky but fixes https://code.google.com/p/android/issues/detail?id=69174.
     // We iterate through the compiled .class tree and rename $$ to $.
     doFirst {
-        new File("$buildDir/tmp/kotlin-classes").eachFileRecurse { file ->
+        new File("$buildDir/tmp/kotlin-classes/debug").eachFileRecurse { file ->
             if (file.name.contains('$$')) {
                 file.renameTo(file.path.replace('$$', '$'))
             }

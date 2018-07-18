@@ -17,9 +17,7 @@ android {
         }
     }
 
-    lintOptions {
-        abortOnError false
-    }
+
 
     androidExtensions {
         experimental = true
@@ -107,6 +105,8 @@ dependencies {
 
     //Anko lib
     implementation "org.jetbrains.anko:anko-commons:$anko_version"
+    compile "org.jetbrains.anko:anko-sdk25-coroutines:$anko_version"
+    compile "org.jetbrains.anko:anko-appcompat-v7-coroutines:$anko_version"
     implementation 'com.android.support:multidex:1.0.3'
 
     //initParser - database

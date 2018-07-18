@@ -1,16 +1,18 @@
 package org.secfirst.umbrella.storage
 
-import junit.framework.Assert
+import io.reactivex.Single
+import junit.framework.Assert.*
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
-import org.mockito.Mockito
+import org.mockito.Mockito.`when`
 import org.mockito.junit.MockitoJUnitRunner
 import org.secfirst.umbrella.data.storage.TentConfig
 import org.secfirst.umbrella.data.storage.TentStorageDao
-import java.io.File
+import org.secfirst.umbrella.storage.FakeTentRepository.Companion.`list of valid files`
+import org.secfirst.umbrella.storage.FakeTentRepository.Companion.`valid list of element`
 
-@RunWith(MockitoJUnitRunner::class)
+@RunWith(MockitoJUnitRunner.Silent::class)
 class TentDaoTest {
 
     @Mock
@@ -19,82 +21,46 @@ class TentDaoTest {
     @Mock
     private lateinit var tentConfig: TentConfig
 
-
-    private fun `randomic list of files`(): List<File> {
-        val file1 = File("/travel/kidnapping/beginner/close.png")
-        val file2 = File("/travel/.foreingkey.yml")
-        val file3 = File("/travel/kidnapping/beginner/.foreingkey.yml")
-        val file4 = File("/travel/kidnapping/beginner/c_checklist.yml")
-        val file5 = File("/travel/kidnapping/.foreingkey.yml")
-        val file6 = File("/travel/kidnapping/intermediate/.foreingkey.yml")
-        val file7 = File("/travel/kidnapping/intermediate/s_segments.yml")
-        val file8 = File("/travel/kidnapping/advanced/.foreingkey.yml")
-        val file9 = File("/email/how_to_learn.md")
-        val file10 = File("/about/.foreingkey.yml")
-        val file11 = File("/something/hello.xml")
-        val file12 = File("/form_view/f_first_form.yml")
-
-        val files = arrayListOf<File>()
-        files.add(file1)
-        files.add(file2)
-        files.add(file3)
-        files.add(file4)
-        files.add(file5)
-        files.add(file6)
-        files.add(file7)
-        files.add(file8)
-        files.add(file9)
-        files.add(file10)
-        files.add(file11)
-        files.add(file12)
-        return files
-    }
-
-    private fun `valid list of element`(): List<File> {
-        val files = arrayListOf<File>()
-        val file1 = File("/about/.foreingkey.yml")
-        val file2 = File("/travel/.foreingkey.yml")
-        val file3 = File("/travel/kidnapping/.foreingkey.yml")
-        val file4 = File("/travel/kidnapping/beginner/.foreingkey.yml")
-        val file5 = File("/travel/kidnapping/intermediate/.foreingkey.yml")
-        val file6 = File("/travel/kidnapping/advanced/.foreingkey.yml")
-
-        files.add(file1)
-        files.add(file2)
-        files.add(file3)
-        files.add(file4)
-        files.add(file5)
-        files.add(file6)
-        return files
-    }
-
-    private fun `valid list of files`(): List<File> {
-
-        val file1 = File("/travel/kidnapping/intermediate/s_segments.yml")
-        val file2 = File("/travel/kidnapping/beginner/c_checklist.yml")
-        val file3 = File("/form_view/f_first_form.yml")
-
-        val files = arrayListOf<File>()
-        files.add(file1)
-        files.add(file2)
-        files.add(file3)
-
-        return files
-    }
-
     @Test
-    fun `should return a valid list of sub elements`() {
-        Mockito.`when`(tentDao.filterBySubElement(tentConfig)).thenReturn(`valid list of files`())
+    fun `should filter a valid list of sub elements`() {
+        `when`(tentDao.filterBySubElement(tentConfig)).thenReturn(`list of valid files`())
         val files = tentDao.filterBySubElement(tentConfig)
-        val numberOfFileFiltered = `randomic list of files`().size - `valid list of files`().size
-        Assert.assertEquals(files.size, `randomic list of files`().size - numberOfFileFiltered)
+        assertNotNull(files)
     }
 
     @Test
-    fun `should return a valid list of elements`() {
-        Mockito.`when`(tentDao.filterByElement(tentConfig)).thenReturn(`valid list of element`())
-        val files = tentDao.filterByElement(tentConfig)
-        val numberOfFileFiltered = `randomic list of files`().size - `valid list of element`().size
-        Assert.assertEquals(files.size, numberOfFileFiltered)
+    fun `shouldn't filter a valid list of sub elements`() {
+        `when`(tentDao.filterBySubElement(tentConfig)).thenReturn(emptyList())
+        val files = tentDao.filterBySubElement(tentConfig)
+        if (files.isEmpty()) assertTrue(true) else assertFalse(false)
     }
+
+    @Test
+    fun `shouldn't filter a valid list of elements`() {
+        `when`(tentDao.filterBySubElement(tentConfig)).thenReturn(emptyList())
+        val files = tentDao.filterByElement(tentConfig)
+        if (files.isEmpty()) assertTrue(true) else assertFalse(false)
+    }
+
+    @Test
+    fun `should filter a valid list of elements`() {
+        `when`(tentDao.filterByElement(tentConfig)).thenReturn(`valid list of element`())
+        val files = tentDao.filterByElement(tentConfig)
+        assertNotNull(files)
+    }
+
+    @Test
+    fun `should create a repository`() {
+        `when`(tentDao.cloneRepository(tentConfig)).thenReturn(Single.just(true))
+        val fetchResult = tentDao.cloneRepository(tentConfig)
+        fetchResult.subscribe { result -> assertTrue(result) }
+    }
+
+    @Test
+    fun `shouldn't create a repository`() {
+        `when`(tentDao.cloneRepository(tentConfig)).thenReturn(Single.just(false))
+        val fetchResult = tentDao.cloneRepository(tentConfig)
+        fetchResult.subscribe { result -> assertTrue(result) }
+    }
+
 }

@@ -4,7 +4,7 @@ import junit.framework.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
-import org.mockito.Mockito
+import org.mockito.Mockito.`when`
 import org.mockito.junit.MockitoJUnitRunner
 import org.secfirst.umbrella.data.storage.ExtensionFile
 import org.secfirst.umbrella.data.storage.TentConfig
@@ -71,21 +71,21 @@ class TentConfigTest {
 
     @Test
     fun `Verify if exist Tent repository`() {
-        Mockito.`when`(tentConfig.isNotRepository()).thenReturn(true)
+        `when`(tentConfig.isNotRepository()).thenReturn(true)
         val value = tentConfig.isNotRepository()
         assertEquals(true, value)
     }
 
     @Test
     fun `Verify if not exist Tent repository`() {
-        Mockito.`when`(tentConfig.isNotRepository()).thenReturn(false)
+        `when`(tentConfig.isNotRepository()).thenReturn(false)
         val value = tentConfig.isNotRepository()
         assertEquals(false, value)
     }
 
     @Test
     fun `Should be able to return path of the repository`() {
-        Mockito.`when`(tentConfig.getPathRepository()).thenReturn("/path/")
+        `when`(tentConfig.getPathRepository()).thenReturn("/path/")
         val value = tentConfig.getPathRepository()
         assertEquals("/path/", value)
     }
