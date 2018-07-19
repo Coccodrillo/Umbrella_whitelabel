@@ -4,6 +4,11 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply from: 'config/jacoco.gradle'
 
+kotlin {
+    experimental {
+        coroutines 'enable'
+    }
+}
 android {
     compileSdkVersion 27
     compileOptions {
@@ -36,7 +41,7 @@ android {
     buildTypes {
         debug {
             minifyEnabled false
-            testCoverageEnabled true
+            testCoverageEnabled false
             buildConfigField("String", "BASE_URL", "\"http://www.mocky.io/v2\"")
             buildConfigField("String", "API_KEY", "\"ABCXYZ123TEST\"")
         }
@@ -104,10 +109,12 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 
     //Anko lib
-    implementation "org.jetbrains.anko:anko-commons:$anko_version"
-    compile "org.jetbrains.anko:anko-sdk25-coroutines:$anko_version"
-    compile "org.jetbrains.anko:anko-appcompat-v7-coroutines:$anko_version"
-    implementation 'com.android.support:multidex:1.0.3'
+    implementation "org.jetbrains.anko:anko:$anko_version"
+    implementation "org.jetbrains.anko:anko-sdk25:$anko_version"
+    implementation "org.jetbrains.anko:anko-appcompat-v7:$anko_version"
+    implementation "org.jetbrains.anko:anko-sdk25-coroutines:$anko_version"
+    implementation "org.jetbrains.anko:anko-appcompat-v7-coroutines:$anko_version"
+
 
     //initParser - database
     kapt "com.github.Raizlabs.DBFlow:dbflow-processor:${dbflow_version}"
@@ -131,4 +138,7 @@ dependencies {
 
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+
+    implementation 'com.stepstone.stepper:material-stepper:4.3.1'
+    implementation 'com.android.support:multidex:1.0.3'
 }
