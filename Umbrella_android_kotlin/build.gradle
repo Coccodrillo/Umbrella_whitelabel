@@ -76,7 +76,7 @@ ext {
     //parser and dependencies
     gsonVersion = '2.8.0'
     //Anko and dependencies
-    anko_version = '0.10.4'
+    anko_version = '0.10.3'
     //okhttp log and dependencies
     okHttpLog = '3.9.1'
     //JGit and dependencies
