@@ -1,6 +1,5 @@
 package org.secfirst.umbrella.feature.form.view
 
-import android.content.Context
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.LayoutInflater
@@ -23,16 +22,19 @@ class FormController : BaseController(), FormBaseView {
     @Inject
     internal lateinit var presenter: FormBasePresenter<FormBaseView, FormBaseInteractor>
 
-    private var context: Context = UmbrellaApplication.instance
+    private val application = UmbrellaApplication.instance
 
     override fun onInject() {
-        DaggerFormComponent.builder().build().inject(this)
+        DaggerFormComponent.builder()
+                .application(UmbrellaApplication.instance)
+                .build()
+                .inject(this)
     }
 
     override fun onAttach(view: View) {
         super.onAttach(view)
-        ActiveFormRecycleView.layoutManager = LinearLayoutManager(context)
-        allFormRecycleView.layoutManager = LinearLayoutManager(context)
+        ActiveFormRecycleView.layoutManager = LinearLayoutManager(application)
+        allFormRecycleView.layoutManager = LinearLayoutManager(application)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
