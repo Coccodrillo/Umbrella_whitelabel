@@ -1,5 +1,6 @@
 package org.secfirst.umbrella.feature
 
+import android.content.Context
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
@@ -18,6 +19,7 @@ import org.secfirst.umbrella.feature.content.view.ContentController
 import org.secfirst.umbrella.feature.feed.FeedController
 import org.secfirst.umbrella.feature.form.view.FormController
 import org.secfirst.umbrella.feature.lesson.LessonController
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 
 
 class MainActivity : AppCompatActivity(), BaseView {
@@ -30,6 +32,10 @@ class MainActivity : AppCompatActivity(), BaseView {
         setContentView(R.layout.main_view)
         performDI()
         initRoute(savedInstanceState)
+    }
+
+    override fun attachBaseContext(newBase: Context?) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
     }
 
     private fun initRoute(savedInstanceState: Bundle?) {

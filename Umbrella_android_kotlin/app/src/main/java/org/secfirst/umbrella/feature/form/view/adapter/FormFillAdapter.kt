@@ -10,15 +10,15 @@ import com.stepstone.stepper.viewmodel.StepViewModel
 import org.jetbrains.anko.AnkoContext
 import org.secfirst.umbrella.UmbrellaApplication
 import org.secfirst.umbrella.data.Form
-import org.secfirst.umbrella.feature.form.view.FormEditController
-import org.secfirst.umbrella.feature.form.view.FormEditUI
+import org.secfirst.umbrella.feature.base.view.BaseController
+import org.secfirst.umbrella.feature.form.view.FormFillUI
 
-class FormEditAdapter(private val form: Form, private val controller: FormEditController) : AbstractStepAdapter(UmbrellaApplication.instance) {
+class FormFillAdapter(private val form: Form, private val controller: BaseController) : AbstractStepAdapter(UmbrellaApplication.instance) {
 
     private val pages = SparseArray<Step>()
 
     override fun getViewModel(@IntRange(from = 0) position: Int): StepViewModel = StepViewModel.Builder(context)
-            .setTitle(form.title)
+            .setTitle(form.screens[position].title)
             .create()
 
     override fun instantiateItem(container: ViewGroup, position: Int): View {
@@ -27,7 +27,7 @@ class FormEditAdapter(private val form: Form, private val controller: FormEditCo
             step = createStep(position)
             pages.put(position, step)
         }
-        val stepView = step as FormEditUI
+        val stepView = step as FormFillUI
         val view = stepView.createView(AnkoContext.create(context, controller, false))
         container.addView(view)
 
@@ -40,7 +40,7 @@ class FormEditAdapter(private val form: Form, private val controller: FormEditCo
 
     override fun isViewFromObject(view: View, `object`: Any) = view === `object`
 
-    override fun createStep(position: Int) = FormEditUI()
+    override fun createStep(position: Int) = FormFillUI(form.screens[position])
 
     override fun getCount() = form.screens.size
 }

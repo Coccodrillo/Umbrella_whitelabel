@@ -2,6 +2,8 @@ package org.secfirst.umbrella
 
 import android.app.Activity
 import android.app.Application
+import android.content.Context
+import android.support.multidex.MultiDex
 import com.facebook.stetho.Stetho
 import com.raizlabs.android.dbflow.config.DatabaseConfig
 import com.raizlabs.android.dbflow.config.FlowConfig
@@ -13,6 +15,7 @@ import net.sqlcipher.database.SQLiteDatabase
 import org.secfirst.umbrella.data.database.AppDatabase
 import org.secfirst.umbrella.data.database.SQLCipherHelperImpl
 import org.secfirst.umbrella.di.component.DaggerAppComponent
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig
 import javax.inject.Inject
 
 
@@ -28,6 +31,11 @@ class UmbrellaApplication : Application(), HasActivityInjector {
             private set
     }
 
+    override fun attachBaseContext(base: Context?) {
+        super.attachBaseContext(base)
+        MultiDex.install(this)
+    }
+
     override fun onCreate() {
         super.onCreate()
         instance = this
@@ -35,6 +43,7 @@ class UmbrellaApplication : Application(), HasActivityInjector {
         initDatabase()
         initTentRepository()
         initStetho()
+        initFonts()
 
     }
 
@@ -63,6 +72,13 @@ class UmbrellaApplication : Application(), HasActivityInjector {
 
     private fun initStetho() {
         Stetho.initializeWithDefaults(this);
+    }
+
+    private fun initFonts() {
+        CalligraphyConfig.initDefault(CalligraphyConfig.Builder()
+                .setDefaultFontPath("fonts/Roboto-RobotoRegular.ttf")
+                .setFontAttrId(R.attr.fontPath)
+                .build())
     }
 
     private fun initTentRepository() {

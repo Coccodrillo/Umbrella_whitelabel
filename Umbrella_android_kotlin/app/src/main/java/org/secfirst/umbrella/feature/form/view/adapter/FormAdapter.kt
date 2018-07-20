@@ -10,7 +10,7 @@ import kotlinx.android.synthetic.main.form_all_item_view.view.*
 import org.secfirst.umbrella.R
 import org.secfirst.umbrella.UmbrellaApplication
 import org.secfirst.umbrella.data.Form
-import org.secfirst.umbrella.feature.form.view.FormEditController
+import org.secfirst.umbrella.feature.form.view.FormFillController
 
 
 class FormAdapter(private val forms: List<Form>, private val router: Router) : RecyclerView.Adapter<FormViewHolder>() {
@@ -27,7 +27,7 @@ class FormAdapter(private val forms: List<Form>, private val router: Router) : R
 
     override fun onBindViewHolder(formHolder: FormViewHolder, position: Int) {
         formHolder.bind(forms[position].title, clickListener = {
-            router.pushController(RouterTransaction.with(FormEditController(forms[it.adapterPosition])))
+            router.pushController(RouterTransaction.with(FormFillController(forms[it.adapterPosition])))
         })
     }
 }

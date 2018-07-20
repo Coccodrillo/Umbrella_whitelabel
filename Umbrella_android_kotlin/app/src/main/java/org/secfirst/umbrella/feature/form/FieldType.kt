@@ -5,5 +5,6 @@ enum class FieldType(val value: String) {
     LABEL("label"),
     TEXT_AREA("text_area"),
     MULTIPLE_CHOICE("multiple_choice"),
+    SINGLE_CHOICE("single_choice"),
     HINT("hint")
 }
