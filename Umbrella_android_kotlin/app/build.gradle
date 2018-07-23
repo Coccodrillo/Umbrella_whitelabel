@@ -3,6 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply from: 'config/jacoco.gradle'
+apply plugin: 'io.fabric'
 
 kotlin {
     experimental {
@@ -41,12 +42,18 @@ android {
     buildTypes {
         debug {
             minifyEnabled false
-            testCoverageEnabled false
+            testCoverageEnabled true
+            ext.enableCrashlytics = false
             buildConfigField("String", "BASE_URL", "\"http://www.mocky.io/v2\"")
             buildConfigField("String", "API_KEY", "\"ABCXYZ123TEST\"")
         }
-        release {
+        beta{
             minifyEnabled false
+            ext.enableCrashlytics = true
+        }
+        release {
+            minifyEnabled true
+            ext.enableCrashlytics = false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -143,4 +150,8 @@ dependencies {
     implementation 'com.android.support:multidex:1.0.3'
 
     implementation 'uk.co.chrisjenx:calligraphy:2.3.0'
+
+    implementation('com.crashlytics.sdk.android:crashlytics:2.9.4@aar') {
+        transitive = true;
+    }
 }

@@ -145,7 +145,7 @@ data class Form(
         var id: Long = 0,
         @Column
         var title: String = "",
-        var screens: MutableList<Screen> = arrayListOf()) : BaseModel(), Serializable{
+        var screens: MutableList<Screen> = arrayListOf()) : BaseModel(), Serializable {
 
     @OneToMany(methods = [(OneToMany.Method.ALL)], variableName = "screens")
     fun oneToManyScreens(): MutableList<Screen> {
@@ -160,7 +160,7 @@ data class Form(
 }
 
 @Table(database = AppDatabase::class)
-data class Screen (
+data class Screen(
         @PrimaryKey(autoincrement = true)
         var id: Long = 0,
         @Column
@@ -202,7 +202,11 @@ data class Item(
         var screen: Screen? = null,
         var options: MutableList<Option> = arrayListOf(),
         @Column
-        var hint: String = "") : BaseModel() , Serializable{
+        var value: String = "",
+        @Column
+        var hint: String = "",
+        @ForeignKey
+        var res: Value? = null) : BaseModel(), Serializable {
 
     @OneToMany(methods = [(OneToMany.Method.ALL)], variableName = "options")
     fun oneToManyOptions(): MutableList<Option> {
@@ -219,7 +223,6 @@ data class Item(
 @Table(database = AppDatabase::class, allFields = true)
 data class Option(
         @PrimaryKey(autoincrement = true)
-        @Column
         var id: Long = 0,
         var label: String = "",
         @ForeignKey(onUpdate = ForeignKeyAction.CASCADE,
@@ -227,7 +230,16 @@ data class Option(
                 stubbedRelationship = true)
         @ForeignKeyReference(foreignKeyColumnName = "id", columnName = "item_id")
         var item: Item? = null,
-        var value: String = "") : BaseModel(), Serializable
+        var value: String = "",
+        @ForeignKey
+        var res: Value? = null) : BaseModel(), Serializable
+
+@Table(database = AppDatabase::class, allFields = true, useBooleanGetterSetters = false)
+data class Value(
+        @PrimaryKey(autoincrement = true)
+        var id: Long = 0,
+        var textInput: String = "",
+        var choiceInput: Boolean = false) : BaseModel(), Serializable
 
 
 val Element.convertToCategory: Category

@@ -5,16 +5,15 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
+import kotlinx.android.synthetic.main.fragment_standard.*
 import org.secfirst.umbrella.R
 import org.secfirst.umbrella.UmbrellaApplication
 import org.secfirst.umbrella.data.database.AppDatabase
-import org.secfirst.umbrella.data.database.content.Lesson
 import org.secfirst.umbrella.feature.base.view.BaseController
 import org.secfirst.umbrella.feature.content.DaggerContentComponent
 import org.secfirst.umbrella.feature.content.interactor.ContentBaseInteractor
@@ -32,8 +31,15 @@ class ContentController : BaseController(), ContentBaseView {
         val exportDb = view.findViewById<Button>(R.id.test)
         exportDb.setOnClickListener { showFileChooserPreview() }
         presenter.onAttach(this)
-        presenter.manageContent()
         return view
+    }
+
+    override fun onAttach(view: View) {
+        super.onAttach(view)
+        firstAccess.setOnClickListener {
+            presenter.manageContent()
+            it.isEnabled = false
+        }
     }
 
     override fun onInject() {
@@ -51,8 +57,8 @@ class ContentController : BaseController(), ContentBaseView {
         fun newInstance(): ContentController = ContentController()
     }
 
-    override fun downloadContent(lesson: Lesson) {
-        lesson.categories.forEach { Log.e("test", "object -  $it") }
+    override fun finishDownloadedData() {
+        Toast.makeText(activity!!, "Downloaded with success", Toast.LENGTH_LONG).show()
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {

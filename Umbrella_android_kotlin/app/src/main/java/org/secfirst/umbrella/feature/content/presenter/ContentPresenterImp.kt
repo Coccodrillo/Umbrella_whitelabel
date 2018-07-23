@@ -1,12 +1,10 @@
 package org.secfirst.umbrella.feature.content.presenter
 
-import android.util.Log
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import org.secfirst.umbrella.data.Root
-import org.secfirst.umbrella.data.database.content.Lesson
 import org.secfirst.umbrella.feature.base.presenter.BasePresenterImp
 import org.secfirst.umbrella.feature.content.interactor.ContentBaseInteractor
 import org.secfirst.umbrella.feature.content.view.ContentBaseView
@@ -24,11 +22,7 @@ class ContentPresenterImp<V : ContentBaseView, I : ContentBaseInteractor>
         schedulerProvider = schedulerProvider,
         compositeDisposable = disposable), ContentBasePresenter<V, I> {
 
-    override fun validateLoadAllLesson() {
-        interactor?.let {
-            getView()?.downloadContent(it.getAllLesson())
-        }
-    }
+    override fun validateLoadAllLesson() {}
 
     override fun manageContent() {
         interactor?.let { contentInteractor ->
@@ -41,6 +35,7 @@ class ContentPresenterImp<V : ContentBaseView, I : ContentBaseInteractor>
                                 .subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .trackException()
+                                .doAfterSuccess { getView()!!.finishDownloadedData() }
                                 .subscribe()
                     }
                     .subscribe()
@@ -49,11 +44,10 @@ class ContentPresenterImp<V : ContentBaseView, I : ContentBaseInteractor>
 
     private fun validateFetch(fetchResult: Single<Boolean>) {
         fetchResult
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .trackException()
-                .subscribe { success, error ->
-                    if (success) getView()?.downloadContent(Lesson())
-                    else Log.e("Test", "Error when tried to fetch tent repository $error")
-                }
+                .subscribe()
     }
 
     private fun validateData(): Single<Root> {

@@ -4,6 +4,8 @@ import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.support.multidex.MultiDex
+import com.crashlytics.android.Crashlytics
+import com.crashlytics.android.core.CrashlyticsCore
 import com.facebook.stetho.Stetho
 import com.raizlabs.android.dbflow.config.DatabaseConfig
 import com.raizlabs.android.dbflow.config.FlowConfig
@@ -44,6 +46,7 @@ class UmbrellaApplication : Application(), HasActivityInjector {
         initTentRepository()
         initStetho()
         initFonts()
+        initFabric()
 
     }
 
@@ -79,6 +82,13 @@ class UmbrellaApplication : Application(), HasActivityInjector {
                 .setDefaultFontPath("fonts/Roboto-RobotoRegular.ttf")
                 .setFontAttrId(R.attr.fontPath)
                 .build())
+    }
+
+    private fun initFabric() {
+        Crashlytics.Builder()
+                .core(CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
+                .build()
+//        Fabric.with(this, Crashlytics())
     }
 
     private fun initTentRepository() {

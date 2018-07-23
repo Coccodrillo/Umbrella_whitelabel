@@ -9,14 +9,14 @@ import dagger.android.AndroidInjectionModule
 import org.secfirst.umbrella.data.Form
 import org.secfirst.umbrella.di.module.AppModule
 import org.secfirst.umbrella.di.module.RepositoryModule
-import org.secfirst.umbrella.feature.base.view.BaseController
 import org.secfirst.umbrella.feature.form.interactor.FormBaseInteractor
 import org.secfirst.umbrella.feature.form.interactor.FormInteractorImp
 import org.secfirst.umbrella.feature.form.presenter.FormBasePresenter
 import org.secfirst.umbrella.feature.form.presenter.FormPresenterImp
 import org.secfirst.umbrella.feature.form.view.FormBaseView
 import org.secfirst.umbrella.feature.form.view.FormController
-import org.secfirst.umbrella.feature.form.view.adapter.FormFillAdapter
+import org.secfirst.umbrella.feature.form.view.FormInputController
+import org.secfirst.umbrella.feature.form.view.adapter.FormInputAdapter
 import javax.inject.Singleton
 
 
@@ -31,7 +31,7 @@ class FormModule {
             : FormBasePresenter<FormBaseView, FormBaseInteractor> = presenter
 
     @Provides
-    fun provideFormEditAdapter(controller: BaseController, form: Form) = FormFillAdapter(form, controller)
+    fun provideFormEditAdapter(controller: FormInputController, form: Form) = FormInputAdapter(form, controller)
 
 }
 
