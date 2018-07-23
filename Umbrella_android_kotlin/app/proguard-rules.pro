@@ -21,3 +21,7 @@
 #-renamesourcefileattribute SourceFile
 # DbFlow
 -keep class * extends com.raizlabs.android.dbflow.config.DatabaseHolder { *; }
+-keep class * {
+    public private *;
+}
+-ignorewarnings

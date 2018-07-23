@@ -8,5 +8,4 @@
     app:ms_showErrorState="true"
     app:ms_showErrorStateOnBack="true"
     app:ms_stepperType="tabs"
-    tools:theme="@style/AppTheme" >
-</com.stepstone.stepper.StepperLayout>
+    tools:theme="@style/AppTheme" />

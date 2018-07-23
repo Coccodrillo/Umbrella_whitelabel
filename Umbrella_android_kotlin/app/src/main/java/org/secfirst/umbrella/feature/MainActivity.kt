@@ -38,6 +38,10 @@ class MainActivity : AppCompatActivity(), BaseView {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
     }
 
+    override fun onResume() {
+        super.onResume()
+        navigation.selectedItemId = R.id.navigation_checklists
+    }
     private fun initRoute(savedInstanceState: Bundle?) {
         container = findViewById(R.id.baseContainer)
         val navigation = findViewById<BottomNavigationView>(R.id.navigation)
