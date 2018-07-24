@@ -204,9 +204,7 @@ data class Item(
         @Column
         var value: String = "",
         @Column
-        var hint: String = "",
-        @ForeignKey
-        var res: Value? = null) : BaseModel(), Serializable {
+        var hint: String = "") : BaseModel(), Serializable {
 
     @OneToMany(methods = [(OneToMany.Method.ALL)], variableName = "options")
     fun oneToManyOptions(): MutableList<Option> {
@@ -220,27 +218,32 @@ data class Item(
     }
 }
 
-@Table(database = AppDatabase::class, allFields = true)
+@Table(database = AppDatabase::class, allFields = false)
 data class Option(
         @PrimaryKey(autoincrement = true)
         var id: Long = 0,
+        @Column
         var label: String = "",
         @ForeignKey(onUpdate = ForeignKeyAction.CASCADE,
                 onDelete = ForeignKeyAction.CASCADE,
                 stubbedRelationship = true)
         @ForeignKeyReference(foreignKeyColumnName = "id", columnName = "item_id")
         var item: Item? = null,
-        var value: String = "",
-        @ForeignKey
-        var res: Value? = null) : BaseModel(), Serializable
+        @Column
+        var value: String = "") : BaseModel(), Serializable
 
 @Table(database = AppDatabase::class, allFields = true, useBooleanGetterSetters = false)
 data class Value(
         @PrimaryKey(autoincrement = true)
         var id: Long = 0,
         var textInput: String = "",
-        var choiceInput: Boolean = false) : BaseModel(), Serializable
-
+        var choiceInput: Boolean = false,
+        @ForeignKey
+        var item: Item? = null,
+        @ForeignKey
+        var option: Option? = null,
+        @ForeignKey
+        var form: Form? = null) : Serializable
 
 val Element.convertToCategory: Category
     get() {

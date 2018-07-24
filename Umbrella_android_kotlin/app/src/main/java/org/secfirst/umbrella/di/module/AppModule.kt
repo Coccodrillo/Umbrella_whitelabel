@@ -10,6 +10,9 @@ import io.reactivex.schedulers.Schedulers
 import org.secfirst.umbrella.data.database.content.ContentDao
 import org.secfirst.umbrella.data.database.content.ContentRepo
 import org.secfirst.umbrella.data.database.content.ContentRepository
+import org.secfirst.umbrella.data.database.form.FormDao
+import org.secfirst.umbrella.data.database.form.FormRepo
+import org.secfirst.umbrella.data.database.form.FormRepository
 import org.secfirst.umbrella.data.network.ApiHelper
 import org.secfirst.umbrella.data.network.NetworkEndPoint.BASE_URL
 import org.secfirst.umbrella.data.storage.TentConfig
@@ -27,7 +30,7 @@ import javax.inject.Singleton
 
 @Module
 class AppModule {
-   @Provides
+    @Provides
     @Singleton
     internal fun provideContext(application: Application): Context = application
 
@@ -68,9 +71,17 @@ class RepositoryModule {
     internal val contentDao
         get() = object : ContentDao {}
 
+    internal val formDao
+        get() = object : FormDao {}
+
     @Provides
     @Singleton
     internal fun provideContentDao(): ContentRepo = ContentRepository(contentDao)
+
+    @Provides
+    @Singleton
+    internal fun provideFormDao(): FormRepo = FormRepository(formDao)
+
 }
 
 @Module

@@ -6,17 +6,15 @@ import dagger.Component
 import dagger.Module
 import dagger.Provides
 import dagger.android.AndroidInjectionModule
-import org.secfirst.umbrella.data.Form
 import org.secfirst.umbrella.di.module.AppModule
 import org.secfirst.umbrella.di.module.RepositoryModule
 import org.secfirst.umbrella.feature.form.interactor.FormBaseInteractor
 import org.secfirst.umbrella.feature.form.interactor.FormInteractorImp
 import org.secfirst.umbrella.feature.form.presenter.FormBasePresenter
 import org.secfirst.umbrella.feature.form.presenter.FormPresenterImp
-import org.secfirst.umbrella.feature.form.view.FormBaseView
-import org.secfirst.umbrella.feature.form.view.FormController
-import org.secfirst.umbrella.feature.form.view.FormInputController
-import org.secfirst.umbrella.feature.form.view.adapter.FormInputAdapter
+import org.secfirst.umbrella.feature.form.view.FormView
+import org.secfirst.umbrella.feature.form.view.controller.FormController
+import org.secfirst.umbrella.feature.form.view.controller.FormInputController
 import javax.inject.Singleton
 
 
@@ -27,11 +25,11 @@ class FormModule {
     internal fun provideFormInteractor(interactor: FormInteractorImp): FormBaseInteractor = interactor
 
     @Provides
-    internal fun provideFormPresenter(presenter: FormPresenterImp<FormBaseView, FormBaseInteractor>)
-            : FormBasePresenter<FormBaseView, FormBaseInteractor> = presenter
+    internal fun provideFormPresenter(presenter: FormPresenterImp<FormView, FormBaseInteractor>)
+            : FormBasePresenter<FormView, FormBaseInteractor> = presenter
 
-    @Provides
-    fun provideFormEditAdapter(controller: FormInputController, form: Form) = FormInputAdapter(form, controller)
+//    @Provides
+//    fun provideFormEditAdapter(controller: FormInputController, form: Form) = FormInputAdapter(form, controller, listOfViews)
 
 }
 
@@ -51,4 +49,6 @@ interface FormComponent {
     }
 
     fun inject(formController: FormController)
+
+    fun inject(formInputController: FormInputController)
 }
