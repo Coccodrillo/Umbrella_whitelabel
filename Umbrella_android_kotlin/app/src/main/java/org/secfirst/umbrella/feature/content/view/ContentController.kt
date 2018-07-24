@@ -23,6 +23,7 @@ import javax.inject.Inject
 
 class ContentController : BaseController(), ContentBaseView {
 
+
     @Inject
     internal lateinit var presenter: ContentBasePresenter<ContentBaseView, ContentBaseInteractor>
 
@@ -98,14 +99,6 @@ class ContentController : BaseController(), ContentBaseView {
 
     private fun shareDbFile(fileName: String) {
         Extensions.copyFile()
-    }
-
-    override fun hiddenBottomMenu() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun showBottomMenu() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     val PERMISSION_REQUEST_EXTERNAL_STORAGE = 1

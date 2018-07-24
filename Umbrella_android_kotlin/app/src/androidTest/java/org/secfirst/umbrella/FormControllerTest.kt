@@ -20,7 +20,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.secfirst.umbrella.data.Form
 import org.secfirst.umbrella.feature.MainActivity
-import org.secfirst.umbrella.feature.form.view.FormController
+import org.secfirst.umbrella.feature.form.view.controller.FormController
 
 
 @RunWith(AndroidJUnit4::class)

@@ -5,12 +5,18 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.support.v4.content.ContextCompat
 import android.view.Gravity
+import android.widget.CheckBox
+import android.widget.EditText
+import android.widget.RadioButton
 import com.stepstone.stepper.Step
 import com.stepstone.stepper.VerificationError
 import org.jetbrains.anko.*
 import org.secfirst.umbrella.R
+import org.secfirst.umbrella.data.Item
+import org.secfirst.umbrella.data.Option
 import org.secfirst.umbrella.data.Screen
 import org.secfirst.umbrella.feature.form.FieldType
+import org.secfirst.umbrella.feature.form.view.controller.FormInputController
 
 
 class FormUI(private val screen: Screen) : AnkoComponent<FormInputController>, Step {
@@ -36,20 +42,27 @@ class FormUI(private val screen: Screen) : AnkoComponent<FormInputController>, S
                             val editText = editText {
                                 hint = item.hint
                             }.lparams(width = matchParent)
-                            item.res?.textInput = editText.text.toString()
+                            val editTextMap = hashMapOf<EditText, Item>()
+                            editTextMap[editText] = item
+                            ui.owner.editTextList.add(editTextMap)
                         }
                         FieldType.TEXT_INPUT.value -> {
                             textView(item.label) { textSize = size }.lparams { topMargin = dip(10) }
-                            val aaaa = editText {
+                            val editText = editText {
                                 hint = item.hint
                             }.lparams(width = matchParent)
-                            item.res?.textInput = aaaa.text.toString()
+                            val editTextMap = hashMapOf<EditText, Item>()
+                            editTextMap[editText] = item
+                            ui.owner.editTextList.add(editTextMap)
                         }
+
                         FieldType.MULTIPLE_CHOICE.value -> {
                             textView(item.label) { textSize = size }.lparams { topMargin = dip(10) }
                             item.options.forEach { formOption ->
                                 val checkBox = checkBox(formOption.label)
-                                formOption.res?.choiceInput = checkBox.isChecked
+                                val checkboxMap = hashMapOf<CheckBox, Option>()
+                                checkboxMap[checkBox] = formOption
+                                ui.owner.checkboxList.add(checkboxMap)
                             }
                         }
                         FieldType.SINGLE_CHOICE.value -> {
@@ -58,7 +71,9 @@ class FormUI(private val screen: Screen) : AnkoComponent<FormInputController>, S
                                 val radioButton = radioButton {
                                     text = formOption.label
                                 }
-                                formOption.res?.choiceInput = radioButton.isChecked
+                                val radioButtonMap = hashMapOf<RadioButton, Option>()
+                                radioButtonMap[radioButton] = formOption
+                                ui.owner.radioButtonList.add(radioButtonMap)
                             }
                         }
                     }

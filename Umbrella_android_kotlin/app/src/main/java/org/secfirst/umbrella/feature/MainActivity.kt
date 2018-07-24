@@ -14,15 +14,16 @@ import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.main_view.*
 import org.secfirst.umbrella.R
 import org.secfirst.umbrella.feature.account.AccountController
-import org.secfirst.umbrella.feature.base.view.BaseView
 import org.secfirst.umbrella.feature.content.view.ContentController
 import org.secfirst.umbrella.feature.feed.FeedController
-import org.secfirst.umbrella.feature.form.view.FormController
+import org.secfirst.umbrella.feature.form.view.controller.FormController
 import org.secfirst.umbrella.feature.lesson.LessonController
+import org.secfirst.umbrella.feature.main.OnNavigationView
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 
 
-class MainActivity : AppCompatActivity(), BaseView {
+class MainActivity : AppCompatActivity(), OnNavigationView {
+
 
     private lateinit var container: ViewGroup
     private lateinit var router: Router
@@ -42,6 +43,7 @@ class MainActivity : AppCompatActivity(), BaseView {
         super.onResume()
         navigation.selectedItemId = R.id.navigation_checklists
     }
+
     private fun initRoute(savedInstanceState: Bundle?) {
         container = findViewById(R.id.baseContainer)
         val navigation = findViewById<BottomNavigationView>(R.id.navigation)
@@ -50,6 +52,7 @@ class MainActivity : AppCompatActivity(), BaseView {
         if (!router.hasRootController()) {
             router.setRoot(RouterTransaction.with(FeedController()))
         }
+
     }
 
     private val navigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
@@ -79,12 +82,15 @@ class MainActivity : AppCompatActivity(), BaseView {
         false
     }
 
-
     override fun onBackPressed() {
         if (!router.handleBack()) {
             super.onBackPressed()
         }
     }
+
+    private fun performDI() = AndroidInjection.inject(this)
+
+    fun getRouter() = router
 
     override fun showBottomMenu() {
         navigation.visibility = VISIBLE
@@ -93,8 +99,4 @@ class MainActivity : AppCompatActivity(), BaseView {
     override fun hiddenBottomMenu() {
         navigation.visibility = INVISIBLE
     }
-
-    private fun performDI() = AndroidInjection.inject(this)
-
-    fun getRouter() = router
 }

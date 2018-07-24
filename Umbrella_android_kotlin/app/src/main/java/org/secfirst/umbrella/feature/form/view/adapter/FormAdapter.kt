@@ -10,7 +10,7 @@ import kotlinx.android.synthetic.main.form_all_item_view.view.*
 import org.secfirst.umbrella.R
 import org.secfirst.umbrella.UmbrellaApplication
 import org.secfirst.umbrella.data.Form
-import org.secfirst.umbrella.feature.form.view.FormInputController
+import org.secfirst.umbrella.feature.form.view.controller.FormInputController
 
 
 class FormAdapter(private val forms: List<Form>, private val router: Router) : RecyclerView.Adapter<FormViewHolder>() {

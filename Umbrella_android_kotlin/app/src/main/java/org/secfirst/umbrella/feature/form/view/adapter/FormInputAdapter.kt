@@ -10,10 +10,10 @@ import com.stepstone.stepper.viewmodel.StepViewModel
 import org.jetbrains.anko.AnkoContext
 import org.secfirst.umbrella.UmbrellaApplication
 import org.secfirst.umbrella.data.Form
-import org.secfirst.umbrella.feature.form.view.FormInputController
 import org.secfirst.umbrella.feature.form.view.FormUI
+import org.secfirst.umbrella.feature.form.view.controller.FormInputController
 
-class FormInputAdapter(private val form: Form, private val controller: FormInputController)
+class FormInputAdapter(private val form: Form, private val controller: FormInputController, private val listOfViews: MutableList<FormUI>)
     : AbstractStepAdapter(UmbrellaApplication.instance) {
 
     private val pages = SparseArray<Step>()
@@ -41,7 +41,7 @@ class FormInputAdapter(private val form: Form, private val controller: FormInput
 
     override fun isViewFromObject(view: View, `object`: Any) = view === `object`
 
-    override fun createStep(position: Int) = FormUI(form.screens[position])
+    override fun createStep(position: Int) = listOfViews[position]
 
     override fun getCount() = form.screens.size
 }
