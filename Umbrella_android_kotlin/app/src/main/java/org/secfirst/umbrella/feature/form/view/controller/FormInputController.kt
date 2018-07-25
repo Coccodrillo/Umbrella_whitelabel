@@ -24,8 +24,9 @@ import org.secfirst.umbrella.feature.form.presenter.FormBasePresenter
 import org.secfirst.umbrella.feature.form.view.FormUI
 import org.secfirst.umbrella.feature.form.view.FormView
 import org.secfirst.umbrella.feature.form.view.adapter.FormInputAdapter
-import org.secfirst.umbrella.feature.main.OnNavigationView
+import org.secfirst.umbrella.feature.main.OnNavigationBottomView
 import org.secfirst.umbrella.util.BundleExt.Companion.EXTRA_FORM_SELECTED
+import org.secfirst.umbrella.util.currenttime
 import javax.inject.Inject
 
 class FormInputController(bundle: Bundle) : BaseController(bundle), FormView, StepperLayout.StepperListener {
@@ -36,7 +37,7 @@ class FormInputController(bundle: Bundle) : BaseController(bundle), FormView, St
     var editTextList = mutableListOf<HashMap<EditText, Item>>()
     var radioButtonList = mutableListOf<HashMap<RadioButton, Option>>()
     var checkboxList = mutableListOf<HashMap<CheckBox, Option>>()
-    private lateinit var onNavigation: OnNavigationView
+    private lateinit var onNavigation: OnNavigationBottomView
     private var listOfViews: MutableList<FormUI> = mutableListOf()
 
 
@@ -95,6 +96,7 @@ class FormInputController(bundle: Bundle) : BaseController(bundle), FormView, St
                 value.choiceInput = checkbox.isChecked
                 value.form = formSelected
                 value.option = formOption
+                value.dataTime = currenttime
                 value.id = 0
                 if (value.choiceInput) presenter.submitInsert(value)
             }
@@ -110,6 +112,7 @@ class FormInputController(bundle: Bundle) : BaseController(bundle), FormView, St
                 value.textInput = editText.text.toString()
                 value.form = formSelected
                 value.item = item
+                value.dataTime = currenttime
                 value.id = 0
                 if (value.textInput.isNotEmpty()) presenter.submitInsert(value)
             }
@@ -125,6 +128,7 @@ class FormInputController(bundle: Bundle) : BaseController(bundle), FormView, St
                 value.choiceInput = radioButton.isChecked
                 value.form = formSelected
                 value.option = formOption
+                value.dataTime = currenttime
                 value.id = 0
                 if (value.choiceInput) presenter.submitInsert(value)
             }

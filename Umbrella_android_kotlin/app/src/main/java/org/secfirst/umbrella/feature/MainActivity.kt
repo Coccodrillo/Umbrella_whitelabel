@@ -18,11 +18,11 @@ import org.secfirst.umbrella.feature.content.view.ContentController
 import org.secfirst.umbrella.feature.feed.FeedController
 import org.secfirst.umbrella.feature.form.view.controller.FormController
 import org.secfirst.umbrella.feature.lesson.LessonController
-import org.secfirst.umbrella.feature.main.OnNavigationView
+import org.secfirst.umbrella.feature.main.OnNavigationBottomView
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 
 
-class MainActivity : AppCompatActivity(), OnNavigationView {
+class MainActivity : AppCompatActivity(), OnNavigationBottomView {
 
 
     private lateinit var container: ViewGroup
@@ -39,17 +39,13 @@ class MainActivity : AppCompatActivity(), OnNavigationView {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
     }
 
-    override fun onResume() {
-        super.onResume()
-        navigation.selectedItemId = R.id.navigation_checklists
-    }
-
     private fun initRoute(savedInstanceState: Bundle?) {
         container = findViewById(R.id.baseContainer)
         val navigation = findViewById<BottomNavigationView>(R.id.navigation)
         navigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener)
         router = Conductor.attachRouter(this, container, savedInstanceState)
         if (!router.hasRootController()) {
+
             router.setRoot(RouterTransaction.with(FeedController()))
         }
 
