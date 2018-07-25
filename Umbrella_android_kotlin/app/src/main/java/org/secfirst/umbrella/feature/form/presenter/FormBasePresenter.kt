@@ -9,5 +9,9 @@ interface FormBasePresenter<V : FormView, I : FormBaseInteractor> : BasePresente
 
     fun submitLoadModelForms()
 
+    fun submitLoadActiveForms()
+
     fun submitInsert(formData: Value)
+
+
 }

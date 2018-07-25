@@ -145,6 +145,7 @@ data class Form(
         var id: Long = 0,
         @Column
         var title: String = "",
+        var data: List<Value>? = null,
         var screens: MutableList<Screen> = arrayListOf()) : BaseModel(), Serializable {
 
     @OneToMany(methods = [(OneToMany.Method.ALL)], variableName = "screens")
@@ -238,6 +239,7 @@ data class Value(
         var id: Long = 0,
         var textInput: String = "",
         var choiceInput: Boolean = false,
+        var dataTime: String = "",
         @ForeignKey
         var item: Item? = null,
         @ForeignKey

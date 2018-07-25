@@ -1,6 +1,6 @@
 package org.secfirst.umbrella.feature.main
 
-interface OnNavigationView {
+interface OnNavigationBottomView {
     fun showBottomMenu()
     fun hiddenBottomMenu()
 }

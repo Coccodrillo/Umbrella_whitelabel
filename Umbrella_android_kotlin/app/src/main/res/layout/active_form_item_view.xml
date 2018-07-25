@@ -21,11 +21,17 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/titleForm"
+                android:id="@+id/titleActiveForm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
                 android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/currentTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -40,8 +46,24 @@
                     android:id="@+id/shareForm"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="5dp"
-                    android:text="@string/message_body_form_new"
+                    android:background="@drawable/ic_share"
+                    android:padding="3dp"
+                    android:textColor="@color/umbrella_purple" />
+
+                <TextView
+                    android:id="@+id/editForm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_mode_edit"
+                    android:padding="3dp"
+                    android:textColor="@color/umbrella_purple" />
+
+                <TextView
+                    android:id="@+id/deleteForm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_delete"
+                    android:padding="3dp"
                     android:textColor="@color/umbrella_purple" />
 
             </LinearLayout>

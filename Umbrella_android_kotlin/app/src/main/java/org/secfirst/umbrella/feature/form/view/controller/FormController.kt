@@ -1,6 +1,5 @@
 package org.secfirst.umbrella.feature.form.view.controller
 
-import android.support.design.widget.BottomNavigationView
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,7 +14,8 @@ import org.secfirst.umbrella.feature.form.DaggerFormComponent
 import org.secfirst.umbrella.feature.form.interactor.FormBaseInteractor
 import org.secfirst.umbrella.feature.form.presenter.FormBasePresenter
 import org.secfirst.umbrella.feature.form.view.FormView
-import org.secfirst.umbrella.feature.form.view.adapter.FormAdapter
+import org.secfirst.umbrella.feature.form.view.adapter.ActiveFormAdapter
+import org.secfirst.umbrella.feature.form.view.adapter.AllFormAdapter
 import javax.inject.Inject
 
 
@@ -23,7 +23,8 @@ class FormController : BaseController(), FormView {
 
     @Inject
     internal lateinit var presenter: FormBasePresenter<FormView, FormBaseInteractor>
-    private val application = UmbrellaApplication.instance
+    private var application = UmbrellaApplication.instance
+
 
     override fun onInject() {
         DaggerFormComponent.builder()
@@ -34,20 +35,23 @@ class FormController : BaseController(), FormView {
 
     override fun onAttach(view: View) {
         super.onAttach(view)
-        ActiveFormRecycleView.layoutManager = LinearLayoutManager(application)
-        allFormRecycleView.layoutManager = LinearLayoutManager(application)
         presenter.onAttach(this)
+        activeFormRecycleView.layoutManager = LinearLayoutManager(application)
+        allFormRecycleView.layoutManager = LinearLayoutManager(application)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
-        val view = inflater.inflate(R.layout.form_view, container, false)
-        presenter.onAttach(this)
         presenter.submitLoadModelForms()
-        return view
+        presenter.submitLoadActiveForms()
+        return inflater.inflate(R.layout.form_view, container, false)
     }
 
-    override fun showModelForms(forms: List<Form>) {
-        forms.forEach { Log.e("test", "forms -  $it") }
-        allFormRecycleView.adapter = FormAdapter(forms, router)
+    override fun showModelForms(modelForms: List<Form>) {
+        modelForms.forEach { Log.e("test", "modelForms -  $it") }
+        allFormRecycleView.adapter = AllFormAdapter(modelForms, router)
+    }
+
+    override fun showActiveForms(activeForms: List<Form>) {
+        activeFormRecycleView.adapter = ActiveFormAdapter(activeForms, router)
     }
 }
