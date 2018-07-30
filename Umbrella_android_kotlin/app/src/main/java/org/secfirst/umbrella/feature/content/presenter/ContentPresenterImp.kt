@@ -9,7 +9,6 @@ import org.secfirst.umbrella.feature.base.presenter.BasePresenterImp
 import org.secfirst.umbrella.feature.content.interactor.ContentBaseInteractor
 import org.secfirst.umbrella.feature.content.view.ContentBaseView
 import org.secfirst.umbrella.util.SchedulerProvider
-import org.secfirst.umbrella.util.trackException
 import javax.inject.Inject
 
 
@@ -29,12 +28,10 @@ class ContentPresenterImp<V : ContentBaseView, I : ContentBaseInteractor>
             Single.fromCallable { validateFetch(contentInteractor.fetchData()) }
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .trackException()
                     .doAfterSuccess {
                         validateData()
                                 .subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
-                                .trackException()
                                 .doAfterSuccess { getView()!!.finishDownloadedData() }
                                 .subscribe()
                     }
@@ -46,7 +43,6 @@ class ContentPresenterImp<V : ContentBaseView, I : ContentBaseInteractor>
         fetchResult
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .trackException()
                 .subscribe()
     }
 

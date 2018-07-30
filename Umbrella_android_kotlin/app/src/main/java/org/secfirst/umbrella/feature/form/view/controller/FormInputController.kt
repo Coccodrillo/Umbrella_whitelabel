@@ -31,7 +31,6 @@ import javax.inject.Inject
 
 class FormInputController(bundle: Bundle) : BaseController(bundle), FormView, StepperLayout.StepperListener {
 
-
     @Inject
     internal lateinit var presenter: FormBasePresenter<FormView, FormBaseInteractor>
     var editTextList = mutableListOf<HashMap<EditText, Item>>()
@@ -69,7 +68,14 @@ class FormInputController(bundle: Bundle) : BaseController(bundle), FormView, St
 
     private fun createFormUI() {
         for (view in formSelected.screens)
-            listOfViews.add(FormUI(view))
+            listOfViews.add(FormUI(view, formSelected.data))
+    }
+
+    override fun onCompleted(completeButton: View?) {
+        bindCheckboxValue()
+        bindEditTextValue()
+        bindRadioButtonValue()
+        router.popCurrentController()
     }
 
     override fun onInject() {
@@ -77,13 +83,6 @@ class FormInputController(bundle: Bundle) : BaseController(bundle), FormView, St
                 .application(UmbrellaApplication.instance)
                 .build()
                 .inject(this)
-    }
-
-
-    override fun onCompleted(completeButton: View?) {
-        bindCheckboxValue()
-        bindEditTextValue()
-        bindRadioButtonValue()
     }
 
 
@@ -140,4 +139,8 @@ class FormInputController(bundle: Bundle) : BaseController(bundle), FormView, St
     override fun onError(verificationError: VerificationError?) {}
 
     override fun onReturn() {}
+
+    override fun getTitleToolbar() = formSelected.title
+
+    override fun getEnableBackAction() = true
 }

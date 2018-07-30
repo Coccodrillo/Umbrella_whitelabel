@@ -23,8 +23,6 @@ class FormController : BaseController(), FormView {
 
     @Inject
     internal lateinit var presenter: FormBasePresenter<FormView, FormBaseInteractor>
-    private var application = UmbrellaApplication.instance
-
 
     override fun onInject() {
         DaggerFormComponent.builder()
@@ -36,22 +34,44 @@ class FormController : BaseController(), FormView {
     override fun onAttach(view: View) {
         super.onAttach(view)
         presenter.onAttach(this)
-        activeFormRecycleView.layoutManager = LinearLayoutManager(application)
-        allFormRecycleView.layoutManager = LinearLayoutManager(application)
+        activeFormRecycleView.layoutManager = LinearLayoutManager(applicationContext)
+        allFormRecycleView.layoutManager = LinearLayoutManager(applicationContext)
+        presenter.submitLoadModelForms()
+        presenter.submitLoadActiveForms()
+        initToolbar()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
-        presenter.submitLoadModelForms()
-        presenter.submitLoadActiveForms()
-        return inflater.inflate(R.layout.form_view, container, false)
+        val view = inflater.inflate(R.layout.form_view, container, false)
+
+        return view
     }
+
+    fun initToolbar() {
+//        formToolbar.inflateMenu(R.menu.form_menu)
+//        formToolbar.setOnMenuItemClickListener { menuItem ->
+//            when (menuItem.itemId) {
+//                R.id.shareForm -> return@setOnMenuItemClickListener true
+//                R.id.editForm -> return@setOnMenuItemClickListener true
+//                R.id.deleteForm -> return@setOnMenuItemClickListener true
+//                else -> {
+//                    return@setOnMenuItemClickListener true
+//                }
+//            }
+//        }
+    }
+
 
     override fun showModelForms(modelForms: List<Form>) {
         modelForms.forEach { Log.e("test", "modelForms -  $it") }
-        allFormRecycleView.adapter = AllFormAdapter(modelForms, router)
+        allFormRecycleView?.adapter = AllFormAdapter(modelForms, router)
     }
 
     override fun showActiveForms(activeForms: List<Form>) {
-        activeFormRecycleView.adapter = ActiveFormAdapter(activeForms, router)
+        activeFormRecycleView?.adapter = ActiveFormAdapter(activeForms, router)
     }
+
+    override fun getTitleToolbar() = applicationContext?.getString(R.string.form_title)!!
+
+    override fun getEnableBackAction() = false
 }

@@ -5,9 +5,11 @@ import org.secfirst.umbrella.data.Value
 
 interface FormRepo {
 
-    fun persistDataForm(formData: Value)
+    suspend fun persist(formData: Value)
 
-    fun getAllModelForms(): List<Form>
+    suspend fun getAll(): List<Form>
 
-    fun loadDataFormsById(id: Long): List<Value>
+    suspend fun loadBy(id: Long): List<Value>
+
+    suspend fun loadDataBy(forms: List<Form>): List<Form>
 }

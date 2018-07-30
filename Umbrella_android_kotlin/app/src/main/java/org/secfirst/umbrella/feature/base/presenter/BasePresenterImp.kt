@@ -25,5 +25,4 @@ internal constructor(protected var interactor: I?,
         view = null
         interactor = null
     }
-
 }

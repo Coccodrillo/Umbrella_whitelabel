@@ -37,8 +37,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginRight="20dp"
                 android:orientation="horizontal"
                 tools:ignore="RtlHardcoded">
 
@@ -47,7 +46,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/ic_share"
-                    android:padding="3dp"
                     android:textColor="@color/umbrella_purple" />
 
                 <TextView
@@ -55,7 +53,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/ic_mode_edit"
-                    android:padding="3dp"
                     android:textColor="@color/umbrella_purple" />
 
                 <TextView
@@ -63,7 +60,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/ic_delete"
-                    android:padding="3dp"
                     android:textColor="@color/umbrella_purple" />
 
             </LinearLayout>

@@ -5,8 +5,9 @@ import android.view.View
 import com.bluelinelabs.conductor.Controller
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.*
+import org.secfirst.umbrella.feature.MainActivity
 
-abstract class BaseController(private val bundle: Bundle = Bundle()) : Controller(bundle), LayoutContainer {
+abstract class BaseController(bundle: Bundle = Bundle()) : Controller(bundle), LayoutContainer {
 
     init {
         inject()
@@ -19,9 +20,19 @@ abstract class BaseController(private val bundle: Bundle = Bundle()) : Controlle
     override val containerView: View?
         get() = view
 
+    override fun onAttach(view: View) {
+        super.onAttach(view)
+        val mainActivity = activity as MainActivity
+        mainActivity.setToolBarTitle(getTitleToolbar())
+        mainActivity.enableUpArrow(getEnableBackAction())
+    }
+
     override fun onDestroyView(view: View) {
         super.onDestroyView(view)
         clearFindViewByIdCache()
     }
+
+    protected abstract fun getEnableBackAction(): Boolean
+    protected abstract fun getTitleToolbar(): String
 }
 

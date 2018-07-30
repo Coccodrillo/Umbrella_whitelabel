@@ -95,4 +95,6 @@ ext {
     test_rule = '1.0.2'
     mockito = '2.10.0'
     junit = '4.12'
+
+    coroutineVersion = "0.22.5"
 }

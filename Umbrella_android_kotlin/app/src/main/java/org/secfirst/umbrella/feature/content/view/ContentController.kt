@@ -23,9 +23,11 @@ import javax.inject.Inject
 
 class ContentController : BaseController(), ContentBaseView {
 
-
     @Inject
     internal lateinit var presenter: ContentBasePresenter<ContentBaseView, ContentBaseInteractor>
+
+    override fun getTitleToolbar() = applicationContext!!.getString(R.string.checklist_title)!!
+    override fun getEnableBackAction() = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
         val view = inflater.inflate(R.layout.fragment_standard, container, false)

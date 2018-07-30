@@ -7,10 +7,12 @@ import org.secfirst.umbrella.feature.base.interactor.BaseInteractor
 
 interface FormBaseInteractor : BaseInteractor {
 
-    fun fetchForm(): List<Form>
+    suspend fun fetchForm(): List<Form>
 
-    fun saveForm(formData: Value)
+    suspend fun persisteFormData(formData: Value)
 
-    fun loadDataFormById(id: Long): List<Value>
+    suspend fun loadDataFormBy(id: Long): List<Value>
+
+    suspend fun loadDataFormBy(forms: List<Form>): List<Form>
 
 }

@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
+import android.view.MenuItem
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
@@ -24,7 +25,6 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 
 class MainActivity : AppCompatActivity(), OnNavigationBottomView {
 
-
     private lateinit var container: ViewGroup
     private lateinit var router: Router
 
@@ -33,10 +33,32 @@ class MainActivity : AppCompatActivity(), OnNavigationBottomView {
         setContentView(R.layout.main_view)
         performDI()
         initRoute(savedInstanceState)
+        setUpToolbar()
     }
 
     override fun attachBaseContext(newBase: Context?) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
+    }
+
+    private fun setUpToolbar() {
+        setSupportActionBar(mainToolbar)
+    }
+
+    fun setToolBarTitle(title: String) {
+        if (mainToolbar != null) mainToolbar.title = title
+    }
+
+    fun enableUpArrow(enabled: Boolean) {
+        supportActionBar!!.setDisplayHomeAsUpEnabled(enabled)
+        supportActionBar!!.setDisplayShowHomeEnabled(enabled)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            onBackPressed()
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun initRoute(savedInstanceState: Bundle?) {
