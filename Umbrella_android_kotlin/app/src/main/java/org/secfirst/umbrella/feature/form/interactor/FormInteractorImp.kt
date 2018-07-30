@@ -8,9 +8,11 @@ import javax.inject.Inject
 
 class FormInteractorImp @Inject constructor(private val formRepo: FormRepo) : BaseInteractorImp(), FormBaseInteractor {
 
-    override fun loadDataFormById(id: Long): List<Value> = formRepo.loadDataFormsById(id)
+    override suspend fun loadDataFormBy(forms: List<Form>) = formRepo.loadDataBy(forms)
 
-    override fun saveForm(formData: Value) = formRepo.persistDataForm(formData)
+    override suspend fun loadDataFormBy(id: Long) = formRepo.loadBy(id)
 
-    override fun fetchForm(): List<Form> = formRepo.getAllModelForms()
+    override suspend fun persisteFormData(formData: Value) = formRepo.persist(formData)
+
+    override suspend fun fetchForm() = formRepo.getAll()
 }

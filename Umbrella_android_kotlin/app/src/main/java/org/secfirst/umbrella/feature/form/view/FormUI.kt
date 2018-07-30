@@ -15,11 +15,12 @@ import org.secfirst.umbrella.R
 import org.secfirst.umbrella.data.Item
 import org.secfirst.umbrella.data.Option
 import org.secfirst.umbrella.data.Screen
+import org.secfirst.umbrella.data.Value
 import org.secfirst.umbrella.feature.form.FieldType
 import org.secfirst.umbrella.feature.form.view.controller.FormInputController
 
 
-class FormUI(private val screen: Screen) : AnkoComponent<FormInputController>, Step {
+class FormUI(private val screen: Screen, private val dataView: List<Value>?) : AnkoComponent<FormInputController>, Step {
 
     override fun createView(ui: AnkoContext<FormInputController>) = ui.apply {
         val size = 16f
@@ -31,38 +32,39 @@ class FormUI(private val screen: Screen) : AnkoComponent<FormInputController>, S
                 screen.items.forEach { item ->
                     when (item.type) {
 
-                        FieldType.LABEL.value -> textView(item.label) {
-                            textSize = 18f
-                            padding = dip(10)
-                            textColor = ContextCompat.getColor(context, R.color.umbrella_purple)
-                        }.lparams { gravity = Gravity.CENTER }
-
+                        FieldType.LABEL.value ->
+                            textView(item.label) {
+                                textSize = 18f
+                                padding = dip(10)
+                                textColor = ContextCompat.getColor(context, R.color.umbrella_purple)
+                            }.lparams { gravity = Gravity.CENTER }
                         FieldType.TEXT_AREA.value -> {
                             textView(item.label) { textSize = size }.lparams { topMargin = dip(10) }
+
                             val editText = editText {
                                 hint = item.hint
+                                setText(isData(item))
+
                             }.lparams(width = matchParent)
-                            val editTextMap = hashMapOf<EditText, Item>()
-                            editTextMap[editText] = item
-                            ui.owner.editTextList.add(editTextMap)
+                            bindEditText(item, editText, ui)
                         }
                         FieldType.TEXT_INPUT.value -> {
                             textView(item.label) { textSize = size }.lparams { topMargin = dip(10) }
                             val editText = editText {
                                 hint = item.hint
-                            }.lparams(width = matchParent)
-                            val editTextMap = hashMapOf<EditText, Item>()
-                            editTextMap[editText] = item
-                            ui.owner.editTextList.add(editTextMap)
-                        }
+                                setText(isData(item))
 
+                            }.lparams(width = matchParent)
+                            bindEditText(item, editText, ui)
+                        }
                         FieldType.MULTIPLE_CHOICE.value -> {
                             textView(item.label) { textSize = size }.lparams { topMargin = dip(10) }
                             item.options.forEach { formOption ->
-                                val checkBox = checkBox(formOption.label)
-                                val checkboxMap = hashMapOf<CheckBox, Option>()
-                                checkboxMap[checkBox] = formOption
-                                ui.owner.checkboxList.add(checkboxMap)
+                                val checkBox = checkBox {
+                                    text = formOption.label
+                                    isChecked = isData(formOption)
+                                }
+                                bindCheckBox(formOption, checkBox, ui)
                             }
                         }
                         FieldType.SINGLE_CHOICE.value -> {
@@ -70,10 +72,9 @@ class FormUI(private val screen: Screen) : AnkoComponent<FormInputController>, S
                             item.options.forEach { formOption ->
                                 val radioButton = radioButton {
                                     text = formOption.label
+                                    isChecked = isData(formOption)
                                 }
-                                val radioButtonMap = hashMapOf<RadioButton, Option>()
-                                radioButtonMap[radioButton] = formOption
-                                ui.owner.radioButtonList.add(radioButtonMap)
+                                bindRadioButton(formOption, radioButton, ui)
                             }
                         }
                     }
@@ -84,10 +85,44 @@ class FormUI(private val screen: Screen) : AnkoComponent<FormInputController>, S
 
     }.view
 
+    private fun isData(formOption: Option): Boolean {
+        dataView?.forEach { data ->
+            if (formOption.id == data.option?.id)
+                return true
+        }
+        return false
+    }
+
+    private fun isData(item: Item): String {
+        dataView?.forEach { data ->
+            if (item.id == data.item?.id) {
+                return data.textInput
+            }
+        }
+        return ""
+    }
+
+    private fun bindRadioButton(formOption: Option, radioButton: RadioButton, ui: AnkoContext<FormInputController>) {
+        val radioButtonMap = hashMapOf<RadioButton, Option>()
+        radioButtonMap[radioButton] = formOption
+        ui.owner.radioButtonList.add(radioButtonMap)
+    }
+
+    private fun bindCheckBox(formOption: Option, checkBox: CheckBox, ui: AnkoContext<FormInputController>) {
+        val checkboxMap = hashMapOf<CheckBox, Option>()
+        checkboxMap[checkBox] = formOption
+        ui.owner.checkboxList.add(checkboxMap)
+    }
+
+    private fun bindEditText(item: Item, editText: EditText, ui: AnkoContext<FormInputController>) {
+        val editTextMap = hashMapOf<EditText, Item>()
+        editTextMap[editText] = item
+        ui.owner.editTextList.add(editTextMap)
+    }
+
     override fun onSelected() {}
 
     override fun verifyStep(): Nothing? = null
 
     override fun onError(error: VerificationError) {}
-
 }

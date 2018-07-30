@@ -6,9 +6,12 @@ import javax.inject.Inject
 
 class FormRepository @Inject constructor(private val formDao: FormDao) : FormRepo {
 
-    override fun loadDataFormsById(id: Long): List<Value> = formDao.getDataFormById(id)
+    override suspend fun persist(formData: Value) = formDao.insertDataForm(formData)
 
-    override fun persistDataForm(formData: Value) = formDao.insertDataForm(formData)
+    override suspend fun getAll() = formDao.getAllFormModel()
 
-    override fun getAllModelForms(): List<Form> = formDao.getAllModel()
+    override suspend fun loadBy(id: Long) = formDao.getDataFormById(id)
+
+    override suspend fun loadDataBy(forms: List<Form>) = formDao.getAllDataFormBy(forms)
+
 }

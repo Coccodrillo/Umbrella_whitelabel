@@ -4,26 +4,26 @@
     <item
         android:id="@+id/navigation_feeds"
         android:icon="@drawable/ic_view_feed"
-        android:title="@string/menu_title_feed" />
+        android:title="@string/feed_title" />
 
     <item
         android:id="@+id/navigation_forms"
         android:icon="@drawable/ic_form"
-        android:title="@string/menu_title_forms" />
+        android:title="@string/form_title" />
 
     <item
         android:id="@+id/navigation_checklists"
         android:icon="@drawable/ic_checklist"
-        android:title="@string/menu_title_checklists" />
+        android:title="@string/checklist_title" />
 
     <item
         android:id="@+id/navigation_lessons"
         android:icon="@drawable/ic_local_library"
-        android:title="@string/menu_title_lessons" />
+        android:title="@string/lesson_title" />
 
     <item
         android:id="@+id/navigation_account"
         android:icon="@drawable/ic_account_box"
-        android:title="@string/menu_title_account" />
+        android:title="@string/account_title" />
 
 </menu>
