@@ -1,4 +1,4 @@
-package org.secfirst.umbrella.util
+package org.secfirst.umbrella.misc
 
 import java.text.SimpleDateFormat
 import java.util.*

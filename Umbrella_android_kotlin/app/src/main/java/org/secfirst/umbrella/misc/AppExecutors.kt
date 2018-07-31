@@ -1,4 +1,4 @@
-package org.secfirst.umbrella.util
+package org.secfirst.umbrella.misc
 
 import kotlinx.coroutines.experimental.DefaultDispatcher
 import kotlinx.coroutines.experimental.android.UI

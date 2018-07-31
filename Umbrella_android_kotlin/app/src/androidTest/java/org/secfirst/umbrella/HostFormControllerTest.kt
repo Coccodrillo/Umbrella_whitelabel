@@ -12,7 +12,6 @@ import android.support.test.runner.AndroidJUnit4
 import android.support.v7.widget.RecyclerView
 import com.bluelinelabs.conductor.Router
 import com.bluelinelabs.conductor.RouterTransaction
-import com.forkingcode.espresso.contrib.DescendantViewActions.checkViewAction
 import org.hamcrest.CoreMatchers.not
 import org.junit.Before
 import org.junit.Rule
@@ -20,11 +19,12 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.secfirst.umbrella.data.Form
 import org.secfirst.umbrella.feature.MainActivity
-import org.secfirst.umbrella.feature.form.view.controller.FormController
+import org.secfirst.umbrella.feature.form.view.controller.HostFormController
+import org.secfirst.umbrella.misc.CustomMatchers.Companion.withItemCount
 
 
 @RunWith(AndroidJUnit4::class)
-class FormControllerTest {
+class HostFormControllerTest {
 
     private lateinit var router: Router
     private val form: Form = Form()
@@ -38,7 +38,7 @@ class FormControllerTest {
     fun setUp() {
         testRule.runOnUiThread {
             router = testRule.activity.getRouter()
-            router.setRoot(RouterTransaction.with(FormController()))
+            router.setRoot(RouterTransaction.with(HostFormController()))
         }
     }
 
@@ -55,15 +55,33 @@ class FormControllerTest {
     }
 
     @Test
-    fun one_item_is_necessary_in_list() {
+    fun countPrograms() {
         onView(withId(R.id.allFormRecycleView))
-                .perform(actionOnItemAtPosition<RecyclerView.ViewHolder>(1,
-                        checkViewAction(matches(isCompletelyDisplayed()))))
+                .check(matches(withItemCount(8)))
     }
 
     @Test
     fun click_on_item_and_open_form_detail() {
         onView(withId(R.id.allFormRecycleView)).perform(
+
+                // First position the recycler view. Necessary to allow the layout
+                // manager perform the scroll operation
+                scrollToPosition<RecyclerView.ViewHolder>(1),
+
+                // Click the item to trigger navigation to detail view
+                actionOnItemAtPosition<RecyclerView.ViewHolder>(1, click())
+        )
+
+        // Check detail view
+        onView(withId(R.id.navigation)).check(matches(not(isDisplayed())))
+
+        // return to main activity
+        pressBack()
+    }
+
+    @Test
+    fun click_on_active_item_and_open_form_detail() {
+        onView(withId(R.id.activeFormRecycleView)).perform(
 
                 // First position the recycler view. Necessary to allow the layout
                 // manager perform the scroll operation

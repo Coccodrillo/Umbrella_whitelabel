@@ -17,7 +17,7 @@ import org.secfirst.umbrella.R
 import org.secfirst.umbrella.feature.account.AccountController
 import org.secfirst.umbrella.feature.content.view.ContentController
 import org.secfirst.umbrella.feature.feed.FeedController
-import org.secfirst.umbrella.feature.form.view.controller.FormController
+import org.secfirst.umbrella.feature.form.view.controller.HostFormController
 import org.secfirst.umbrella.feature.lesson.LessonController
 import org.secfirst.umbrella.feature.main.OnNavigationBottomView
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
@@ -45,12 +45,12 @@ class MainActivity : AppCompatActivity(), OnNavigationBottomView {
     }
 
     fun setToolBarTitle(title: String) {
-        if (mainToolbar != null) mainToolbar.title = title
+        mainToolbar?.title = title
     }
 
     fun enableUpArrow(enabled: Boolean) {
-        supportActionBar!!.setDisplayHomeAsUpEnabled(enabled)
-        supportActionBar!!.setDisplayShowHomeEnabled(enabled)
+        supportActionBar?.setDisplayHomeAsUpEnabled(enabled)
+        supportActionBar?.setDisplayShowHomeEnabled(enabled)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -63,7 +63,6 @@ class MainActivity : AppCompatActivity(), OnNavigationBottomView {
 
     private fun initRoute(savedInstanceState: Bundle?) {
         container = findViewById(R.id.baseContainer)
-        val navigation = findViewById<BottomNavigationView>(R.id.navigation)
         navigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener)
         router = Conductor.attachRouter(this, container, savedInstanceState)
         if (!router.hasRootController()) {
@@ -81,7 +80,7 @@ class MainActivity : AppCompatActivity(), OnNavigationBottomView {
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_forms -> {
-                router.pushController(RouterTransaction.with(FormController()))
+                router.pushController(RouterTransaction.with(HostFormController()))
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_checklists -> {

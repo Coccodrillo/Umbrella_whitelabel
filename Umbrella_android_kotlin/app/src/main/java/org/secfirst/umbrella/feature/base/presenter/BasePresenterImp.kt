@@ -3,7 +3,7 @@ package org.secfirst.umbrella.feature.base.presenter
 import io.reactivex.disposables.CompositeDisposable
 import org.secfirst.umbrella.feature.base.interactor.BaseInteractor
 import org.secfirst.umbrella.feature.base.view.BaseView
-import org.secfirst.umbrella.util.SchedulerProvider
+import org.secfirst.umbrella.misc.SchedulerProvider
 
 abstract class BasePresenterImp<V : BaseView, I : BaseInteractor>
 internal constructor(protected var interactor: I?,
