@@ -5,8 +5,8 @@
     <string name="checklist_title">Checklists</string>
     <string name="lesson_title">Lessons</string>
     <string name="account_title">Account</string>
-    <string name="message_title_active_list_form">Active</string>
-    <string name="message_title_all_list_form">All</string>
+    <string name="message_title_active_forms">Filled out forms</string>
+    <string name="message_title_all_forms">Available forms</string>
     <string name="message_body_form_new">NEW</string>
     <string name="form_input_controller_name">Digital Security Incident</string>
 </resources>

@@ -14,7 +14,8 @@
         android:layout_marginLeft="5dp"
         android:layout_marginStart="5dp"
         android:padding="5dp"
-        android:text="@string/message_title_all_list_form"
+        android:text="@string/message_title_all_forms"
+        android:textSize="14sp"
         app:layout_constraintBottom_toTopOf="@+id/allFormRecycleView"
         app:layout_constraintStart_toStartOf="@+id/allFormRecycleView"
         app:layout_constraintTop_toTopOf="parent" />
@@ -23,7 +24,6 @@
         android:id="@+id/allFormRecycleView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/titleActiveForm"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/titleAllForm" />
@@ -33,20 +33,19 @@
         android:id="@+id/titleActiveForm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="270dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginStart="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
         android:padding="5dp"
-        android:text="@string/message_title_active_list_form"
+        android:text="@string/message_title_active_forms"
+        android:textSize="14sp"
+        android:layout_marginTop="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/allFormRecycleView"
-        app:layout_constraintTop_toBottomOf="@+id/allFormRecycleView" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/activeFormRecycleView"
         android:layout_width="match_parent"
         android:layout_height="242dp"
-        android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

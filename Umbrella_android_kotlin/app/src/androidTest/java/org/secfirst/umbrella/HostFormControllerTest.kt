@@ -45,13 +45,13 @@ class HostFormControllerTest {
     @Test
     fun should_return_valid_title_for_all_forms() {
         onView(withId(R.id.titleAllForm)).check(matches(
-                withText(R.string.message_title_all_list_form)))
+                withText(R.string.message_title_all_forms)))
     }
 
     @Test
     fun should_return_valid_title_for_active_forms() {
         onView(withId(R.id.titleActiveForm)).check(matches(
-                withText(R.string.message_title_active_list_form)))
+                withText(R.string.message_title_active_forms)))
     }
 
     @Test
