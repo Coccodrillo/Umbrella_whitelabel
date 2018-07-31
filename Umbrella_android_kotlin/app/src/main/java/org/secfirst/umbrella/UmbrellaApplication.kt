@@ -6,7 +6,6 @@ import android.content.Context
 import android.support.multidex.MultiDex
 import com.crashlytics.android.Crashlytics
 import com.crashlytics.android.core.CrashlyticsCore
-import com.facebook.stetho.Stetho
 import com.raizlabs.android.dbflow.config.DatabaseConfig
 import com.raizlabs.android.dbflow.config.FlowConfig
 import com.raizlabs.android.dbflow.config.FlowLog
@@ -44,7 +43,6 @@ class UmbrellaApplication : Application(), HasActivityInjector {
         initDaggerComponent()
         initDatabase()
         initTentRepository()
-        initStetho()
         initFonts()
         initFabric()
 
@@ -71,10 +69,6 @@ class UmbrellaApplication : Application(), HasActivityInjector {
 
         FlowManager.init(dbConfig)
         FlowLog.setMinimumLoggingLevel(FlowLog.Level.V)
-    }
-
-    private fun initStetho() {
-        Stetho.initializeWithDefaults(this);
     }
 
     private fun initFonts() {

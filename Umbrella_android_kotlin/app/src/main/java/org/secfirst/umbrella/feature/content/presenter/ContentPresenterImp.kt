@@ -8,7 +8,7 @@ import org.secfirst.umbrella.data.Root
 import org.secfirst.umbrella.feature.base.presenter.BasePresenterImp
 import org.secfirst.umbrella.feature.content.interactor.ContentBaseInteractor
 import org.secfirst.umbrella.feature.content.view.ContentBaseView
-import org.secfirst.umbrella.util.SchedulerProvider
+import org.secfirst.umbrella.misc.SchedulerProvider
 import javax.inject.Inject
 
 

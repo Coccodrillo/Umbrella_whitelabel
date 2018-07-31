@@ -4,18 +4,16 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.bluelinelabs.conductor.Router
-import com.bluelinelabs.conductor.RouterTransaction
 import kotlinx.android.synthetic.main.all_form_item_view.view.*
 import org.secfirst.umbrella.R
 import org.secfirst.umbrella.UmbrellaApplication
 import org.secfirst.umbrella.data.Form
-import org.secfirst.umbrella.feature.form.view.controller.FormInputController
 
 
-class AllFormAdapter(private val forms: List<Form>, private val router: Router) : RecyclerView.Adapter<FormViewHolder>() {
+class AllFormAdapter(private val onItemClick: (Form) -> Unit) : RecyclerView.Adapter<FormViewHolder>() {
 
     private val context = UmbrellaApplication.instance
+    private val forms = mutableListOf<Form>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FormViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.all_form_item_view, parent, false)
@@ -23,12 +21,16 @@ class AllFormAdapter(private val forms: List<Form>, private val router: Router) 
         return FormViewHolder(view)
     }
 
+    fun updateForms(forms: List<Form>) {
+        this.forms.clear()
+        this.forms.addAll(forms)
+        notifyDataSetChanged()
+    }
+
     override fun getItemCount() = forms.size
 
     override fun onBindViewHolder(formHolder: FormViewHolder, position: Int) {
-        formHolder.bind(forms[position].title, clickListener = {
-            router.pushController(RouterTransaction.with(FormInputController(forms[it.adapterPosition])))
-        })
+        formHolder.bind(forms[position].title, clickListener = { onItemClick(forms[it.adapterPosition]) })
     }
 }
 

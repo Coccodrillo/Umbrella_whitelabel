@@ -17,12 +17,12 @@ import org.secfirst.umbrella.data.Option
 import org.secfirst.umbrella.data.Screen
 import org.secfirst.umbrella.data.Value
 import org.secfirst.umbrella.feature.form.FieldType
-import org.secfirst.umbrella.feature.form.view.controller.FormInputController
+import org.secfirst.umbrella.feature.form.view.controller.FormController
 
 
-class FormUI(private val screen: Screen, private val dataView: List<Value>?) : AnkoComponent<FormInputController>, Step {
+class FormUI(private val screen: Screen, private val dataView: List<Value>?) : AnkoComponent<FormController>, Step {
 
-    override fun createView(ui: AnkoContext<FormInputController>) = ui.apply {
+    override fun createView(ui: AnkoContext<FormController>) = ui.apply {
         val size = 16f
 
         scrollView {
@@ -102,19 +102,19 @@ class FormUI(private val screen: Screen, private val dataView: List<Value>?) : A
         return ""
     }
 
-    private fun bindRadioButton(formOption: Option, radioButton: RadioButton, ui: AnkoContext<FormInputController>) {
+    private fun bindRadioButton(formOption: Option, radioButton: RadioButton, ui: AnkoContext<FormController>) {
         val radioButtonMap = hashMapOf<RadioButton, Option>()
         radioButtonMap[radioButton] = formOption
         ui.owner.radioButtonList.add(radioButtonMap)
     }
 
-    private fun bindCheckBox(formOption: Option, checkBox: CheckBox, ui: AnkoContext<FormInputController>) {
+    private fun bindCheckBox(formOption: Option, checkBox: CheckBox, ui: AnkoContext<FormController>) {
         val checkboxMap = hashMapOf<CheckBox, Option>()
         checkboxMap[checkBox] = formOption
         ui.owner.checkboxList.add(checkboxMap)
     }
 
-    private fun bindEditText(item: Item, editText: EditText, ui: AnkoContext<FormInputController>) {
+    private fun bindEditText(item: Item, editText: EditText, ui: AnkoContext<FormController>) {
         val editTextMap = hashMapOf<EditText, Item>()
         editTextMap[editText] = item
         ui.owner.editTextList.add(editTextMap)

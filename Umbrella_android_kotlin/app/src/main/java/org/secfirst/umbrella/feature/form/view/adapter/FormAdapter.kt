@@ -11,9 +11,9 @@ import org.jetbrains.anko.AnkoContext
 import org.secfirst.umbrella.UmbrellaApplication
 import org.secfirst.umbrella.data.Form
 import org.secfirst.umbrella.feature.form.view.FormUI
-import org.secfirst.umbrella.feature.form.view.controller.FormInputController
+import org.secfirst.umbrella.feature.form.view.controller.FormController
 
-class FormInputAdapter(private val form: Form, private val controller: FormInputController, private val listOfViews: MutableList<FormUI>)
+class FormAdapter(private val form: Form, private val controller: FormController, private val listOfViews: MutableList<FormUI>)
     : AbstractStepAdapter(UmbrellaApplication.instance) {
 
     private val pages = SparseArray<Step>()
