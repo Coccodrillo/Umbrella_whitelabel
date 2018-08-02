@@ -55,12 +55,13 @@ class HostFormController : BaseController(), FormView {
         return inflater.inflate(R.layout.host_form_view, container, false)
     }
 
-    override fun showModelForms(modelForms: List<Form>) {
-        allFormAdapter.updateForms(modelForms)
+    override fun showModelForms(modelForms: List<Form>?) {
+        if (modelForms != null)
+            allFormAdapter.updateForms(modelForms)
     }
 
     override fun showActiveForms(activeForms: List<Form>) {
-        activeFormAdapter.updateForms(activeForms)
+            activeFormAdapter.updateForms(activeForms)
     }
 
     override fun getTitleToolbar() = applicationContext?.getString(R.string.form_title)!!

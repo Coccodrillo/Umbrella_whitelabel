@@ -1,7 +1,8 @@
 package org.secfirst.umbrella.feature.form.presenter
 
 import io.reactivex.disposables.CompositeDisposable
-import org.secfirst.umbrella.data.Value
+import org.secfirst.umbrella.data.Answer
+import org.secfirst.umbrella.data.Form
 import org.secfirst.umbrella.feature.base.presenter.BasePresenterImp
 import org.secfirst.umbrella.feature.form.interactor.FormBaseInteractor
 import org.secfirst.umbrella.feature.form.view.FormView
@@ -20,27 +21,37 @@ class FormPresenterImp<V : FormView, I : FormBaseInteractor>
         schedulerProvider = schedulerProvider,
         compositeDisposable = disposable), FormBasePresenter<V, I> {
 
-
-    override fun submitLoadActiveForms() {
+    override fun submitForm(form: Form) {
         launchSilent(uiContext) {
-            val allForms = interactor!!.fetchForm()
-            val formsWithData = interactor!!.loadDataFormBy(allForms)
-            if (isActive)
-                getView()?.showActiveForms(formsWithData)
+            interactor?.insertForm(form)
         }
     }
 
-    override fun submitInsert(formData: Value) {
+
+    override fun submitLoadActiveForms() {
         launchSilent(uiContext) {
-            interactor?.persisteFormData(formData)
+            var activeForms = listOf<Form>()
+            interactor?.let {
+                activeForms = it.fetchActiveForms()
+                activeForms.forEach { form ->
+                    form.screens = it.fetchScreenBy(form.referenceId).toMutableList()
+                }
+            }
+            if (isActive)
+                getView()?.showActiveForms(activeForms)
+        }
+    }
+
+    override fun submitInsert(answer: Answer) {
+        launchSilent(uiContext) {
+            interactor?.insertFormData(answer)
         }
     }
 
     override fun submitLoadModelForms() {
         launchSilent(uiContext) {
-            val forms = interactor!!.fetchForm()
             if (isActive)
-                getView()?.showModelForms(forms)
+                getView()?.showModelForms(interactor?.fetchForms())
         }
     }
 }

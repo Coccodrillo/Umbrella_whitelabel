@@ -139,13 +139,19 @@ class Content(
         var label: String = "") : BaseModel()
 
 
-@Table(database = AppDatabase::class)
+@Table(database = AppDatabase::class, useBooleanGetterSetters = false)
 data class Form(
         @PrimaryKey(autoincrement = true)
         var id: Long = 0,
         @Column
         var title: String = "",
-        var data: List<Value>? = null,
+        var answers: MutableList<Answer> = mutableListOf(),
+        @Column
+        var active: Boolean = false,
+        @Column(name = "form_model_id")
+        var referenceId: Long = 0,
+        @Column
+        var date: String = "",
         var screens: MutableList<Screen> = arrayListOf()) : BaseModel(), Serializable {
 
     @OneToMany(methods = [(OneToMany.Method.ALL)], variableName = "screens")
@@ -157,6 +163,17 @@ data class Form(
                     .queryList()
         }
         return screens
+    }
+
+    @OneToMany(methods = [(OneToMany.Method.ALL)], variableName = "answers")
+    fun oneToManyAnswer(): MutableList<Answer> {
+        if (answers.isEmpty()) {
+            answers = SQLite.select()
+                    .from(Answer::class.java)
+                    .where(Answer_Table.form_id.eq(id))
+                    .queryList()
+        }
+        return answers
     }
 }
 
@@ -233,18 +250,22 @@ data class Option(
         @Column
         var value: String = "") : BaseModel(), Serializable
 
-@Table(database = AppDatabase::class, allFields = true, useBooleanGetterSetters = false)
-data class Value(
+@Table(database = AppDatabase::class, useBooleanGetterSetters = false)
+data class Answer(
         @PrimaryKey(autoincrement = true)
         var id: Long = 0,
+        @Column
         var textInput: String = "",
+        @Column
         var choiceInput: Boolean = false,
-        var dataTime: String = "",
         @ForeignKey
         var item: Item? = null,
         @ForeignKey
         var option: Option? = null,
-        @ForeignKey
+        @ForeignKey(onUpdate = ForeignKeyAction.CASCADE,
+                onDelete = ForeignKeyAction.CASCADE,
+                stubbedRelationship = true)
+        @ForeignKeyReference(foreignKeyColumnName = "id", columnName = "form_id")
         var form: Form? = null) : Serializable
 
 val Element.convertToCategory: Category

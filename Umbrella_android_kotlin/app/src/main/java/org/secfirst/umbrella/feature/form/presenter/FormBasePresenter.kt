@@ -1,6 +1,7 @@
 package org.secfirst.umbrella.feature.form.presenter
 
-import org.secfirst.umbrella.data.Value
+import org.secfirst.umbrella.data.Answer
+import org.secfirst.umbrella.data.Form
 import org.secfirst.umbrella.feature.base.presenter.BasePresenter
 import org.secfirst.umbrella.feature.form.interactor.FormBaseInteractor
 import org.secfirst.umbrella.feature.form.view.FormView
@@ -11,7 +12,9 @@ interface FormBasePresenter<V : FormView, I : FormBaseInteractor> : BasePresente
 
     fun submitLoadActiveForms()
 
-    fun submitInsert(formData: Value)
+    fun submitInsert(answer: Answer)
+
+    fun submitForm(form: Form)
 
 
 }

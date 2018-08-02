@@ -1,18 +1,25 @@
 package org.secfirst.umbrella.feature.form.interactor
 
+import org.secfirst.umbrella.data.Answer
 import org.secfirst.umbrella.data.Form
-import org.secfirst.umbrella.data.Value
+import org.secfirst.umbrella.data.Screen
 import org.secfirst.umbrella.data.database.form.FormRepo
 import org.secfirst.umbrella.feature.base.interactor.BaseInteractorImp
 import javax.inject.Inject
 
 class FormInteractorImp @Inject constructor(private val formRepo: FormRepo) : BaseInteractorImp(), FormBaseInteractor {
 
-    override suspend fun loadDataFormBy(forms: List<Form>) = formRepo.loadDataBy(forms)
+    override suspend fun fetchFormIdBy(title: String): Long = formRepo.loadFormIdBy(title)
 
-    override suspend fun loadDataFormBy(id: Long) = formRepo.loadBy(id)
+    override suspend fun fetchAnswerBy(formId: Long): List<Answer> = formRepo.loadAnswerBy(formId)
 
-    override suspend fun persisteFormData(formData: Value) = formRepo.persist(formData)
+    override suspend fun fetchScreenBy(formId: Long): List<Screen> = formRepo.loadScreenBy(formId)
 
-    override suspend fun fetchForm() = formRepo.getAll()
+    override suspend fun insertForm(form: Form) = formRepo.persistForm(form)
+
+    override suspend fun fetchActiveForms(): List<Form> = formRepo.loadActiveForms()
+
+    override suspend fun insertFormData(answer: Answer) = formRepo.persistFormData(answer)
+
+    override suspend fun fetchForms() = formRepo.loadModelForms()
 }

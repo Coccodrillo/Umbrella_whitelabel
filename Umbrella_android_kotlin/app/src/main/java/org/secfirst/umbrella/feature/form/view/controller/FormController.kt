@@ -12,10 +12,10 @@ import com.stepstone.stepper.VerificationError
 import kotlinx.android.synthetic.main.form_view.*
 import org.secfirst.umbrella.R
 import org.secfirst.umbrella.UmbrellaApplication
+import org.secfirst.umbrella.data.Answer
 import org.secfirst.umbrella.data.Form
 import org.secfirst.umbrella.data.Item
 import org.secfirst.umbrella.data.Option
-import org.secfirst.umbrella.data.Value
 import org.secfirst.umbrella.feature.MainActivity
 import org.secfirst.umbrella.feature.base.view.BaseController
 import org.secfirst.umbrella.feature.form.DaggerFormComponent
@@ -26,7 +26,8 @@ import org.secfirst.umbrella.feature.form.view.FormView
 import org.secfirst.umbrella.feature.form.view.adapter.FormAdapter
 import org.secfirst.umbrella.feature.main.OnNavigationBottomView
 import org.secfirst.umbrella.misc.BundleExt.Companion.EXTRA_FORM_SELECTED
-import org.secfirst.umbrella.misc.currenttime
+import org.secfirst.umbrella.misc.currentTime
+import org.secfirst.umbrella.misc.hideKeyboard
 import javax.inject.Inject
 
 class FormController(bundle: Bundle) : BaseController(bundle), FormView, StepperLayout.StepperListener {
@@ -38,6 +39,8 @@ class FormController(bundle: Bundle) : BaseController(bundle), FormView, Stepper
     var checkboxList = mutableListOf<HashMap<CheckBox, Option>>()
     private lateinit var onNavigation: OnNavigationBottomView
     private var listOfViews: MutableList<FormUI> = mutableListOf()
+    private var formStartTime = ""
+    private lateinit var newForm: Form
 
 
     constructor(formSelected: Form) : this(Bundle().apply {
@@ -49,15 +52,17 @@ class FormController(bundle: Bundle) : BaseController(bundle), FormView, Stepper
 
     override fun onAttach(view: View) {
         super.onAttach(view)
+        createFormUI()
         stepperLayout.adapter = FormAdapter(formSelected, this, listOfViews)
         stepperLayout.setListener(this)
         onNavigation = activity as MainActivity
-        onNavigation.hiddenBottomMenu()
+        onNavigation.hideBottomMenu()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
         val view = inflater.inflate(R.layout.form_view, container, false)
         createFormUI()
+        createActiveForm()
         return view
     }
 
@@ -66,15 +71,23 @@ class FormController(bundle: Bundle) : BaseController(bundle), FormView, Stepper
         super.onDestroy()
     }
 
+    private fun createActiveForm(){
+        newForm = formSelected
+        newForm.referenceId = formSelected.id
+        newForm.id = System.currentTimeMillis()
+        newForm.active = true
+    }
     private fun createFormUI() {
         for (view in formSelected.screens)
-            listOfViews.add(FormUI(view, formSelected.data))
+            listOfViews.add(FormUI(view, formSelected.answers))
     }
 
     override fun onCompleted(completeButton: View?) {
+        formStartTime = currentTime
         bindCheckboxValue()
         bindEditTextValue()
         bindRadioButtonValue()
+        hideKeyboard()
         router.popCurrentController()
     }
 
@@ -88,49 +101,57 @@ class FormController(bundle: Bundle) : BaseController(bundle), FormView, Stepper
 
     private fun bindCheckboxValue() {
         checkboxList.forEach { map ->
-            val value = Value()
+            val answer = Answer()
             for (entry in map) {
                 val formOption = entry.value
                 val checkbox = entry.key
-                value.choiceInput = checkbox.isChecked
-                value.form = formSelected
-                value.option = formOption
-                value.dataTime = currenttime
-                value.id = 0
-                if (value.choiceInput) presenter.submitInsert(value)
+                answer.choiceInput = checkbox.isChecked
+                answer.form = formSelected
+                answer.option = formOption
+                newForm.date = formStartTime
+
+                if (answer.choiceInput)
+                    newForm.answers.add(answer)
+
             }
+
+            presenter.submitForm(newForm)
         }
     }
 
     private fun bindEditTextValue() {
         editTextList.forEach { map ->
-            val value = Value()
+            val answer = Answer()
             for (entry in map) {
                 val item = entry.value
                 val editText = entry.key
-                value.textInput = editText.text.toString()
-                value.form = formSelected
-                value.item = item
-                value.dataTime = currenttime
-                value.id = 0
-                if (value.textInput.isNotEmpty()) presenter.submitInsert(value)
+                answer.textInput = editText.text.toString()
+                answer.form = formSelected
+                answer.item = item
+                newForm.date = formStartTime
+                if (answer.textInput.isNotEmpty())
+                    newForm.answers.add(answer)
+
             }
+            presenter.submitForm(newForm)
         }
     }
 
     private fun bindRadioButtonValue() {
         radioButtonList.forEach { map ->
-            val value = Value()
+            val answer = Answer()
             for (entry in map) {
                 val formOption = entry.value
                 val radioButton = entry.key
-                value.choiceInput = radioButton.isChecked
-                value.form = formSelected
-                value.option = formOption
-                value.dataTime = currenttime
-                value.id = 0
-                if (value.choiceInput) presenter.submitInsert(value)
+                answer.choiceInput = radioButton.isChecked
+                answer.form = formSelected
+                answer.option = formOption
+                newForm.date = formStartTime
+                if (answer.choiceInput)
+                    newForm.answers.add(answer)
+
             }
+            presenter.submitForm(newForm)
         }
     }
 
@@ -143,4 +164,5 @@ class FormController(bundle: Bundle) : BaseController(bundle), FormView, Stepper
     override fun getTitleToolbar() = formSelected.title
 
     override fun getEnableBackAction() = true
+
 }
