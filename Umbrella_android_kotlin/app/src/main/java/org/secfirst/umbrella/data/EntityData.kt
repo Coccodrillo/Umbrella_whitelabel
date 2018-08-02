@@ -185,7 +185,7 @@ data class Screen(
         var title: String = "",
         @JsonIgnore
         @ForeignKey(onUpdate = ForeignKeyAction.CASCADE,
-                onDelete = ForeignKeyAction.CASCADE,
+                deleteForeignKeyModel = false,
                 stubbedRelationship = true)
         @ForeignKeyReference(foreignKeyColumnName = "id", columnName = "form_id")
         var form: Form? = null,
@@ -214,7 +214,7 @@ data class Item(
         @Column
         var label: String = "",
         @ForeignKey(onUpdate = ForeignKeyAction.CASCADE,
-                onDelete = ForeignKeyAction.CASCADE,
+                deleteForeignKeyModel = false,
                 stubbedRelationship = true)
         @ForeignKeyReference(foreignKeyColumnName = "id", columnName = "screen_id")
         var screen: Screen? = null,
@@ -243,7 +243,7 @@ data class Option(
         @Column
         var label: String = "",
         @ForeignKey(onUpdate = ForeignKeyAction.CASCADE,
-                onDelete = ForeignKeyAction.CASCADE,
+                deleteForeignKeyModel = false,
                 stubbedRelationship = true)
         @ForeignKeyReference(foreignKeyColumnName = "id", columnName = "item_id")
         var item: Item? = null,
@@ -258,12 +258,12 @@ data class Answer(
         var textInput: String = "",
         @Column
         var choiceInput: Boolean = false,
-        @ForeignKey
+        @ForeignKey(deleteForeignKeyModel = false)
         var item: Item? = null,
-        @ForeignKey
+        @ForeignKey(deleteForeignKeyModel = false)
         var option: Option? = null,
         @ForeignKey(onUpdate = ForeignKeyAction.CASCADE,
-                onDelete = ForeignKeyAction.CASCADE,
+                deleteForeignKeyModel = false,
                 stubbedRelationship = true)
         @ForeignKeyReference(foreignKeyColumnName = "id", columnName = "form_id")
         var form: Form? = null) : Serializable

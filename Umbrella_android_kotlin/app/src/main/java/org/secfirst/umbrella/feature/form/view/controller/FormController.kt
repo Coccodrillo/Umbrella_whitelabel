@@ -14,8 +14,6 @@ import org.secfirst.umbrella.R
 import org.secfirst.umbrella.UmbrellaApplication
 import org.secfirst.umbrella.data.Answer
 import org.secfirst.umbrella.data.Form
-import org.secfirst.umbrella.data.Item
-import org.secfirst.umbrella.data.Option
 import org.secfirst.umbrella.feature.MainActivity
 import org.secfirst.umbrella.feature.base.view.BaseController
 import org.secfirst.umbrella.feature.form.DaggerFormComponent
@@ -34,9 +32,9 @@ class FormController(bundle: Bundle) : BaseController(bundle), FormView, Stepper
 
     @Inject
     internal lateinit var presenter: FormBasePresenter<FormView, FormBaseInteractor>
-    var editTextList = mutableListOf<HashMap<EditText, Item>>()
-    var radioButtonList = mutableListOf<HashMap<RadioButton, Option>>()
-    var checkboxList = mutableListOf<HashMap<CheckBox, Option>>()
+    var editTextList = mutableListOf<HashMap<EditText, Answer>>()
+    var radioButtonList = mutableListOf<HashMap<RadioButton, Answer>>()
+    var checkboxList = mutableListOf<HashMap<CheckBox, Answer>>()
     private lateinit var onNavigation: OnNavigationBottomView
     private var listOfViews: MutableList<FormUI> = mutableListOf()
     private var formStartTime = ""
@@ -52,7 +50,6 @@ class FormController(bundle: Bundle) : BaseController(bundle), FormView, Stepper
 
     override fun onAttach(view: View) {
         super.onAttach(view)
-        createFormUI()
         stepperLayout.adapter = FormAdapter(formSelected, this, listOfViews)
         stepperLayout.setListener(this)
         onNavigation = activity as MainActivity
@@ -61,7 +58,6 @@ class FormController(bundle: Bundle) : BaseController(bundle), FormView, Stepper
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
         val view = inflater.inflate(R.layout.form_view, container, false)
-        createFormUI()
         createActiveForm()
         return view
     }
@@ -71,12 +67,18 @@ class FormController(bundle: Bundle) : BaseController(bundle), FormView, Stepper
         super.onDestroy()
     }
 
-    private fun createActiveForm(){
+    private fun createActiveForm() {
         newForm = formSelected
-        newForm.referenceId = formSelected.id
-        newForm.id = System.currentTimeMillis()
-        newForm.active = true
+        if (!newForm.active) {
+            newForm.referenceId = formSelected.id
+            newForm.id = if (formSelected.active) newForm.id else System.currentTimeMillis()
+            newForm.active = true
+            newForm.date = formStartTime
+        }
+
+        createFormUI()
     }
+
     private fun createFormUI() {
         for (view in formSelected.screens)
             listOfViews.add(FormUI(view, formSelected.answers))
@@ -101,15 +103,11 @@ class FormController(bundle: Bundle) : BaseController(bundle), FormView, Stepper
 
     private fun bindCheckboxValue() {
         checkboxList.forEach { map ->
-            val answer = Answer()
             for (entry in map) {
-                val formOption = entry.value
+                val answer = entry.value
                 val checkbox = entry.key
                 answer.choiceInput = checkbox.isChecked
-                answer.form = formSelected
-                answer.option = formOption
-                newForm.date = formStartTime
-
+                answer.form = newForm
                 if (answer.choiceInput)
                     newForm.answers.add(answer)
 
@@ -121,14 +119,11 @@ class FormController(bundle: Bundle) : BaseController(bundle), FormView, Stepper
 
     private fun bindEditTextValue() {
         editTextList.forEach { map ->
-            val answer = Answer()
             for (entry in map) {
-                val item = entry.value
+                val answer = entry.value
                 val editText = entry.key
                 answer.textInput = editText.text.toString()
-                answer.form = formSelected
-                answer.item = item
-                newForm.date = formStartTime
+                answer.form = newForm
                 if (answer.textInput.isNotEmpty())
                     newForm.answers.add(answer)
 
@@ -139,14 +134,11 @@ class FormController(bundle: Bundle) : BaseController(bundle), FormView, Stepper
 
     private fun bindRadioButtonValue() {
         radioButtonList.forEach { map ->
-            val answer = Answer()
             for (entry in map) {
-                val formOption = entry.value
+                val answer = entry.value
                 val radioButton = entry.key
                 answer.choiceInput = radioButton.isChecked
-                answer.form = formSelected
-                answer.option = formOption
-                newForm.date = formStartTime
+                answer.form = newForm
                 if (answer.choiceInput)
                     newForm.answers.add(answer)
 

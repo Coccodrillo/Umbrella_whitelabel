@@ -12,6 +12,8 @@ interface FormBaseInteractor : BaseInteractor {
 
     suspend fun insertForm(form: Form)
 
+    suspend fun deleteForm(form: Form)
+
     suspend fun fetchForms(): List<Form>
 
     suspend fun fetchActiveForms(): List<Form>

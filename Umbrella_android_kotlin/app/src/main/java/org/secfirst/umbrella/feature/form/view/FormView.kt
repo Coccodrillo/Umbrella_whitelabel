@@ -5,6 +5,6 @@ import org.secfirst.umbrella.feature.base.view.BaseView
 
 interface FormView : BaseView {
 
-    fun showModelForms(modelForms: List<Form>?) {}
+    fun showModelForms(modelForms: List<Form>) {}
     fun showActiveForms(activeForms: List<Form>) {}
 }

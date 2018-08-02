@@ -33,50 +33,59 @@ class FormUI(private val screen: Screen, private val answers: List<Answer>?) : A
                     when (item.type) {
 
                         FieldType.LABEL.value ->
-
                             textView(item.label) {
                                 textSize = 18f
                                 padding = dip(10)
                                 textColor = ContextCompat.getColor(context, R.color.umbrella_purple)
                             }.lparams { gravity = Gravity.CENTER }
                         FieldType.TEXT_AREA.value -> {
-
+                            var answer = Answer()
                             textView(item.label) { textSize = size }.lparams { topMargin = dip(10) }
                             val editText = editText {
                                 hint = item.hint
-                                setText(isData(item))
+                                getAnswer(item)?.let { answer = it }
+                                setText(answer.textInput)
+
                             }.lparams(width = matchParent)
-                            bindEditText(item, editText, ui)
+
+                            answer.item = item
+                            bindEditText(answer, editText, ui)
                         }
                         FieldType.TEXT_INPUT.value -> {
-
+                            var answer = Answer()
                             textView(item.label) { textSize = size }.lparams { topMargin = dip(10) }
                             val editText = editText {
                                 hint = item.hint
-                                setText(isData(item))
+                                getAnswer(item)?.let { answer = it }
+                                setText(answer.textInput)
                             }.lparams(width = matchParent)
-                            bindEditText(item, editText, ui)
+
+                            answer.item = item
+                            bindEditText(answer, editText, ui)
                         }
                         FieldType.MULTIPLE_CHOICE.value -> {
-
+                            var answer = Answer()
                             textView(item.label) { textSize = size }.lparams { topMargin = dip(10) }
                             item.options.forEach { formOption ->
                                 val checkBox = checkBox {
                                     text = formOption.label
-                                    isChecked = isData(formOption)
+                                    getAnswer(formOption)?.let { answer = it }
+                                    isChecked = answer.choiceInput
                                 }
-                                bindCheckBox(formOption, checkBox, ui)
+                                bindCheckBox(answer, checkBox, ui)
                             }
                         }
                         FieldType.SINGLE_CHOICE.value -> {
-
+                            var answer = Answer()
                             textView(item.label)
                             item.options.forEach { formOption ->
                                 val radioButton = radioButton {
                                     text = formOption.label
-                                    isChecked = isData(formOption)
+                                    getAnswer(formOption)?.let { answer = it }
+                                    isChecked = answer.choiceInput
                                 }
-                                bindRadioButton(formOption, radioButton, ui)
+                                answer.option = formOption
+                                bindRadioButton(answer, radioButton, ui)
                             }
                         }
                     }
@@ -87,38 +96,38 @@ class FormUI(private val screen: Screen, private val answers: List<Answer>?) : A
 
     }.view
 
-    private fun isData(formOption: Option): Boolean {
+    private fun getAnswer(formOption: Option): Answer? {
         answers?.forEach { answer ->
             if (formOption.id == answer.option?.id)
-                return true
+                return answer
         }
-        return false
+        return null
     }
 
-    private fun isData(item: Item): String {
+    private fun getAnswer(item: Item): Answer? {
         answers?.forEach { answer ->
             if (item.id == answer.item?.id) {
-                return answer.textInput
+                return answer
             }
         }
-        return ""
+        return null
     }
 
-    private fun bindRadioButton(formOption: Option, radioButton: RadioButton, ui: AnkoContext<FormController>) {
-        val radioButtonMap = hashMapOf<RadioButton, Option>()
-        radioButtonMap[radioButton] = formOption
+    private fun bindRadioButton(answer: Answer, radioButton: RadioButton, ui: AnkoContext<FormController>) {
+        val radioButtonMap = hashMapOf<RadioButton, Answer>()
+        radioButtonMap[radioButton] = answer
         ui.owner.radioButtonList.add(radioButtonMap)
     }
 
-    private fun bindCheckBox(formOption: Option, checkBox: CheckBox, ui: AnkoContext<FormController>) {
-        val checkboxMap = hashMapOf<CheckBox, Option>()
-        checkboxMap[checkBox] = formOption
+    private fun bindCheckBox(answer: Answer, checkBox: CheckBox, ui: AnkoContext<FormController>) {
+        val checkboxMap = hashMapOf<CheckBox, Answer>()
+        checkboxMap[checkBox] = answer
         ui.owner.checkboxList.add(checkboxMap)
     }
 
-    private fun bindEditText(item: Item, editText: EditText, ui: AnkoContext<FormController>) {
-        val editTextMap = hashMapOf<EditText, Item>()
-        editTextMap[editText] = item
+    private fun bindEditText(answer: Answer, editText: EditText, ui: AnkoContext<FormController>) {
+        val editTextMap = hashMapOf<EditText, Answer>()
+        editTextMap[editText] = answer
         ui.owner.editTextList.add(editTextMap)
     }
 
