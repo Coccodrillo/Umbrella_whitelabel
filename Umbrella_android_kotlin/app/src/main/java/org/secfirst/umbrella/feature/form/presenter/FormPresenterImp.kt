@@ -21,12 +21,18 @@ class FormPresenterImp<V : FormView, I : FormBaseInteractor>
         schedulerProvider = schedulerProvider,
         compositeDisposable = disposable), FormBasePresenter<V, I> {
 
+
+    override fun submitDeleteForm(form: Form) {
+        launchSilent(uiContext) {
+            interactor?.deleteForm(form)
+        }
+    }
+
     override fun submitForm(form: Form) {
         launchSilent(uiContext) {
             interactor?.insertForm(form)
         }
     }
-
 
     override fun submitLoadActiveForms() {
         launchSilent(uiContext) {
@@ -51,7 +57,8 @@ class FormPresenterImp<V : FormView, I : FormBaseInteractor>
     override fun submitLoadModelForms() {
         launchSilent(uiContext) {
             if (isActive)
-                getView()?.showModelForms(interactor?.fetchForms())
+                interactor?.let { getView()?.showModelForms(it.fetchForms()) }
+
         }
     }
 }

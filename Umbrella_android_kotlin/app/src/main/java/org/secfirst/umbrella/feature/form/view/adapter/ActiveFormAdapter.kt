@@ -10,7 +10,9 @@ import org.secfirst.umbrella.UmbrellaApplication
 import org.secfirst.umbrella.data.Form
 
 
-class ActiveFormAdapter(private val onItemClick: (Form) -> Unit) : RecyclerView.Adapter<ActiveFormViewHolder>() {
+class ActiveFormAdapter(private val onEditItemClick: (Form) -> Unit,
+                        private val onDeleteItemClick: (Form) -> Unit,
+                        private val onShareItemClick: (Form) -> Unit) : RecyclerView.Adapter<ActiveFormViewHolder>() {
 
     private val context = UmbrellaApplication.instance
     private val forms = mutableListOf<Form>()
@@ -29,10 +31,17 @@ class ActiveFormAdapter(private val onItemClick: (Form) -> Unit) : RecyclerView.
         notifyDataSetChanged()
     }
 
+    fun remove(form: Form) {
+        this.forms.remove(form)
+        notifyDataSetChanged()
+    }
+
     override fun onBindViewHolder(formHolder: ActiveFormViewHolder, position: Int) {
         val currentTime = forms[position].date
         val title = forms[position].title
-        formHolder.bind(title, currentTime, clickListener = { onItemClick(forms[it.adapterPosition]) })
+        formHolder.bind(title, currentTime, editClickListener = { onEditItemClick(forms[it.adapterPosition]) },
+                shareClickListener = { onShareItemClick(forms[it.adapterPosition]) },
+                deleteClickListener = { onDeleteItemClick(forms[it.adapterPosition]) })
     }
 
 }
@@ -45,9 +54,16 @@ class ActiveFormViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val share = itemView.shareForm
     private val delete = itemView.deleteForm
 
-    fun bind(title: String, timeNow: String, clickListener: (ActiveFormViewHolder) -> Unit) {
+    fun bind(title: String, timeNow: String,
+             editClickListener: (ActiveFormViewHolder) -> Unit,
+             deleteClickListener: (ActiveFormViewHolder) -> Unit,
+             shareClickListener: (ActiveFormViewHolder) -> Unit) {
+
         titleForm.text = title
         currentTime.text = timeNow
-        itemView.setOnClickListener { clickListener(this) }
+
+        edit.setOnClickListener { editClickListener(this) }
+        share.setOnClickListener { shareClickListener(this) }
+        delete.setOnClickListener { deleteClickListener(this) }
     }
 }

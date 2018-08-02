@@ -6,6 +6,8 @@ import org.secfirst.umbrella.data.Screen
 
 interface FormRepo {
 
+    suspend fun removeForm(form: Form)
+
     suspend fun persistFormData(answer: Answer)
 
     suspend fun persistForm(form: Form)
@@ -18,7 +20,6 @@ interface FormRepo {
 
     suspend fun loadScreenBy(formId: Long): List<Screen>
 
-
-    suspend fun loadFormIdBy(title : String): Long
+    suspend fun loadFormIdBy(title: String): Long
 
 }

@@ -16,5 +16,6 @@ interface FormBasePresenter<V : FormView, I : FormBaseInteractor> : BasePresente
 
     fun submitForm(form: Form)
 
+    fun submitDeleteForm(form: Form)
 
 }

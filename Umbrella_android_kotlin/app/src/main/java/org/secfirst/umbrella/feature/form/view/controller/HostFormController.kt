@@ -25,9 +25,11 @@ class HostFormController : BaseController(), FormView {
 
     @Inject
     internal lateinit var presenter: FormBasePresenter<FormView, FormBaseInteractor>
-    private val clickListener: (Form) -> Unit = this::onFormClicked
-    private val allFormAdapter = AllFormAdapter(clickListener)
-    private val activeFormAdapter = ActiveFormAdapter(clickListener)
+    private val editClick: (Form) -> Unit = this::onEditFormClicked
+    private val deleteClick: (Form) -> Unit = this::onDeleteFormClicked
+    private val shareClick: (Form) -> Unit = this::onShareFormClicked
+    private val allFormAdapter = AllFormAdapter(editClick)
+    private val activeFormAdapter = ActiveFormAdapter(editClick, deleteClick, shareClick)
 
     override fun onInject() {
         DaggerFormComponent.builder()
@@ -45,7 +47,18 @@ class HostFormController : BaseController(), FormView {
         presenter.submitLoadActiveForms()
     }
 
-    private fun onFormClicked(form: Form) {
+    private fun onEditFormClicked(form: Form) {
+        router.pushController(RouterTransaction.with(FormController(form))
+                .pushChangeHandler(FadeChangeHandler())
+                .popChangeHandler(FadeChangeHandler()))
+    }
+
+    private fun onDeleteFormClicked(form: Form) {
+        presenter.submitDeleteForm(form)
+        activeFormAdapter.remove(form)
+    }
+
+    private fun onShareFormClicked(form: Form) {
         router.pushController(RouterTransaction.with(FormController(form))
                 .pushChangeHandler(FadeChangeHandler())
                 .popChangeHandler(FadeChangeHandler()))
@@ -55,13 +68,12 @@ class HostFormController : BaseController(), FormView {
         return inflater.inflate(R.layout.host_form_view, container, false)
     }
 
-    override fun showModelForms(modelForms: List<Form>?) {
-        if (modelForms != null)
+    override fun showModelForms(modelForms: List<Form>) {
             allFormAdapter.updateForms(modelForms)
     }
 
     override fun showActiveForms(activeForms: List<Form>) {
-            activeFormAdapter.updateForms(activeForms)
+        activeFormAdapter.updateForms(activeForms)
     }
 
     override fun getTitleToolbar() = applicationContext?.getString(R.string.form_title)!!

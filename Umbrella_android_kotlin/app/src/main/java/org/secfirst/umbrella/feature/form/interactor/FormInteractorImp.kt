@@ -9,6 +9,8 @@ import javax.inject.Inject
 
 class FormInteractorImp @Inject constructor(private val formRepo: FormRepo) : BaseInteractorImp(), FormBaseInteractor {
 
+    override suspend fun deleteForm(form: Form) = formRepo.removeForm(form)
+
     override suspend fun fetchFormIdBy(title: String): Long = formRepo.loadFormIdBy(title)
 
     override suspend fun fetchAnswerBy(formId: Long): List<Answer> = formRepo.loadAnswerBy(formId)

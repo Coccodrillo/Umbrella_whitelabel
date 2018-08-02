@@ -6,6 +6,7 @@ import org.secfirst.umbrella.data.Screen
 import javax.inject.Inject
 
 class FormRepository @Inject constructor(private val formDao: FormDao) : FormRepo {
+    override suspend fun removeForm(form: Form) = formDao.delete(form)
 
     override suspend fun loadFormIdBy(title: String): Long = formDao.getFormIdBy(title)!!
 

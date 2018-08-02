@@ -15,10 +15,21 @@ interface FormDao {
         }
     }
 
+    suspend fun delete(form: Form) {
+        withContext(ioContext) {
+            modelAdapter<Answer>().deleteAll(form.answers)
+            SQLite.delete(Form::class.java)
+                    .where(Form_Table.id.eq(form.id))
+                    .async()
+                    .execute()
+
+        }
+    }
 
     suspend fun insertForm(form: Form) {
         withContext(ioContext) {
             modelAdapter<Form>().save(form)
+            //modelAdapter<Answer>().saveAll(form.answers)
         }
     }
 
