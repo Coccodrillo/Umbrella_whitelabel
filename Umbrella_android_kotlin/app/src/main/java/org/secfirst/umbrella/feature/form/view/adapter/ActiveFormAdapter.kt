@@ -30,8 +30,7 @@ class ActiveFormAdapter(private val onItemClick: (Form) -> Unit) : RecyclerView.
     }
 
     override fun onBindViewHolder(formHolder: ActiveFormViewHolder, position: Int) {
-
-        val currentTime = forms[position].data!!.last().dataTime
+        val currentTime = forms[position].date
         val title = forms[position].title
         formHolder.bind(title, currentTime, clickListener = { onItemClick(forms[it.adapterPosition]) })
     }

@@ -8,7 +8,6 @@ import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.Toast
 import kotlinx.android.synthetic.main.fragment_standard.*
 import org.secfirst.umbrella.R
@@ -31,14 +30,13 @@ class ContentController : BaseController(), ContentBaseView {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
         val view = inflater.inflate(R.layout.fragment_standard, container, false)
-        val exportDb = view.findViewById<Button>(R.id.test)
-        exportDb.setOnClickListener { showFileChooserPreview() }
         presenter.onAttach(this)
         return view
     }
 
     override fun onAttach(view: View) {
         super.onAttach(view)
+        db_bt.setOnClickListener { showFileChooserPreview() }
         firstAccess.setOnClickListener {
             presenter.manageContent()
             it.isEnabled = false
@@ -100,7 +98,7 @@ class ContentController : BaseController(), ContentBaseView {
     }
 
     private fun shareDbFile(fileName: String) {
-        Extensions.copyFile()
+        Extensions.copyFile(activity!!)
     }
 
     val PERMISSION_REQUEST_EXTERNAL_STORAGE = 1

@@ -1,15 +1,24 @@
 package org.secfirst.umbrella.data.database.form
 
+import org.secfirst.umbrella.data.Answer
 import org.secfirst.umbrella.data.Form
-import org.secfirst.umbrella.data.Value
+import org.secfirst.umbrella.data.Screen
 
 interface FormRepo {
 
-    suspend fun persist(formData: Value)
+    suspend fun persistFormData(answer: Answer)
 
-    suspend fun getAll(): List<Form>
+    suspend fun persistForm(form: Form)
 
-    suspend fun loadBy(id: Long): List<Value>
+    suspend fun loadModelForms(): List<Form>
 
-    suspend fun loadDataBy(forms: List<Form>): List<Form>
+    suspend fun loadAnswerBy(formId: Long): List<Answer>
+
+    suspend fun loadActiveForms(): List<Form>
+
+    suspend fun loadScreenBy(formId: Long): List<Screen>
+
+
+    suspend fun loadFormIdBy(title : String): Long
+
 }

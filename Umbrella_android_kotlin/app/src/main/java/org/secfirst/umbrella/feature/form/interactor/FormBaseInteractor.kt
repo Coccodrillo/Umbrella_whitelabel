@@ -1,18 +1,25 @@
 package org.secfirst.umbrella.feature.form.interactor
 
+import org.secfirst.umbrella.data.Answer
 import org.secfirst.umbrella.data.Form
-import org.secfirst.umbrella.data.Value
+import org.secfirst.umbrella.data.Screen
 import org.secfirst.umbrella.feature.base.interactor.BaseInteractor
 
 
 interface FormBaseInteractor : BaseInteractor {
 
-    suspend fun fetchForm(): List<Form>
+    suspend fun insertFormData(answer: Answer)
 
-    suspend fun persisteFormData(formData: Value)
+    suspend fun insertForm(form: Form)
 
-    suspend fun loadDataFormBy(id: Long): List<Value>
+    suspend fun fetchForms(): List<Form>
 
-    suspend fun loadDataFormBy(forms: List<Form>): List<Form>
+    suspend fun fetchActiveForms(): List<Form>
+
+    suspend fun fetchAnswerBy(formId: Long): List<Answer>
+
+    suspend fun fetchScreenBy(formId: Long): List<Screen>
+
+    suspend fun fetchFormIdBy(title: String): Long
 
 }

@@ -4,8 +4,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-val currenttime: String
+val currentTime: String
     get() {
-        val dateFormat = SimpleDateFormat("dd/M/yyyy hh:mm:ss", Locale.ENGLISH)
+        val dateFormat = SimpleDateFormat("dd/M/yyyy hh:mm", Locale.ENGLISH)
         return dateFormat.format(Date())
     }

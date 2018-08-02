@@ -13,5 +13,5 @@ data class BlogResponse(@Expose
                         private var message: String? = null,
 
                         @Expose
-                        @SerializedName("data")
+                        @SerializedName("date")
                         var data: List<Blog>? = null)

@@ -1,7 +1,9 @@
+
 import android.content.Context
+import android.os.Environment
 import android.util.Log
 import org.secfirst.umbrella.UmbrellaApplication
-import java.io.File
+import org.secfirst.umbrella.data.database.AppDatabase
 import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.io.IOException
@@ -9,14 +11,15 @@ import java.io.IOException
 class Extensions {
     companion object {
         @Throws(IOException::class)
-        fun copyFile() {
-            val f = File("/data/data/org.secfirst.umbrella/databases/AppDatabase.db")
+        fun copyFile(context: Context) {
+            val outroPath = context.getDatabasePath(AppDatabase.NAME+".db")
             var fis: FileInputStream? = null
             var fos: FileOutputStream? = null
 
             try {
-                fis = FileInputStream(f)
-                fos = FileOutputStream("/mnt/sdcard/db_dump.db")
+                fis = FileInputStream(outroPath)
+                val path = Environment.getExternalStorageDirectory()
+                fos = FileOutputStream("$path/db_dump.db")
                 while (true) {
                     val i = fis.read()
                     if (i != -1) {
@@ -32,8 +35,8 @@ class Extensions {
                 Log.i("test", "DB dump ERROR")
             } finally {
                 try {
-                    fos!!.close()
-                    fis!!.close()
+                    fos?.close()
+                    fis?.close()
                 } catch (ioe: IOException) {
                 }
 

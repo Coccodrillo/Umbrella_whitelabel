@@ -20,6 +20,7 @@ import org.secfirst.umbrella.feature.feed.FeedController
 import org.secfirst.umbrella.feature.form.view.controller.HostFormController
 import org.secfirst.umbrella.feature.lesson.LessonController
 import org.secfirst.umbrella.feature.main.OnNavigationBottomView
+import org.secfirst.umbrella.misc.hideKeyboard
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 
 
@@ -56,6 +57,7 @@ class MainActivity : AppCompatActivity(), OnNavigationBottomView {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
             onBackPressed()
+            hideKeyboard()
             return true
         }
         return super.onOptionsItemSelected(item)
@@ -113,7 +115,7 @@ class MainActivity : AppCompatActivity(), OnNavigationBottomView {
         navigation.visibility = VISIBLE
     }
 
-    override fun hiddenBottomMenu() {
+    override fun hideBottomMenu() {
         navigation.visibility = INVISIBLE
     }
 }
