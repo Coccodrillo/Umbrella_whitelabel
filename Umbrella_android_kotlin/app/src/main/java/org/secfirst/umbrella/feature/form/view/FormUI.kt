@@ -38,6 +38,7 @@ class FormUI(private val screen: Screen, private val answers: List<Answer>?) : A
                                 padding = dip(10)
                                 textColor = ContextCompat.getColor(context, R.color.umbrella_purple)
                             }.lparams { gravity = Gravity.CENTER }
+
                         FieldType.TEXT_AREA.value -> {
                             var answer = Answer()
                             textView(item.label) { textSize = size }.lparams { topMargin = dip(10) }
@@ -64,25 +65,27 @@ class FormUI(private val screen: Screen, private val answers: List<Answer>?) : A
                             bindEditText(answer, editText, ui)
                         }
                         FieldType.MULTIPLE_CHOICE.value -> {
-                            var answer = Answer()
                             textView(item.label) { textSize = size }.lparams { topMargin = dip(10) }
                             item.options.forEach { formOption ->
+                                var answer = Answer()
                                 val checkBox = checkBox {
                                     text = formOption.label
                                     getAnswer(formOption)?.let { answer = it }
                                     isChecked = answer.choiceInput
+                                    answer.option = formOption
                                 }
                                 bindCheckBox(answer, checkBox, ui)
                             }
                         }
                         FieldType.SINGLE_CHOICE.value -> {
-                            var answer = Answer()
                             textView(item.label)
                             item.options.forEach { formOption ->
+                                var answer = Answer()
                                 val radioButton = radioButton {
                                     text = formOption.label
                                     getAnswer(formOption)?.let { answer = it }
                                     isChecked = answer.choiceInput
+                                    answer.option = formOption
                                 }
                                 answer.option = formOption
                                 bindRadioButton(answer, radioButton, ui)
