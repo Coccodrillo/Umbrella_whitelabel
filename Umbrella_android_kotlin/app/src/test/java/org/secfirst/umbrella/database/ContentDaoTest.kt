@@ -39,10 +39,4 @@ class ContentDaoTest {
         val value = contentDao.getContents()
         assertNotNull(value)
     }
-
-    @Test
-    fun `get forms in a database`() {
-        `when`(contentDao.getForms()).thenReturn(forms)
-        contentDao.getForms().subscribe { result -> assertNotNull(result) }
-    }
 }
