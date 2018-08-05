@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
-import android.view.ViewGroup
+import com.aurelhubert.ahbottomnavigation.AHBottomNavigation
 import com.bluelinelabs.conductor.Conductor
 import com.bluelinelabs.conductor.Router
 import com.bluelinelabs.conductor.RouterTransaction
@@ -26,8 +26,9 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 
 class MainActivity : AppCompatActivity(), OnNavigationBottomView {
 
-    private lateinit var container: ViewGroup
     private lateinit var router: Router
+    lateinit var test: AHBottomNavigation
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +47,7 @@ class MainActivity : AppCompatActivity(), OnNavigationBottomView {
     }
 
     fun setToolBarTitle(title: String) {
-        mainToolbar?.title = title
+        mainToolbar?.let { it.title = title }
     }
 
     fun enableUpArrow(enabled: Boolean) {
@@ -64,14 +65,10 @@ class MainActivity : AppCompatActivity(), OnNavigationBottomView {
     }
 
     private fun initRoute(savedInstanceState: Bundle?) {
-        container = findViewById(R.id.baseContainer)
         navigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener)
-        router = Conductor.attachRouter(this, container, savedInstanceState)
-        if (!router.hasRootController()) {
-
+        router = Conductor.attachRouter(this, baseContainer, savedInstanceState)
+        if (!router.hasRootController())
             router.setRoot(RouterTransaction.with(FeedController()))
-        }
-
     }
 
     private val navigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
@@ -112,10 +109,11 @@ class MainActivity : AppCompatActivity(), OnNavigationBottomView {
     fun getRouter() = router
 
     override fun showBottomMenu() {
-        navigation.visibility = VISIBLE
+        navigation?.let { it.visibility = VISIBLE }
     }
 
+
     override fun hideBottomMenu() {
-        navigation.visibility = INVISIBLE
+        navigation?.let { it.visibility = INVISIBLE }
     }
 }

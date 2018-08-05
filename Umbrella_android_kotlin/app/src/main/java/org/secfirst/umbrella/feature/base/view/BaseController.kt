@@ -1,9 +1,7 @@
 package org.secfirst.umbrella.feature.base.view
 
-import android.content.Context
 import android.os.Bundle
 import android.view.View
-import android.view.inputmethod.InputMethodManager
 import com.bluelinelabs.conductor.Controller
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.*
@@ -32,11 +30,6 @@ abstract class BaseController(bundle: Bundle = Bundle()) : Controller(bundle), L
     override fun onDestroyView(view: View) {
         super.onDestroyView(view)
         clearFindViewByIdCache()
-    }
-
-    protected fun View.hideKeyboard() {
-        val inputMethodManager = applicationContext?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputMethodManager.hideSoftInputFromWindow(this.windowToken, 0)
     }
 
     protected abstract fun getEnableBackAction(): Boolean

@@ -1,15 +1,16 @@
 package org.secfirst.umbrella.feature.form.view.controller
 
+import android.content.Context
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bluelinelabs.conductor.RouterTransaction
-import com.bluelinelabs.conductor.changehandler.FadeChangeHandler
 import kotlinx.android.synthetic.main.host_form_view.*
 import org.secfirst.umbrella.R
 import org.secfirst.umbrella.UmbrellaApplication
 import org.secfirst.umbrella.data.Form
+import org.secfirst.umbrella.feature.MainActivity
 import org.secfirst.umbrella.feature.base.view.BaseController
 import org.secfirst.umbrella.feature.form.DaggerFormComponent
 import org.secfirst.umbrella.feature.form.interactor.FormBaseInteractor
@@ -30,6 +31,7 @@ class HostFormController : BaseController(), FormView {
     private val shareClick: (Form) -> Unit = this::onShareFormClicked
     private val allFormAdapter = AllFormAdapter(editClick)
     private val activeFormAdapter = ActiveFormAdapter(editClick, deleteClick, shareClick)
+    private lateinit var context: Context
 
     override fun onInject() {
         DaggerFormComponent.builder()
@@ -43,14 +45,19 @@ class HostFormController : BaseController(), FormView {
         presenter.onAttach(this)
         activeFormRecycleView.initRecyclerView(LinearLayoutManager(view.context), activeFormAdapter)
         allFormRecycleView.initRecyclerView(LinearLayoutManager(view.context), allFormAdapter)
+        activity?.let { context = it }
+        val mainActivity = activity as MainActivity
+//        activeFormRecycleView.addOnScrollListener(object : HideShowScrollListener(context) {
+//            override fun onMoved(distance: Int) {
+//                mainActivity.test.translationY = distance.toFloat()
+//            }
+//        })
         presenter.submitLoadModelForms()
         presenter.submitLoadActiveForms()
     }
 
     private fun onEditFormClicked(form: Form) {
-        router.pushController(RouterTransaction.with(FormController(form))
-                .pushChangeHandler(FadeChangeHandler())
-                .popChangeHandler(FadeChangeHandler()))
+        router.pushController(RouterTransaction.with(FormController(form)))
     }
 
     private fun onDeleteFormClicked(form: Form) {
@@ -59,9 +66,7 @@ class HostFormController : BaseController(), FormView {
     }
 
     private fun onShareFormClicked(form: Form) {
-        router.pushController(RouterTransaction.with(FormController(form))
-                .pushChangeHandler(FadeChangeHandler())
-                .popChangeHandler(FadeChangeHandler()))
+        router.pushController(RouterTransaction.with(FormController(form)))
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
@@ -69,7 +74,7 @@ class HostFormController : BaseController(), FormView {
     }
 
     override fun showModelForms(modelForms: List<Form>) {
-            allFormAdapter.updateForms(modelForms)
+        allFormAdapter.updateForms(modelForms)
     }
 
     override fun showActiveForms(activeForms: List<Form>) {
@@ -79,4 +84,5 @@ class HostFormController : BaseController(), FormView {
     override fun getTitleToolbar() = applicationContext?.getString(R.string.form_title)!!
 
     override fun getEnableBackAction() = false
+
 }

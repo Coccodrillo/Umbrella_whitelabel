@@ -12,7 +12,7 @@
     <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp"
+        android:padding="5dp"
         app:layout_constraintBottom_toBottomOf="@+id/titleActiveForm"
         app:layout_constraintTop_toBottomOf="@+id/titleActiveForm">
 
@@ -27,7 +27,6 @@
             android:layout_marginStart="4dp"
             android:layout_marginTop="8dp"
             android:padding="5dp"
-            android:text="Digital Security Incident"
             android:textSize="24sp"
             app:layout_constraintBottom_toTopOf="@+id/currentTime"
             app:layout_constraintEnd_toEndOf="parent"
@@ -42,7 +41,6 @@
             android:layout_marginLeft="8dp"
             android:layout_marginStart="8dp"
             android:padding="5dp"
-            android:text="24/04/1987 - 29:00"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 

@@ -13,8 +13,8 @@ import org.secfirst.umbrella.feature.form.interactor.FormInteractorImp
 import org.secfirst.umbrella.feature.form.presenter.FormBasePresenter
 import org.secfirst.umbrella.feature.form.presenter.FormPresenterImp
 import org.secfirst.umbrella.feature.form.view.FormView
-import org.secfirst.umbrella.feature.form.view.controller.HostFormController
 import org.secfirst.umbrella.feature.form.view.controller.FormController
+import org.secfirst.umbrella.feature.form.view.controller.HostFormController
 import javax.inject.Singleton
 
 
@@ -27,10 +27,6 @@ class FormModule {
     @Provides
     internal fun provideFormPresenter(presenter: FormPresenterImp<FormView, FormBaseInteractor>)
             : FormBasePresenter<FormView, FormBaseInteractor> = presenter
-
-//    @Provides
-//    fun provideFormEditAdapter(controller: FormController, form: Form) = FormAdapter(form, controller, listOfViews)
-
 }
 
 @Singleton

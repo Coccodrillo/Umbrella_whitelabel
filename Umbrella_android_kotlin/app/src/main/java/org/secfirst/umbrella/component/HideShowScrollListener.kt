@@ -1,34 +1,39 @@
 package org.secfirst.umbrella.component
 
+import android.content.Context
 import android.support.v7.widget.RecyclerView
 
 
-abstract class HideShowScrollListener : RecyclerView.OnScrollListener() {
-    private var scrolledDistance = 0
-    private var controlsVisible = true
+abstract class HideShowScrollListener(context: Context) : RecyclerView.OnScrollListener() {
+
+    private var toolbarOffset = 0
+    private val toolbarHeight: Int
+
+    init {
+        val actionBarAttr = intArrayOf(android.R.attr.actionBarSize)
+        val attributeStyle = context.obtainStyledAttributes(actionBarAttr)
+        toolbarHeight = attributeStyle.getDimension(0, 0f).toInt() + 10
+        attributeStyle.recycle()
+    }
 
     override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
         super.onScrolled(recyclerView, dx, dy)
 
-        if (scrolledDistance > HIDE_THRESHOLD && controlsVisible) {
-            onHide()
-            controlsVisible = false
-            scrolledDistance = 0
-        } else if (scrolledDistance < -HIDE_THRESHOLD && !controlsVisible) {
-            onShow()
-            controlsVisible = true
-            scrolledDistance = 0
-        }
+        clipToolbarOffset()
+        onMoved(toolbarOffset)
 
-        if (controlsVisible && dy > 0 || !controlsVisible && dy < 0) {
-            scrolledDistance += dy
+        if (toolbarOffset < toolbarHeight && dy > 5 || toolbarOffset > 0 && dy < 0) {
+            toolbarOffset += dy
         }
     }
 
-    abstract fun onHide()
-    abstract fun onShow()
-
-    companion object {
-        private val HIDE_THRESHOLD = 20
+    private fun clipToolbarOffset() {
+        if (toolbarOffset > toolbarHeight) {
+            toolbarOffset = toolbarHeight
+        } else if (toolbarOffset < 0) {
+            toolbarOffset = 0
+        }
     }
+
+    abstract fun onMoved(distance: Int)
 }
