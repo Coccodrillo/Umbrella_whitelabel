@@ -9,7 +9,7 @@ import org.secfirst.umbrella.misc.AppExecutors.Companion.ioContext
 
 interface FormDao {
 
-    suspend fun insertDataForm(answer: Answer) {
+    suspend fun insertAnswer(answer: Answer) {
         withContext(ioContext) {
             modelAdapter<Answer>().insert(answer)
         }
@@ -22,14 +22,12 @@ interface FormDao {
                     .where(Form_Table.id.eq(form.id))
                     .async()
                     .execute()
-
         }
     }
 
-    suspend fun insertForm(form: Form) {
+    suspend fun saveForm(form: Form) {
         withContext(ioContext) {
             modelAdapter<Form>().save(form)
-            //modelAdapter<Answer>().saveAll(form.answers)
         }
     }
 
@@ -39,7 +37,6 @@ interface FormDao {
                 .where(Answer_Table.form_id.`is`(formId))
                 .queryList()
     }
-
 
     suspend fun getAllFormModel(): List<Form> = withContext(ioContext) {
         SQLite.select()

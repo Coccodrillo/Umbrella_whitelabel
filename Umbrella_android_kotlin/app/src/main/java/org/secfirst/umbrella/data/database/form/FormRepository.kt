@@ -12,9 +12,9 @@ class FormRepository @Inject constructor(private val formDao: FormDao) : FormRep
 
     override suspend fun loadScreenBy(formId: Long): List<Screen> = formDao.getScreenBy(formId)
 
-    override suspend fun persistForm(form: Form) = formDao.insertForm(form)
+    override suspend fun persistForm(form: Form) = formDao.saveForm(form)
 
-    override suspend fun persistFormData(answer: Answer) = formDao.insertDataForm(answer)
+    override suspend fun persistFormData(answer: Answer) = formDao.insertAnswer(answer)
 
     override suspend fun loadModelForms() = formDao.getAllFormModel()
 

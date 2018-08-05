@@ -62,6 +62,8 @@ android {
 
 dependencies {
 
+    implementation 'com.aurelhubert:ahbottomnavigation:2.1.0'
+
     //Framework to replace fragments
     implementation "com.bluelinelabs:conductor:$conductor_version"
 

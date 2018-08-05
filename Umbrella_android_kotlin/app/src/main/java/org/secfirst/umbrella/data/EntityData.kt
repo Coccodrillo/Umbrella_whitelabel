@@ -258,10 +258,10 @@ data class Answer(
         var textInput: String = "",
         @Column
         var choiceInput: Boolean = false,
-        @ForeignKey(deleteForeignKeyModel = false)
-        var item: Item? = null,
-        @ForeignKey(deleteForeignKeyModel = false)
-        var option: Option? = null,
+        @Column
+        var itemId: Long = 0,
+        @Column
+        var optionId: Long = 0,
         @ForeignKey(onUpdate = ForeignKeyAction.CASCADE,
                 deleteForeignKeyModel = false,
                 stubbedRelationship = true)

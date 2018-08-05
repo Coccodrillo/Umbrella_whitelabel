@@ -37,16 +37,13 @@ class FormController(bundle: Bundle) : BaseController(bundle), FormView, Stepper
     var checkboxList = mutableListOf<HashMap<CheckBox, Answer>>()
     private lateinit var onNavigation: OnNavigationBottomView
     private var listOfViews: MutableList<FormUI> = mutableListOf()
-    private var formStartTime = ""
     private lateinit var newForm: Form
-
 
     constructor(formSelected: Form) : this(Bundle().apply {
         putSerializable(EXTRA_FORM_SELECTED, formSelected)
     })
 
     private val formSelected by lazy { args.getSerializable(EXTRA_FORM_SELECTED) as Form }
-
 
     override fun onAttach(view: View) {
         super.onAttach(view)
@@ -73,9 +70,7 @@ class FormController(bundle: Bundle) : BaseController(bundle), FormView, Stepper
             newForm.referenceId = formSelected.id
             newForm.id = if (formSelected.active) newForm.id else System.currentTimeMillis()
             newForm.active = true
-            newForm.date = formStartTime
         }
-
         createFormUI()
     }
 
@@ -85,7 +80,7 @@ class FormController(bundle: Bundle) : BaseController(bundle), FormView, Stepper
     }
 
     override fun onCompleted(completeButton: View?) {
-        formStartTime = currentTime
+        newForm.date = currentTime
         bindCheckboxValue()
         bindEditTextValue()
         bindRadioButtonValue()

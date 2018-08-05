@@ -49,7 +49,7 @@ class FormUI(private val screen: Screen, private val answers: List<Answer>?) : A
 
                             }.lparams(width = matchParent)
 
-                            answer.item = item
+                            answer.itemId = item.id
                             bindEditText(answer, editText, ui)
                         }
                         FieldType.TEXT_INPUT.value -> {
@@ -61,7 +61,7 @@ class FormUI(private val screen: Screen, private val answers: List<Answer>?) : A
                                 setText(answer.textInput)
                             }.lparams(width = matchParent)
 
-                            answer.item = item
+                            answer.itemId = item.id
                             bindEditText(answer, editText, ui)
                         }
                         FieldType.MULTIPLE_CHOICE.value -> {
@@ -72,7 +72,7 @@ class FormUI(private val screen: Screen, private val answers: List<Answer>?) : A
                                     text = formOption.label
                                     getAnswer(formOption)?.let { answer = it }
                                     isChecked = answer.choiceInput
-                                    answer.option = formOption
+                                    answer.optionId = formOption.id
                                 }
                                 bindCheckBox(answer, checkBox, ui)
                             }
@@ -85,9 +85,9 @@ class FormUI(private val screen: Screen, private val answers: List<Answer>?) : A
                                     text = formOption.label
                                     getAnswer(formOption)?.let { answer = it }
                                     isChecked = answer.choiceInput
-                                    answer.option = formOption
+                                    answer.optionId = formOption.id
                                 }
-                                answer.option = formOption
+                                answer.optionId = formOption.id
                                 bindRadioButton(answer, radioButton, ui)
                             }
                         }
@@ -101,7 +101,7 @@ class FormUI(private val screen: Screen, private val answers: List<Answer>?) : A
 
     private fun getAnswer(formOption: Option): Answer? {
         answers?.forEach { answer ->
-            if (formOption.id == answer.option?.id)
+            if (formOption.id == answer.optionId)
                 return answer
         }
         return null
@@ -109,9 +109,8 @@ class FormUI(private val screen: Screen, private val answers: List<Answer>?) : A
 
     private fun getAnswer(item: Item): Answer? {
         answers?.forEach { answer ->
-            if (item.id == answer.item?.id) {
+            if (item.id == answer.itemId)
                 return answer
-            }
         }
         return null
     }

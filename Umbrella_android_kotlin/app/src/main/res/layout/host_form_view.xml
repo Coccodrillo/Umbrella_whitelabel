@@ -35,10 +35,10 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginStart="10dp"
+        android:layout_marginTop="50dp"
         android:padding="5dp"
         android:text="@string/message_title_active_forms"
         android:textSize="14sp"
-        android:layout_marginTop="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -46,6 +46,7 @@
         android:id="@+id/activeFormRecycleView"
         android:layout_width="match_parent"
         android:layout_height="242dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
