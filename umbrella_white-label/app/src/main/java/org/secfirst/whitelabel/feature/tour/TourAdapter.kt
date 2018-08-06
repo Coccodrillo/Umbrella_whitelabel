@@ -1,63 +1,43 @@
 package org.secfirst.whitelabel.feature.tour
 
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
-import android.os.Bundle
-import android.view.LayoutInflater
+import android.support.v4.view.PagerAdapter
+import android.view.View
 import android.view.ViewGroup
-import com.bluelinelabs.conductor.Controller
-import com.bluelinelabs.conductor.Router
-import com.bluelinelabs.conductor.RouterTransaction
-import com.bluelinelabs.conductor.support.RouterPagerAdapter
-import org.jetbrains.anko.AnkoComponent
 import org.jetbrains.anko.AnkoContext
-import org.jetbrains.anko.verticalLayout
 import org.secfirst.whitelabel.UmbrellaApplication
-import org.secfirst.whitelabel.feature.base.view.BaseController
-import org.secfirst.whitelabel.misc.BundleExt
 
-class TourAdapter(host: Controller) : RouterPagerAdapter(host) {
+class TourAdapter(private val controller: TourController) : PagerAdapter() {
 
-    private var childView: MutableList<TourViewHolder> = mutableListOf()
+    private val childrenViews = mutableListOf<TourUI>()
 
-    init {
-        childView.add(TourViewHolder("#FF9ABE2E"))
-        childView.add(TourViewHolder("#FFB83657"))
-        childView.add(TourViewHolder("#FF9ABE2E"))
+    override fun isViewFromObject(view: View, `object`: Any): Boolean {
+        return view === `object`
     }
 
-    override fun configureRouter(router: Router, position: Int) {
-        if (!router.hasRootController()) {
-            router.setRoot(RouterTransaction.with(childView[position]))
-        }
+    override fun destroyItem(collection: ViewGroup, position: Int, view: Any) {
+        collection.removeView(view as View)
     }
 
-    override fun getCount() = childView.size
-}
+    override fun instantiateItem(collection: ViewGroup, position: Int): View {
+        val view = childrenViews[position].createView(AnkoContext.create(UmbrellaApplication.instance, controller, false))
+        collection.addView(view)
+        return view
+    }
 
-class TourViewHolder(bundle: Bundle) : BaseController(bundle) {
+    override fun getItemPosition(`object`: Any): Int {
+        return PagerAdapter.POSITION_NONE
+    }
 
-    constructor(color: String) : this(Bundle().apply {
-        putSerializable(BundleExt.EXTRA_COLOR_SELECTED, color)
-    })
-
-    private val color by lazy { args.getSerializable(BundleExt.EXTRA_COLOR_SELECTED) as String }
-    private val context = UmbrellaApplication.instance
-
-
-    override fun onInject() {}
-
-    override fun getEnableBackAction() = false
-
-    override fun getTitleToolbar() = ""
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup) = ChildView(color).createView(AnkoContext.create(context, this, false))
-}
-
-private class ChildView(val color: String) : AnkoComponent<BaseController> {
-    override fun createView(ui: AnkoContext<BaseController>) = ui.apply {
-        verticalLayout {
-            background = ColorDrawable(Color.parseColor(color))
+    fun setData(list: List<TourUI>?) {
+        childrenViews.clear()
+        if (list != null && !list.isEmpty()) {
+            childrenViews.addAll(list)
         }
-    }.view
+
+        notifyDataSetChanged()
+    }
+
+    override fun getCount(): Int {
+        return childrenViews.size
+    }
 }

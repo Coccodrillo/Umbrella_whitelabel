@@ -30,6 +30,8 @@ class UmbrellaApplication : Application(), HasActivityInjector {
     companion object {
         lateinit var instance: UmbrellaApplication
             private set
+
+        fun getResources() = instance.resources
     }
 
     override fun attachBaseContext(base: Context?) {
