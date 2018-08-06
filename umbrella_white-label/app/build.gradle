@@ -63,6 +63,8 @@ android {
 
 dependencies {
 
+    implementation 'com.romandanylyk:pageindicatorview:1.0.1@aar'
+
     //Framework to replace fragments
     implementation "com.bluelinelabs:conductor:$conductor_version"
     implementation "com.bluelinelabs:conductor-support:$conductor_version"

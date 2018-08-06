@@ -70,9 +70,9 @@ class MainActivity : AppCompatActivity(), OnNavigationBottomView {
     private fun initRoute(savedInstanceState: Bundle?) {
         navigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener)
         router = Conductor.attachRouter(this, baseContainer, savedInstanceState)
-        if (!router.hasRootController())
-            router.setRoot(RouterTransaction.with(TourController()))
-        //else router.setRoot(RouterTransaction.with(TourController()))
+        if (!router.hasRootController() && tentConfig.isCreate())
+            router.setRoot(RouterTransaction.with(FeedController()))
+        else router.setRoot(RouterTransaction.with(TourController()))
     }
 
     private val navigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
@@ -116,8 +116,16 @@ class MainActivity : AppCompatActivity(), OnNavigationBottomView {
         navigation?.let { it.visibility = VISIBLE }
     }
 
-
     override fun hideBottomMenu() {
         navigation?.let { it.visibility = INVISIBLE }
     }
+
+    override fun showToolbar() {
+        supportActionBar?.show()
+    }
+
+    override fun hideToolbar() {
+        supportActionBar?.hide()
+    }
+
 }
