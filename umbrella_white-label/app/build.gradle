@@ -12,26 +12,29 @@ kotlin {
     }
 }
 android {
+    signingConfigs {
+        umbrella_beta {
+            keyAlias 'umbrella'
+            keyPassword 'android'
+            storeFile file('/home/hall-9000/Documents/projects/umbrella_temp/basic_algorithm/umbrella_white-label/app/config/beta_keystore.jks')
+            storePassword 'android'
+        }
+    }
     compileSdkVersion 27
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-
     configurations {
         all {
             exclude module: 'httpclient'
         }
     }
-
-
-
     androidExtensions {
         experimental = true
     }
-
     defaultConfig {
-        applicationId "org.secfirst.whitelabel"
+        applicationId "org.secfirst.umbrella.whitelabel"
         minSdkVersion 16
         targetSdkVersion 27
         versionCode 1
@@ -51,6 +54,7 @@ android {
         beta {
             minifyEnabled false
             ext.enableCrashlytics = true
+            signingConfig signingConfigs.umbrella_beta
         }
         release {
             minifyEnabled true
@@ -58,12 +62,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
 }
 
 dependencies {
+
     //Snackbar
-    implementation "com.github.matecode:Snacky:1.0.3"
+    implementation 'com.github.matecode:Snacky:1.0.3'
 
     //ViewPager indicator.
     implementation 'com.romandanylyk:pageindicatorview:1.0.1@aar'
