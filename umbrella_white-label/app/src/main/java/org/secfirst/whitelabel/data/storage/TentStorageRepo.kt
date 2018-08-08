@@ -1,15 +1,14 @@
 package org.secfirst.whitelabel.data.storage
 
-import io.reactivex.Single
 import java.io.File
 
 
 interface   TentStorageRepo {
 
-    fun fetch(): Single<Boolean>
+    suspend fun fetch(): Boolean
 
-    fun getElementsFile(): List<File>
+    suspend fun getElementsFile(): List<File>
 
-    fun getLoadersFile(): List<File>
+    suspend fun getLoadersFile(): List<File>
 
 }

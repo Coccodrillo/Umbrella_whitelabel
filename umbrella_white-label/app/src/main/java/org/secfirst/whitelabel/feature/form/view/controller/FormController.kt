@@ -50,6 +50,7 @@ class FormController(bundle: Bundle) : BaseController(bundle), FormView, Stepper
         stepperLayout.adapter = FormAdapter(formSelected, this, listOfViews)
         stepperLayout.setListener(this)
         onNavigation = activity as MainActivity
+        presenter.onAttach(this)
         onNavigation.hideBottomMenu()
     }
 

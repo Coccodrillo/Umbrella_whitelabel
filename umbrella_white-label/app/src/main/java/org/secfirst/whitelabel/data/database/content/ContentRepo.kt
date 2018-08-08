@@ -5,8 +5,6 @@ import org.secfirst.whitelabel.data.Root
 
 interface ContentRepo {
 
-    fun insertAllLessons(root: Root)
-
-    fun loadLessons(): Lesson
+    suspend fun insertAllLessons(root: Root)
 
 }

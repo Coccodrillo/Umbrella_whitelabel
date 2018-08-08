@@ -1,26 +1,27 @@
 package org.secfirst.whitelabel.data.database.content
 
 import com.raizlabs.android.dbflow.kotlinextensions.modelAdapter
-import com.raizlabs.android.dbflow.sql.language.SQLite
+import kotlinx.coroutines.experimental.withContext
 import org.secfirst.whitelabel.data.*
+import org.secfirst.whitelabel.misc.AppExecutors
 
 interface ContentDao {
 
-    fun insertAllLessons(root: Root) {
+    suspend fun insertAllLessons(root: Root) {
+        withContext(AppExecutors.ioContext) {
+            val dataLesson = root.convertRootToLesson()
 
-        val dataLesson = root.convertRootToLesson()
+            dataLesson.categories.forEach { category ->
+                category.associateForeignKey(category)
+                modelAdapter<Category>().save(category)
+            }
 
-        dataLesson.categories.forEach { category ->
-            category.associateForeignKey(category)
-            modelAdapter<Category>().save(category)
+            dataLesson.categories.walkChild { child ->
+                modelAdapter<Child>().save(child)
+                insertChecklistContent(child.checklist)
+            }
+            insertFormsContent(root.forms)
         }
-
-        dataLesson.categories.walkChild { child ->
-            modelAdapter<Child>().save(child)
-            insertChecklistContent(child.checklist)
-        }
-
-        insertForms(root.forms)
     }
 
     private fun insertChecklistContent(checklist: MutableList<Checklist>) {
@@ -31,7 +32,7 @@ interface ContentDao {
         }
     }
 
-    private fun insertForms(forms: MutableList<Form>) {
+    private fun insertFormsContent(forms: MutableList<Form>) {
         forms.forEach { form ->
             form.associateFormForeignKey(forms)
             modelAdapter<Form>().save(form)
@@ -45,7 +46,4 @@ interface ContentDao {
             }
         }
     }
-
-
-    fun getContents() = Lesson(SQLite.select().from(Category::class.java).queryList())
 }
