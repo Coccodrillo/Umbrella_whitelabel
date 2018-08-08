@@ -1,9 +1,9 @@
 package org.secfirst.whitelabel.feature.tour.view
 
-import android.app.AlertDialog
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
+import android.support.design.widget.Snackbar
 import android.support.v4.view.ViewPager
 import android.view.LayoutInflater
 import android.view.View
@@ -71,18 +71,11 @@ class TourController : BaseController(), TourView {
             router.pushController(RouterTransaction.with(LessonController()))
             nav.showBottomMenu()
             nav.showToolbar()
-        } else {
-            dialogManager.showDialog(object : DialogManager.DialogFactory {
-                override fun createDialog(context: Context?): Dialog {
-                    return AlertDialog.Builder(context)
-                            .setMessage(context?.getString(R.string.error_connection_tour_message))
-                            .setPositiveButton("Cool") { _, _ -> presenter.manageContent() }
-                            .setNegativeButton("Nah") {dialog, _ ->  dialog.dismiss()}
-                            .setCancelable(false)
-                            .show()
-                }
-            })
-        }
+        } else
+            view?.let {
+                Snackbar.make(it,
+                        it.resources.getString(R.string.error_connection_tour_message), Snackbar.LENGTH_LONG).show()
+            }
     }
 
     override fun downloadContentInProgress() {

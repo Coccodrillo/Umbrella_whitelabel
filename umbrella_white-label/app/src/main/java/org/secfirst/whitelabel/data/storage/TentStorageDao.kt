@@ -24,8 +24,10 @@ interface TentStorageDao {
             }
         } catch (e: Exception) {
             result = false
-            val a = File(tentConfig.getPathRepository())
-            Log.e("test", "Repository was deleted - ${tentConfig.isCreate()} path - ${tentConfig.getPathRepository()}")
+            File(tentConfig.getPathRepository()).deleteRecursively()
+            Log.i(TentStorageDao::class.java.name,
+                    "Repository wasn't created - ${tentConfig.isNotCreate()} " +
+                            "path - ${tentConfig.getPathRepository()}")
         }
 
         return result
