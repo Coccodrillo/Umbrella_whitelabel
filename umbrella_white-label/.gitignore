@@ -12,3 +12,5 @@
 .idea/gradle.xml
 gradlew
 .idea/misc.xml
+app/debug/
+app/beta/
