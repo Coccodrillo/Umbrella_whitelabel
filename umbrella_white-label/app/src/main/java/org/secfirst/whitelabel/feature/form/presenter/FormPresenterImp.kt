@@ -58,7 +58,6 @@ class FormPresenterImp<V : FormView, I : FormBaseInteractor>
         launchSilent(uiContext) {
             if (isActive)
                 interactor?.let { getView()?.showModelForms(it.fetchForms()) }
-
         }
     }
 }

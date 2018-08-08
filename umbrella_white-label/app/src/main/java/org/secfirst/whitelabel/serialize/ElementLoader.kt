@@ -1,5 +1,6 @@
 package org.secfirst.whitelabel.serialize
 
+import kotlinx.coroutines.experimental.withContext
 import org.secfirst.whitelabel.data.*
 import org.secfirst.whitelabel.data.storage.TentConfig.Companion.CHILD_LEVEL
 import org.secfirst.whitelabel.data.storage.TentConfig.Companion.ELEMENT_LEVEL
@@ -7,6 +8,7 @@ import org.secfirst.whitelabel.data.storage.TentConfig.Companion.SUB_ELEMENT_LEV
 import org.secfirst.whitelabel.data.storage.TentConfig.Companion.getDelimiter
 import org.secfirst.whitelabel.data.storage.TentStorageRepo
 import org.secfirst.whitelabel.data.storage.TypeFile
+import org.secfirst.whitelabel.misc.AppExecutors.Companion.ioContext
 import org.secfirst.whitelabel.serialize.PathUtils.Companion.getLevelOfPath
 import org.secfirst.whitelabel.serialize.PathUtils.Companion.getWorkDirectory
 import java.io.File
@@ -16,10 +18,12 @@ class ElementLoader @Inject constructor(private val tentStorageRepo: TentStorage
 
     private var root = Root()
     private var files = listOf<File>()
-    fun load(pRoot: Root): Root {
-        files = tentStorageRepo.getLoadersFile()
-        root = pRoot
-        create()
+    suspend fun load(pRoot: Root): Root {
+        withContext(ioContext) {
+            files = tentStorageRepo.getLoadersFile()
+            root = pRoot
+            create()
+        }
         return root
     }
 

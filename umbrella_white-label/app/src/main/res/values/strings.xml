@@ -16,5 +16,8 @@
     <string name="tour_slide_4_text">Stay up to date with the latest information on where you are</string>
 
     <string name="tour_view_accept_button">ACCEPT</string>
+    <string name="fab_dialog_transition_name">transition.fab</string>
+    <string name="loading_tour_message">Fetching data...</string>
+    <string name="error_connection_tour_message">Looks like the server is taking to long to respond, would you like to try again?</string>
 
 </resources>

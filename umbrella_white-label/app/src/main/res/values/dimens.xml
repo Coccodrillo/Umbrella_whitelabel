@@ -11,5 +11,11 @@
     <dimen name="font_small">12sp</dimen>
     <dimen name="card_radius">2dp</dimen>
 
+    <dimen name="md_dialog_frame_margin">24dp</dimen>
+    <dimen name="md_content_padding_top">8dp</dimen>
+    <dimen name="md_content_textsize">16sp</dimen>
+
+    <dimen name="dialog_elevation">6dp</dimen>
+    <dimen name="dialog_corners">2dp</dimen>
 
 </resources>

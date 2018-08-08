@@ -15,12 +15,11 @@ import kotlinx.android.synthetic.main.main_view.*
 import org.secfirst.whitelabel.R
 import org.secfirst.whitelabel.data.storage.TentConfig
 import org.secfirst.whitelabel.feature.account.AccountController
-import org.secfirst.whitelabel.feature.content.view.ContentController
 import org.secfirst.whitelabel.feature.feed.FeedController
 import org.secfirst.whitelabel.feature.form.view.controller.HostFormController
 import org.secfirst.whitelabel.feature.lesson.LessonController
 import org.secfirst.whitelabel.feature.main.OnNavigationBottomView
-import org.secfirst.whitelabel.feature.tour.TourController
+import org.secfirst.whitelabel.feature.tour.view.TourController
 import org.secfirst.whitelabel.misc.hideKeyboard
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 import javax.inject.Inject
@@ -87,7 +86,7 @@ class MainActivity : AppCompatActivity(), OnNavigationBottomView {
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_checklists -> {
-                router.pushController(RouterTransaction.with(ContentController()))
+                router.pushController(RouterTransaction.with(LessonController()))
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_lessons -> {

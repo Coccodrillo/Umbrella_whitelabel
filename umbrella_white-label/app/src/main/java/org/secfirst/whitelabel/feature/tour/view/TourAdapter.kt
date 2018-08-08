@@ -1,4 +1,4 @@
-package org.secfirst.whitelabel.feature.tour
+package org.secfirst.whitelabel.feature.tour.view
 
 import android.support.v4.view.PagerAdapter
 import android.view.View

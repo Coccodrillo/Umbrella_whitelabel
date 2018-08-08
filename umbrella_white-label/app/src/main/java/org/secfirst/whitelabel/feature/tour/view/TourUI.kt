@@ -1,4 +1,4 @@
-package org.secfirst.whitelabel.feature.tour
+package org.secfirst.whitelabel.feature.tour.view
 
 import android.graphics.Color
 import android.view.Gravity
@@ -15,6 +15,7 @@ class TourUI(private val color: Int,
              private val visibilityWebView: Int) : AnkoComponent<BaseController>, Step {
 
     override fun createView(ui: AnkoContext<BaseController>) = ui.apply {
+
         verticalLayout {
             backgroundColorResource = color
             padding = dip(20)
