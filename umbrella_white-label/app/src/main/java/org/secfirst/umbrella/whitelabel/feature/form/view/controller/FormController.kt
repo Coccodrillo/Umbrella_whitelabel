@@ -53,6 +53,7 @@ class FormController(bundle: Bundle) : BaseController(bundle), FormView, Stepper
         onNavigation = activity as MainActivity
         presenter.onAttach(this)
         onNavigation.hideBottomMenu()
+
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
