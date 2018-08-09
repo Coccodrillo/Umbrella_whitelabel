@@ -66,8 +66,7 @@ android {
 
 dependencies {
 
-    //Snackbar
-    implementation 'com.github.matecode:Snacky:1.0.3'
+    implementation 'com.afollestad:sectioned-recyclerview:0.5.0'
 
     //ViewPager indicator.
     implementation 'com.romandanylyk:pageindicatorview:1.0.1@aar'

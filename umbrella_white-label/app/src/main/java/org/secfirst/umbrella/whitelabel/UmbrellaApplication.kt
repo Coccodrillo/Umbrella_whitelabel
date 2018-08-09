@@ -5,6 +5,7 @@ import android.app.Application
 import android.content.Context
 import android.support.multidex.MultiDex
 import com.crashlytics.android.Crashlytics
+import com.crashlytics.android.core.CrashlyticsCore
 import com.raizlabs.android.dbflow.config.DatabaseConfig
 import com.raizlabs.android.dbflow.config.FlowConfig
 import com.raizlabs.android.dbflow.config.FlowLog
@@ -81,10 +82,10 @@ class UmbrellaApplication : Application(), HasActivityInjector {
     }
 
     private fun initFabric() {
-//        Crashlytics.Builder()
-//                .core(CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
-//                .build()
-        Fabric.with(this, Crashlytics())
+        Crashlytics.Builder()
+                .core(CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
+                .build()
+//        Fabric.with(this, Crashlytics())
     }
 
     private fun initTentRepository() {

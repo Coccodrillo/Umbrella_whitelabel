@@ -12,6 +12,7 @@ import com.stepstone.stepper.VerificationError
 
 import kotlinx.android.synthetic.main.form_view.*
 import org.secfirst.umbrella.whitelabel.R
+import org.secfirst.umbrella.whitelabel.R.id.stepperLayout
 import org.secfirst.umbrella.whitelabel.UmbrellaApplication
 import org.secfirst.umbrella.whitelabel.data.Answer
 import org.secfirst.umbrella.whitelabel.data.Form
