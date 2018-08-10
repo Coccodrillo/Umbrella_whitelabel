@@ -19,6 +19,7 @@ import org.secfirst.umbrella.whitelabel.feature.form.presenter.FormBasePresenter
 import org.secfirst.umbrella.whitelabel.feature.form.view.FormView
 import org.secfirst.umbrella.whitelabel.feature.form.view.adapter.ActiveFormSection
 import org.secfirst.umbrella.whitelabel.feature.form.view.adapter.AllFormSection
+import java.text.FieldPosition
 import javax.inject.Inject
 
 
@@ -27,7 +28,7 @@ class HostFormController : BaseController(), FormView {
     @Inject
     internal lateinit var presenter: FormBasePresenter<FormView, FormBaseInteractor>
     private val editClick: (Form) -> Unit = this::onEditFormClicked
-    private val deleteClick: (Form) -> Unit = this::onDeleteFormClicked
+    private val deleteClick: (Int, Form) -> Unit = this::onDeleteFormClicked
     private val shareClick: (Form) -> Unit = this::onShareFormClicked
     private lateinit var context: Context
     private val sectionAdapter: SectionedRecyclerViewAdapter by lazy { SectionedRecyclerViewAdapter() }
@@ -62,9 +63,9 @@ class HostFormController : BaseController(), FormView {
         router.pushController(RouterTransaction.with(FormController(form)))
     }
 
-    private fun onDeleteFormClicked(form: Form) {
+    private fun onDeleteFormClicked(position: Int, form: Form) {
         presenter.submitDeleteForm(form)
-//        sectionAdapter.noire
+        sectionAdapter.notifyItemRemoved(position)
     }
 
     private fun onShareFormClicked(form: Form) {
@@ -73,10 +74,6 @@ class HostFormController : BaseController(), FormView {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
         return inflater.inflate(R.layout.host_form_view, container, false)
-    }
-
-    override fun onDestroyView(view: View) {
-        super.onDestroyView(view)
     }
 
     override fun showModelAndActiveForms(modelForms: List<Form>, activeForms: List<Form>) {
@@ -89,9 +86,7 @@ class HostFormController : BaseController(), FormView {
 
         }
     }
-
     override fun getTitleToolbar() = applicationContext?.getString(R.string.form_title)!!
 
     override fun getEnableBackAction() = false
-
 }
