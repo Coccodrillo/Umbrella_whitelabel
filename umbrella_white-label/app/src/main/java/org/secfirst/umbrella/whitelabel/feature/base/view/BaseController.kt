@@ -25,6 +25,7 @@ abstract class BaseController(bundle: Bundle = Bundle()) : Controller(bundle), L
         val mainActivity = activity as MainActivity
         mainActivity.setToolBarTitle(getTitleToolbar())
         mainActivity.enableUpArrow(getEnableBackAction())
+        retainViewMode = RetainViewMode.RETAIN_DETACH
     }
 
     override fun onDestroyView(view: View) {
