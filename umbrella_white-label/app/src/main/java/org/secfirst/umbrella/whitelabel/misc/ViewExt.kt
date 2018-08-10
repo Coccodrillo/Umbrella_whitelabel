@@ -4,7 +4,7 @@ import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import kotlinx.android.synthetic.main.section.view.*
+import kotlinx.android.synthetic.main.head_section.view.*
 import org.secfirst.umbrella.whitelabel.feature.MainActivity
 import org.secfirst.umbrella.whitelabel.feature.base.view.BaseController
 

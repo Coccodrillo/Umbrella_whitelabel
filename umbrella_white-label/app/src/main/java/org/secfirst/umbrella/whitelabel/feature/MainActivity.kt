@@ -2,9 +2,7 @@ package org.secfirst.umbrella.whitelabel.feature
 
 import android.content.Context
 import android.os.Bundle
-import android.support.annotation.VisibleForTesting
 import android.support.design.widget.BottomNavigationView
-import android.support.test.espresso.IdlingResource
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import android.view.View.INVISIBLE

@@ -6,7 +6,7 @@ import io.github.luizgrp.sectionedrecyclerviewadapter.SectionParameters
 import io.github.luizgrp.sectionedrecyclerviewadapter.StatelessSection
 import kotlinx.android.synthetic.main.active_form_item_view.view.*
 import kotlinx.android.synthetic.main.all_form_item_view.view.*
-import kotlinx.android.synthetic.main.section.view.*
+import kotlinx.android.synthetic.main.head_section.view.*
 import org.secfirst.umbrella.whitelabel.R
 import org.secfirst.umbrella.whitelabel.data.Form
 

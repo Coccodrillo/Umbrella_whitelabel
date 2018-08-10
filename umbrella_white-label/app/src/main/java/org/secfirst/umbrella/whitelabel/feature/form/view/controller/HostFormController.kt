@@ -1,6 +1,5 @@
 package org.secfirst.umbrella.whitelabel.feature.form.view.controller
 
-import android.content.Context
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +10,6 @@ import kotlinx.android.synthetic.main.host_form_view.*
 import org.secfirst.umbrella.whitelabel.R
 import org.secfirst.umbrella.whitelabel.UmbrellaApplication
 import org.secfirst.umbrella.whitelabel.data.Form
-import org.secfirst.umbrella.whitelabel.feature.MainActivity
 import org.secfirst.umbrella.whitelabel.feature.base.view.BaseController
 import org.secfirst.umbrella.whitelabel.feature.form.DaggerFormComponent
 import org.secfirst.umbrella.whitelabel.feature.form.interactor.FormBaseInteractor
@@ -19,7 +17,6 @@ import org.secfirst.umbrella.whitelabel.feature.form.presenter.FormBasePresenter
 import org.secfirst.umbrella.whitelabel.feature.form.view.FormView
 import org.secfirst.umbrella.whitelabel.feature.form.view.adapter.ActiveFormSection
 import org.secfirst.umbrella.whitelabel.feature.form.view.adapter.AllFormSection
-import java.text.FieldPosition
 import javax.inject.Inject
 
 
@@ -30,9 +27,11 @@ class HostFormController : BaseController(), FormView {
     private val editClick: (Form) -> Unit = this::onEditFormClicked
     private val deleteClick: (Int, Form) -> Unit = this::onDeleteFormClicked
     private val shareClick: (Form) -> Unit = this::onShareFormClicked
-    private lateinit var context: Context
     private val sectionAdapter: SectionedRecyclerViewAdapter by lazy { SectionedRecyclerViewAdapter() }
-
+    private var allFormTag = ""
+    private var activeFormTag = ""
+    private lateinit var allFormSection: AllFormSection
+    private lateinit var activeFormSection: ActiveFormSection
 
     override fun onInject() {
         DaggerFormComponent.builder()
@@ -44,18 +43,7 @@ class HostFormController : BaseController(), FormView {
     override fun onAttach(view: View) {
         super.onAttach(view)
         presenter.onAttach(this)
-        //activeFormRecycleView.initRecyclerView(LinearLayoutManager(view.context), activeFormAdapter)
-        //allFormRecycleView.initRecyclerView(LinearLayoutManager(view.context), sectionAdapter)
         allFormRecycleView.layoutManager = LinearLayoutManager(view.context)
-        activity?.let { context = it }
-        val mainActivity = activity as MainActivity
-//        activeFormRecycleView.addOnScrollListener(object : HideShowScrollListener(context) {
-//            override fun onMoved(distance: Int) {
-//                mainActivity.test.translationY = distance.toFloat()
-//            }
-//        })
-//        sectionAdapter.addSection(AllFormSection(editClick, "Test A", arrayListOf()))
-//        sectionAdapter.addSection(ActiveFormSection(editClick, deleteClick, shareClick, "Test A", arrayListOf()))
         presenter.submitLoadAllForms()
     }
 
@@ -64,8 +52,8 @@ class HostFormController : BaseController(), FormView {
     }
 
     private fun onDeleteFormClicked(position: Int, form: Form) {
+        activeFormSection.remove(position, sectionAdapter)
         presenter.submitDeleteForm(form)
-        sectionAdapter.notifyItemRemoved(position)
     }
 
     private fun onShareFormClicked(form: Form) {
@@ -79,13 +67,23 @@ class HostFormController : BaseController(), FormView {
     override fun showModelAndActiveForms(modelForms: List<Form>, activeForms: List<Form>) {
         sectionAdapter.removeAllSections()
         sectionAdapter.notifyDataSetChanged()
+
+        resources?.let {
+            allFormTag = it.getString(R.string.message_title_all_forms)
+            activeFormTag = it.getString(R.string.message_title_active_forms)
+        }
+
         allFormRecycleView?.let {
             it.adapter = sectionAdapter
-            sectionAdapter.addSection(AllFormSection(editClick, "Test A", modelForms))
-            sectionAdapter.addSection(ActiveFormSection(editClick, deleteClick, shareClick, "Test B", activeForms))
 
+            allFormSection = AllFormSection(editClick, allFormTag, modelForms.toMutableList())
+            activeFormSection = ActiveFormSection(editClick, deleteClick, shareClick, activeFormTag, activeForms.toMutableList())
+
+            sectionAdapter.addSection(allFormSection)
+            sectionAdapter.addSection(activeFormSection)
         }
     }
+
     override fun getTitleToolbar() = applicationContext?.getString(R.string.form_title)!!
 
     override fun getEnableBackAction() = false
