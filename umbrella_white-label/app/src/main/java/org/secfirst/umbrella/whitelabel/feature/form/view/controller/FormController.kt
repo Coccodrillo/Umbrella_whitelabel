@@ -1,5 +1,6 @@
 package org.secfirst.umbrella.whitelabel.feature.form.view.controller
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import android.widget.EditText
 import android.widget.RadioButton
 import com.stepstone.stepper.StepperLayout
 import com.stepstone.stepper.VerificationError
+import kotlinx.android.synthetic.main.form_progress.*
 import kotlinx.android.synthetic.main.form_view.*
 import org.secfirst.umbrella.whitelabel.R
 import org.secfirst.umbrella.whitelabel.UmbrellaApplication
@@ -144,7 +146,21 @@ class FormController(bundle: Bundle) : BaseController(bundle), FormView, Stepper
         }
     }
 
-    override fun onStepSelected(newStepPosition: Int) {}
+    @SuppressLint("SetTextI18n")
+    override fun onStepSelected(newStepPosition: Int) {
+        val size = formSelected.screens.size.toFloat()
+        var percentage = newStepPosition / size * 100f
+        if (newStepPosition > 0) {
+            progressAnswer.progress = percentage.toInt()
+            titleProgressAnswer.text = "${percentage.toInt()}%"
+        }
+
+        if (newStepPosition == size.toInt() - 1) {
+            percentage = 100f
+            progressAnswer.progress = percentage.toInt()
+            titleProgressAnswer.text = "${percentage.toInt()}%"
+        }
+    }
 
     override fun onError(verificationError: VerificationError?) {}
 
