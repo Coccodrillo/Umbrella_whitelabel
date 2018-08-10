@@ -31,7 +31,6 @@ class FormAdapter(private val form: Form, private val controller: FormController
         val stepView = step as FormUI
         val view = stepView.createView(AnkoContext.create(context, controller, false))
         container.addView(view)
-
         return view
     }
 
