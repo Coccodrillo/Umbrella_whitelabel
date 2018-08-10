@@ -11,9 +11,9 @@ import org.secfirst.umbrella.whitelabel.misc.HeaderViewHolder
 
 class AllFormSection(private val onItemClick: (Form) -> Unit,
                      private val titleSection: String,
-                     private val forms: List<Form>) : StatelessSection(SectionParameters.builder()
+                     private val forms: MutableList<Form>) : StatelessSection(SectionParameters.builder()
         .itemResourceId(R.layout.all_form_item_view)
-        .headerResourceId(R.layout.section)
+        .headerResourceId(R.layout.head_section)
         .build()) {
 
     override fun getContentItemsTotal() = forms.size

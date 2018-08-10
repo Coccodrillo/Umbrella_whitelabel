@@ -1,5 +1,6 @@
 package org.secfirst.umbrella.whitelabel.misc
 
+import android.content.res.Resources
 import java.text.SimpleDateFormat
 import java.util.*
 

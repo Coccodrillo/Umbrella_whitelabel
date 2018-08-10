@@ -1,5 +1,6 @@
 package org.secfirst.umbrella.whitelabel.feature.base.view
 
+import android.content.res.Resources
 import android.os.Bundle
 import android.view.View
 import com.bluelinelabs.conductor.Controller
@@ -25,7 +26,6 @@ abstract class BaseController(bundle: Bundle = Bundle()) : Controller(bundle), L
         val mainActivity = activity as MainActivity
         mainActivity.setToolBarTitle(getTitleToolbar())
         mainActivity.enableUpArrow(getEnableBackAction())
-        retainViewMode = RetainViewMode.RETAIN_DETACH
     }
 
     override fun onDestroyView(view: View) {
@@ -37,3 +37,8 @@ abstract class BaseController(bundle: Bundle = Bundle()) : Controller(bundle), L
     protected abstract fun getTitleToolbar(): String
 }
 
+fun Any?.notNull(f: ()-> Unit){
+    if (this != null){
+        f()
+    }
+}

@@ -3,6 +3,7 @@ package org.secfirst.umbrella.whitelabel.feature.form.view.adapter
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionParameters
+import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter
 import io.github.luizgrp.sectionedrecyclerviewadapter.StatelessSection
 import kotlinx.android.synthetic.main.active_form_item_view.view.*
 import org.secfirst.umbrella.whitelabel.R
@@ -11,12 +12,13 @@ import org.secfirst.umbrella.whitelabel.misc.HeaderViewHolder
 
 
 class ActiveFormSection(private val onEditItemClick: (Form) -> Unit,
-                        private val onDeleteItemClick: (Int,Form) -> Unit,
+                        private val onDeleteItemClick: (Int, Form) -> Unit,
                         private val onShareItemClick: (Form) -> Unit,
                         private val titleSection: String,
-                        private val forms: List<Form>) : StatelessSection(SectionParameters.builder()
+                        private val forms: MutableList<Form>) : StatelessSection(SectionParameters.builder()
         .itemResourceId(R.layout.active_form_item_view)
-        .headerResourceId(R.layout.section)
+        .headerResourceId(R.layout.head_section)
+        .footerResourceId(R.layout.foot_section)
         .build()) {
 
     override fun getContentItemsTotal() = forms.size
@@ -31,20 +33,27 @@ class ActiveFormSection(private val onEditItemClick: (Form) -> Unit,
 
     }
 
-    override fun getHeaderViewHolder(view: View): RecyclerView.ViewHolder {
-        return HeaderViewHolder(view)
-    }
-
     override fun onBindHeaderViewHolder(holder: RecyclerView.ViewHolder?) {
         super.onBindHeaderViewHolder(holder)
         val headerHolder = holder as HeaderViewHolder?
         headerHolder?.let { it.sectionText.text = titleSection }
     }
 
+    override fun getHeaderViewHolder(view: View) = HeaderViewHolder(view)
+
+    override fun getFooterViewHolder(view: View?) = FootViewHolder(view)
+
     override fun getItemViewHolder(view: View?) = ItemActiveFormHolder(view)
 
+    fun remove(position: Int, sectionAdapter: SectionedRecyclerViewAdapter) {
+        sectionAdapter.notifyItemRemoved(position)
+        forms.removeAt(position)
+        sectionAdapter.notifyDataSetChanged()
+    }
 }
 
+
+class FootViewHolder(footView: View?) : RecyclerView.ViewHolder(footView)
 
 class ItemActiveFormHolder(itemView: View?) : RecyclerView.ViewHolder(itemView) {
 
