@@ -11,7 +11,7 @@ import org.secfirst.umbrella.whitelabel.misc.HeaderViewHolder
 
 
 class ActiveFormSection(private val onEditItemClick: (Form) -> Unit,
-                        private val onDeleteItemClick: (Form) -> Unit,
+                        private val onDeleteItemClick: (Int,Form) -> Unit,
                         private val onShareItemClick: (Form) -> Unit,
                         private val titleSection: String,
                         private val forms: List<Form>) : StatelessSection(SectionParameters.builder()
@@ -27,7 +27,7 @@ class ActiveFormSection(private val onEditItemClick: (Form) -> Unit,
         val title = forms[position].title
         activeFormHolder.bind(title, currentTime, editClickListener = { onEditItemClick(forms[position]) },
                 shareClickListener = { onShareItemClick(forms[position]) },
-                deleteClickListener = { onDeleteItemClick(forms[position]) })
+                deleteClickListener = { onDeleteItemClick(position, forms[position]) })
 
     }
 
