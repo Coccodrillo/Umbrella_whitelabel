@@ -34,30 +34,23 @@ class FormPresenterImp<V : FormView, I : FormBaseInteractor>
         }
     }
 
-    override fun submitLoadActiveForms() {
+    override fun submitLoadAllForms() {
         launchSilent(uiContext) {
-            var activeForms = listOf<Form>()
             interactor?.let {
-                activeForms = it.fetchActiveForms()
+                val activeForms = it.fetchActiveForms()
                 activeForms.forEach { form ->
                     form.screens = it.fetchScreenBy(form.referenceId).toMutableList()
                 }
+                val modelForms = it.fethModalForms()
+                if (isActive)
+                getView()?.showModelAndActiveForms(modelForms,activeForms)
             }
-            if (isActive)
-                getView()?.showActiveForms(activeForms)
         }
     }
 
     override fun submitInsert(answer: Answer) {
         launchSilent(uiContext) {
             interactor?.insertFormData(answer)
-        }
-    }
-
-    override fun submitLoadModelForms() {
-        launchSilent(uiContext) {
-            if (isActive)
-                interactor?.let { getView()?.showModelForms(it.fetchForms()) }
         }
     }
 }

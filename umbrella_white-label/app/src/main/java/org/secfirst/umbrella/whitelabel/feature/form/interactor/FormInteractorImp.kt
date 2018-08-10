@@ -23,5 +23,5 @@ class FormInteractorImp @Inject constructor(private val formRepo: FormRepo) : Ba
 
     override suspend fun insertFormData(answer: Answer) = formRepo.persistFormData(answer)
 
-    override suspend fun fetchForms() = formRepo.loadModelForms()
+    override suspend fun fethModalForms() = formRepo.loadModelForms()
 }

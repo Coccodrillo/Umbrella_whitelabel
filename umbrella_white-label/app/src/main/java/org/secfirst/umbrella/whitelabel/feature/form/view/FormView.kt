@@ -4,6 +4,5 @@ import org.secfirst.umbrella.whitelabel.data.Form
 import org.secfirst.umbrella.whitelabel.feature.base.view.BaseView
 
 interface FormView : BaseView {
-    fun showModelForms(modelForms: List<Form>) {}
-    fun showActiveForms(activeForms: List<Form>) {}
+    fun showModelAndActiveForms(modelForms: List<Form>, activeForms: List<Form>) {}
 }

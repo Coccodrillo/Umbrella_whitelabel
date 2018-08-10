@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bluelinelabs.conductor.RouterTransaction
+import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter
 import kotlinx.android.synthetic.main.host_form_view.*
 import org.secfirst.umbrella.whitelabel.R
 import org.secfirst.umbrella.whitelabel.UmbrellaApplication
@@ -16,9 +17,8 @@ import org.secfirst.umbrella.whitelabel.feature.form.DaggerFormComponent
 import org.secfirst.umbrella.whitelabel.feature.form.interactor.FormBaseInteractor
 import org.secfirst.umbrella.whitelabel.feature.form.presenter.FormBasePresenter
 import org.secfirst.umbrella.whitelabel.feature.form.view.FormView
-import org.secfirst.umbrella.whitelabel.feature.form.view.adapter.ActiveFormAdapter
-import org.secfirst.umbrella.whitelabel.feature.form.view.adapter.AllFormAdapter
-import org.secfirst.umbrella.whitelabel.misc.initRecyclerView
+import org.secfirst.umbrella.whitelabel.feature.form.view.adapter.ActiveFormSection
+import org.secfirst.umbrella.whitelabel.feature.form.view.adapter.AllFormSection
 import javax.inject.Inject
 
 
@@ -29,9 +29,9 @@ class HostFormController : BaseController(), FormView {
     private val editClick: (Form) -> Unit = this::onEditFormClicked
     private val deleteClick: (Form) -> Unit = this::onDeleteFormClicked
     private val shareClick: (Form) -> Unit = this::onShareFormClicked
-    private val allFormAdapter = AllFormAdapter(editClick)
-    private val activeFormAdapter = ActiveFormAdapter(editClick, deleteClick, shareClick)
     private lateinit var context: Context
+    private val sectionAdapter: SectionedRecyclerViewAdapter by lazy { SectionedRecyclerViewAdapter() }
+
 
     override fun onInject() {
         DaggerFormComponent.builder()
@@ -43,8 +43,9 @@ class HostFormController : BaseController(), FormView {
     override fun onAttach(view: View) {
         super.onAttach(view)
         presenter.onAttach(this)
-        activeFormRecycleView.initRecyclerView(LinearLayoutManager(view.context), activeFormAdapter)
-        allFormRecycleView.initRecyclerView(LinearLayoutManager(view.context), allFormAdapter)
+        //activeFormRecycleView.initRecyclerView(LinearLayoutManager(view.context), activeFormAdapter)
+        //allFormRecycleView.initRecyclerView(LinearLayoutManager(view.context), sectionAdapter)
+        allFormRecycleView.layoutManager = LinearLayoutManager(view.context)
         activity?.let { context = it }
         val mainActivity = activity as MainActivity
 //        activeFormRecycleView.addOnScrollListener(object : HideShowScrollListener(context) {
@@ -52,8 +53,9 @@ class HostFormController : BaseController(), FormView {
 //                mainActivity.test.translationY = distance.toFloat()
 //            }
 //        })
-        presenter.submitLoadModelForms()
-        presenter.submitLoadActiveForms()
+//        sectionAdapter.addSection(AllFormSection(editClick, "Test A", arrayListOf()))
+//        sectionAdapter.addSection(ActiveFormSection(editClick, deleteClick, shareClick, "Test A", arrayListOf()))
+        presenter.submitLoadAllForms()
     }
 
     private fun onEditFormClicked(form: Form) {
@@ -62,7 +64,7 @@ class HostFormController : BaseController(), FormView {
 
     private fun onDeleteFormClicked(form: Form) {
         presenter.submitDeleteForm(form)
-        activeFormAdapter.remove(form)
+//        sectionAdapter.noire
     }
 
     private fun onShareFormClicked(form: Form) {
@@ -73,12 +75,19 @@ class HostFormController : BaseController(), FormView {
         return inflater.inflate(R.layout.host_form_view, container, false)
     }
 
-    override fun showModelForms(modelForms: List<Form>) {
-        allFormAdapter.updateForms(modelForms)
+    override fun onDestroyView(view: View) {
+        super.onDestroyView(view)
     }
 
-    override fun showActiveForms(activeForms: List<Form>) {
-        activeFormAdapter.updateForms(activeForms)
+    override fun showModelAndActiveForms(modelForms: List<Form>, activeForms: List<Form>) {
+        sectionAdapter.removeAllSections()
+        sectionAdapter.notifyDataSetChanged()
+        allFormRecycleView?.let {
+            it.adapter = sectionAdapter
+            sectionAdapter.addSection(AllFormSection(editClick, "Test A", modelForms))
+            sectionAdapter.addSection(ActiveFormSection(editClick, deleteClick, shareClick, "Test B", activeForms))
+
+        }
     }
 
     override fun getTitleToolbar() = applicationContext?.getString(R.string.form_title)!!

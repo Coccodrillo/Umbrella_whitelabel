@@ -8,9 +8,7 @@ import org.secfirst.umbrella.whitelabel.feature.form.view.FormView
 
 interface FormBasePresenter<V : FormView, I : FormBaseInteractor> : BasePresenter<V, I> {
 
-    fun submitLoadModelForms()
-
-    fun submitLoadActiveForms()
+    fun submitLoadAllForms()
 
     fun submitInsert(answer: Answer)
 
