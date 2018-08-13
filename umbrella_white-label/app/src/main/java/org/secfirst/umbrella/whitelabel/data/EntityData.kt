@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import com.raizlabs.android.dbflow.annotation.*
 import com.raizlabs.android.dbflow.sql.language.SQLite
 import org.secfirst.umbrella.whitelabel.data.database.AppDatabase
+import org.secfirst.umbrella.whitelabel.data.database.BaseModel
 import org.secfirst.umbrella.whitelabel.data.database.content.Category
 import org.secfirst.umbrella.whitelabel.data.database.content.Child
 import org.secfirst.umbrella.whitelabel.data.database.content.Lesson
@@ -145,13 +146,6 @@ data class Form(
         var id: Long = 0,
         @Column
         var title: String = "",
-        var answers: MutableList<Answer> = mutableListOf(),
-        @Column
-        var active: Boolean = false,
-        @Column(name = "form_model_id")
-        var referenceId: Long = 0,
-        @Column
-        var date: String = "",
         var screens: MutableList<Screen> = arrayListOf()) : BaseModel(), Serializable {
 
     @OneToMany(methods = [(OneToMany.Method.ALL)], variableName = "screens")
@@ -163,17 +157,6 @@ data class Form(
                     .queryList()
         }
         return screens
-    }
-
-    @OneToMany(methods = [(OneToMany.Method.ALL)], variableName = "answers")
-    fun oneToManyAnswer(): MutableList<Answer> {
-        if (answers.isEmpty()) {
-            answers = SQLite.select()
-                    .from(Answer::class.java)
-                    .where(Answer_Table.form_id.eq(id))
-                    .queryList()
-        }
-        return answers
     }
 }
 
@@ -265,8 +248,32 @@ data class Answer(
         @ForeignKey(onUpdate = ForeignKeyAction.CASCADE,
                 deleteForeignKeyModel = false,
                 stubbedRelationship = true)
-        @ForeignKeyReference(foreignKeyColumnName = "id", columnName = "form_id")
-        var form: Form? = null) : Serializable
+        @ForeignKeyReference(foreignKeyColumnName = "id", columnName = "active_form_id")
+        var activeForm: ActiveForm? = null) : Serializable
+
+@Table(database = AppDatabase::class)
+data class ActiveForm(@PrimaryKey
+                      var id: Long = 0,
+                      var form: Form = Form(),
+                      @Column(name = "form_model_id")
+                      var referenceId: Long = 0,
+                      @Column
+                      var date: String = "",
+                      @Column
+                      var title: String = "",
+                      var answers: MutableList<Answer> = arrayListOf()) : BaseModel(), Serializable {
+
+    @OneToMany(methods = [(OneToMany.Method.ALL)], variableName = "answers")
+    fun oneToManyAnswers(): MutableList<Answer> {
+        if (answers.isEmpty()) {
+            answers = SQLite.select()
+                    .from(Answer::class.java)
+                    .where(Answer_Table.activeForm_id.eq(id))
+                    .queryList()
+        }
+        return answers
+    }
+}
 
 val Element.convertToCategory: Category
     get() {

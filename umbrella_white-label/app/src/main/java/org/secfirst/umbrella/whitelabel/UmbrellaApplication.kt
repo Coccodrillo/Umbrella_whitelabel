@@ -12,7 +12,6 @@ import com.raizlabs.android.dbflow.config.FlowLog
 import com.raizlabs.android.dbflow.config.FlowManager
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
-import io.fabric.sdk.android.Fabric
 import net.sqlcipher.database.SQLiteDatabase
 import org.secfirst.umbrella.whitelabel.data.database.AppDatabase
 import org.secfirst.umbrella.whitelabel.data.database.SQLCipherHelperImpl
@@ -31,8 +30,6 @@ class UmbrellaApplication : Application(), HasActivityInjector {
     companion object {
         lateinit var instance: UmbrellaApplication
             private set
-
-        fun getResources() = instance.resources
     }
 
     override fun attachBaseContext(base: Context?) {

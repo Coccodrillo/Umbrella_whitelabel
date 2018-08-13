@@ -1,5 +1,6 @@
 package org.secfirst.umbrella.whitelabel.feature.form.presenter
 
+import org.secfirst.umbrella.whitelabel.data.ActiveForm
 import org.secfirst.umbrella.whitelabel.data.Answer
 import org.secfirst.umbrella.whitelabel.data.Form
 import org.secfirst.umbrella.whitelabel.feature.base.presenter.BasePresenter
@@ -12,8 +13,10 @@ interface FormBasePresenter<V : FormView, I : FormBaseInteractor> : BasePresente
 
     fun submitInsert(answer: Answer)
 
-    fun submitForm(form: Form)
+    fun submitActiveForm(activeForm: ActiveForm)
 
-    fun submitDeleteForm(form: Form)
+    fun submitDeleteActiveForm(activeForm: ActiveForm)
+
+    fun submitShareFormHtml(activeForm: ActiveForm)
 
 }

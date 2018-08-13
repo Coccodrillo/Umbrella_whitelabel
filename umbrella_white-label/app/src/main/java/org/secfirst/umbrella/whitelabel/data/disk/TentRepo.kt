@@ -1,9 +1,9 @@
-package org.secfirst.umbrella.whitelabel.data.storage
+package org.secfirst.umbrella.whitelabel.data.disk
 
 import java.io.File
 
 
-interface   TentStorageRepo {
+interface   TentRepo {
 
     suspend fun fetch(): Boolean
 

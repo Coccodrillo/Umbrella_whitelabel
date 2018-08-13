@@ -1,5 +1,6 @@
 package org.secfirst.umbrella.whitelabel.feature.form.interactor
 
+import org.secfirst.umbrella.whitelabel.data.ActiveForm
 import org.secfirst.umbrella.whitelabel.data.Answer
 import org.secfirst.umbrella.whitelabel.data.Form
 import org.secfirst.umbrella.whitelabel.data.Screen
@@ -10,18 +11,15 @@ interface FormBaseInteractor : BaseInteractor {
 
     suspend fun insertFormData(answer: Answer)
 
-    suspend fun insertForm(form: Form)
+    suspend fun insertActiveForm(activeForm: ActiveForm)
 
-    suspend fun deleteForm(form: Form)
+    suspend fun deleteActiveForm(activeForm: ActiveForm)
 
-    suspend fun fethModalForms(): List<Form>
+    suspend fun fetchModalForms(): List<Form>
 
-    suspend fun fetchActiveForms(): List<Form>
+    suspend fun fetchActiveForms(): List<ActiveForm>
 
     suspend fun fetchAnswerBy(formId: Long): List<Answer>
 
     suspend fun fetchScreenBy(formId: Long): List<Screen>
-
-    suspend fun fetchFormIdBy(title: String): Long
-
 }

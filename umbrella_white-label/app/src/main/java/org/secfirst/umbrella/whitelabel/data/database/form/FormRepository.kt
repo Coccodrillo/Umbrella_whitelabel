@@ -1,18 +1,17 @@
 package org.secfirst.umbrella.whitelabel.data.database.form
 
+import org.secfirst.umbrella.whitelabel.data.ActiveForm
 import org.secfirst.umbrella.whitelabel.data.Answer
-import org.secfirst.umbrella.whitelabel.data.Form
 import org.secfirst.umbrella.whitelabel.data.Screen
 import javax.inject.Inject
 
 class FormRepository @Inject constructor(private val formDao: FormDao) : FormRepo {
-    override suspend fun removeForm(form: Form) = formDao.delete(form)
 
-    override suspend fun loadFormIdBy(title: String): Long = formDao.getFormIdBy(title)!!
+    override suspend fun removeActiveForm(activeForm: ActiveForm) = formDao.delete(activeForm)
 
     override suspend fun loadScreenBy(formId: Long): List<Screen> = formDao.getScreenBy(formId)
 
-    override suspend fun persistForm(form: Form) = formDao.saveForm(form)
+    override suspend fun persistForm(activeForm: ActiveForm) = formDao.saveActiveForm(activeForm)
 
     override suspend fun persistFormData(answer: Answer) = formDao.insertAnswer(answer)
 
@@ -20,6 +19,6 @@ class FormRepository @Inject constructor(private val formDao: FormDao) : FormRep
 
     override suspend fun loadAnswerBy(formId: Long) = formDao.getAnswerBy(formId)
 
-    override suspend fun loadActiveForms(): List<Form> = formDao.getAllActiveForms()
+    override suspend fun loadActiveForms(): List<ActiveForm> = formDao.getAllActiveForms()
 
 }
