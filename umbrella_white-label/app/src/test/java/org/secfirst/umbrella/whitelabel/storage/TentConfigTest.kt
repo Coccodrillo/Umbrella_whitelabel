@@ -6,12 +6,13 @@ import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.junit.MockitoJUnitRunner
-import org.secfirst.whitelabel.data.storage.ExtensionFile
-import org.secfirst.whitelabel.data.storage.TentConfig
-import org.secfirst.whitelabel.data.storage.TentConfig.Companion.CHILD_LEVEL
-import org.secfirst.whitelabel.data.storage.TentConfig.Companion.ELEMENT_LEVEL
-import org.secfirst.whitelabel.data.storage.TentConfig.Companion.SUB_ELEMENT_LEVEL
-import org.secfirst.whitelabel.data.storage.TypeFile
+import org.secfirst.umbrella.whitelabel.data.disk.ExtensionFile
+import org.secfirst.umbrella.whitelabel.data.disk.TentConfig
+import org.secfirst.umbrella.whitelabel.data.disk.TentConfig.Companion.CHILD_LEVEL
+import org.secfirst.umbrella.whitelabel.data.disk.TentConfig.Companion.ELEMENT_LEVEL
+import org.secfirst.umbrella.whitelabel.data.disk.TentConfig.Companion.SUB_ELEMENT_LEVEL
+import org.secfirst.umbrella.whitelabel.data.disk.TypeFile
+
 
 
 @RunWith(MockitoJUnitRunner::class)

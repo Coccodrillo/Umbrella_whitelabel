@@ -5,16 +5,16 @@ import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.junit.MockitoJUnitRunner
-import org.secfirst.whitelabel.feature.tour.interactor.TourBaseInteractor
-import org.secfirst.whitelabel.feature.tour.presenter.TourPresenterImp
-import org.secfirst.whitelabel.feature.content.view.ContentBaseView
+import org.secfirst.umbrella.whitelabel.feature.tour.interactor.TourBaseInteractor
+import org.secfirst.umbrella.whitelabel.feature.tour.presenter.TourPresenterImp
+import org.secfirst.umbrella.whitelabel.feature.tour.view.TourView
 import java.io.File
 
 @RunWith(MockitoJUnitRunner::class)
 class ContentInteractorTest {
 
     @Mock
-    private lateinit var tourInteractor: TourPresenterImp<ContentBaseView, TourBaseInteractor>
+    private lateinit var tourInteractor: TourPresenterImp<TourView, TourBaseInteractor>
 
     private val emptyRepository: List<File> = arrayListOf()
 
