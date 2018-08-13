@@ -1,5 +1,6 @@
 package org.secfirst.umbrella.whitelabel.data.database.form
 
+import android.util.Log
 import com.raizlabs.android.dbflow.kotlinextensions.modelAdapter
 import com.raizlabs.android.dbflow.sql.language.SQLite
 import kotlinx.coroutines.experimental.withContext
@@ -11,19 +12,31 @@ interface FormDao {
 
     suspend fun insertAnswer(answer: Answer) {
         withContext(ioContext) {
-            modelAdapter<Answer>().insert(answer)
+            try {
+                modelAdapter<Answer>().insert(answer)
+            } catch (e: Exception) {
+                Log.e(FormDao::class.simpleName, "Error when tried to insert a answer - ${e.stackTrace}")
+            }
         }
     }
 
     suspend fun delete(activeForm: ActiveForm) {
         withContext(ioContext) {
-            modelAdapter<ActiveForm>().delete(activeForm)
+            try {
+                modelAdapter<ActiveForm>().delete(activeForm)
+            } catch (e: Exception) {
+                Log.e(FormDao::class.simpleName, "Error when tried to delete a activeForm - ${e.stackTrace}")
+            }
         }
     }
 
     suspend fun saveActiveForm(activeForm: ActiveForm) {
         withContext(ioContext) {
-            modelAdapter<ActiveForm>().save(activeForm)
+            try {
+                modelAdapter<ActiveForm>().save(activeForm)
+            } catch (e: Exception) {
+                Log.e(FormDao::class.simpleName, "Error when tried to insert a activeForm - ${e.stackTrace}")
+            }
         }
     }
 
