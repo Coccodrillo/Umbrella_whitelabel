@@ -49,6 +49,12 @@ detekt {
 }
 
 ext {
+    travisBuild = System.getenv("TRAVIS") == "true"
+    // allows for -Dpre-dex=false to be set
+    preDexEnabled = "true" == System.getProperty("pre-dex", "true")
+}
+
+ext {
 
     minSdkVersion = 15
     targetSdkVersion = 26

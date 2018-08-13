@@ -19,6 +19,7 @@ android {
             storeFile file("$project.projectDir/config/beta_keystore.jks")
             storePassword 'android'
         }
+
     }
     compileSdkVersion 27
     compileOptions {
@@ -30,6 +31,7 @@ android {
             exclude module: 'httpclient'
         }
     }
+
     androidExtensions {
         experimental = true
     }
@@ -64,6 +66,10 @@ android {
             ext.enableCrashlytics = false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    dexOptions {
+        // Skip pre-dexing when running on Travis CI or when disabled via -Dpre-dex=false.
+        preDexLibraries = preDexEnabled && !travisBuild
     }
 }
 
