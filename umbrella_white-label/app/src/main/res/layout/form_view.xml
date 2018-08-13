@@ -25,6 +25,11 @@
     <include
         android:id="@+id/include"
         layout="@layout/form_progress"
-        app:layout_constraintBottom_toBottomOf="@+id/stepperLayout" />
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="75dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
