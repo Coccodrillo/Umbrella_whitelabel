@@ -4,22 +4,22 @@ import android.util.Log
 import kotlinx.coroutines.experimental.withContext
 import org.secfirst.umbrella.whitelabel.data.Element
 import org.secfirst.umbrella.whitelabel.data.Root
-import org.secfirst.umbrella.whitelabel.data.storage.TentConfig
-import org.secfirst.umbrella.whitelabel.data.storage.TentStorageRepo
+import org.secfirst.umbrella.whitelabel.data.disk.TentConfig
+import org.secfirst.umbrella.whitelabel.data.disk.TentRepo
 import org.secfirst.umbrella.whitelabel.misc.AppExecutors.Companion.ioContext
 import org.secfirst.umbrella.whitelabel.serialize.PathUtils.Companion.getWorkDirectory
 import java.io.File
 import javax.inject.Inject
 
 
-class ElementSerializer @Inject constructor(private val tentStorageRepo: TentStorageRepo) : Serializer {
+class ElementSerializer @Inject constructor(private val tentRepo: TentRepo) : Serializer {
 
     private val root: Root = Root()
     private var fileList = listOf<File>()
 
     suspend fun serialize(): Root {
         withContext(ioContext) {
-            fileList = tentStorageRepo.getElementsFile()
+            fileList = tentRepo.getElementsFile()
             create()
         }
 

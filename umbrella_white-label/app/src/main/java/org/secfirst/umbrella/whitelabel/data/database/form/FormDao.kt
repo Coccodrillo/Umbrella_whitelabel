@@ -15,55 +15,49 @@ interface FormDao {
         }
     }
 
-    suspend fun delete(form: Form) {
+    suspend fun delete(activeForm: ActiveForm) {
         withContext(ioContext) {
-            modelAdapter<Answer>().deleteAll(form.answers)
-            SQLite.delete(Form::class.java)
-                    .where(Form_Table.id.eq(form.id))
-                    .async()
-                    .execute()
+            modelAdapter<ActiveForm>().delete(activeForm)
         }
     }
 
-    suspend fun saveForm(form: Form) {
+    suspend fun saveActiveForm(activeForm: ActiveForm) {
         withContext(ioContext) {
-            modelAdapter<Form>().save(form)
+            modelAdapter<ActiveForm>().save(activeForm)
         }
     }
 
     suspend fun getAnswerBy(formId: Long): List<Answer> = withContext(ioContext) {
-        SQLite.select()
-                .from(Answer::class.java)
-                .where(Answer_Table.form_id.`is`(formId))
-                .queryList()
+        withContext(ioContext) {
+            SQLite.select()
+                    .from(Answer::class.java)
+                    .where(Answer_Table.activeForm_id.`is`(formId))
+                    .queryList()
+        }
     }
 
     suspend fun getAllFormModel(): List<Form> = withContext(ioContext) {
-        SQLite.select()
-                .from(Form::class.java)
-                .where(Form_Table.active.`is`(false))
-                .queryList()
+        withContext(ioContext) {
+            SQLite.select()
+                    .from(Form::class.java)
+                    .queryList()
+        }
     }
 
-    suspend fun getAllActiveForms(): List<Form> = withContext(ioContext) {
-        SQLite.select()
-                .from(Form::class.java)
-                .where(Form_Table.active.`is`(true))
-                .queryList()
-    }
-
-    suspend fun getFormIdBy(title: String): Long? = withContext(ioContext) {
-        val form = SQLite.select()
-                .from(Form::class.java)
-                .where(Form_Table.title.`is`(title))
-                .querySingle()
-        form?.id
+    suspend fun getAllActiveForms(): List<ActiveForm> = withContext(ioContext) {
+        withContext(ioContext) {
+            SQLite.select()
+                    .from(ActiveForm::class.java)
+                    .queryList()
+        }
     }
 
     suspend fun getScreenBy(formId: Long): List<Screen> = withContext(ioContext) {
-        SQLite.select()
-                .from(Screen::class.java)
-                .where(Screen_Table.form_id.`is`(formId))
-                .queryList()
+        withContext(ioContext) {
+            SQLite.select()
+                    .from(Screen::class.java)
+                    .where(Screen_Table.form_id.`is`(formId))
+                    .queryList()
+        }
     }
 }

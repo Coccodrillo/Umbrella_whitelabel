@@ -14,8 +14,8 @@ import kotlinx.android.synthetic.main.form_progress.*
 import kotlinx.android.synthetic.main.form_view.*
 import org.secfirst.umbrella.whitelabel.R
 import org.secfirst.umbrella.whitelabel.UmbrellaApplication
+import org.secfirst.umbrella.whitelabel.data.ActiveForm
 import org.secfirst.umbrella.whitelabel.data.Answer
-import org.secfirst.umbrella.whitelabel.data.Form
 import org.secfirst.umbrella.whitelabel.feature.MainActivity
 import org.secfirst.umbrella.whitelabel.feature.base.view.BaseController
 import org.secfirst.umbrella.whitelabel.feature.form.DaggerFormComponent
@@ -25,6 +25,7 @@ import org.secfirst.umbrella.whitelabel.feature.form.view.FormUI
 import org.secfirst.umbrella.whitelabel.feature.form.view.FormView
 import org.secfirst.umbrella.whitelabel.feature.form.view.adapter.FormAdapter
 import org.secfirst.umbrella.whitelabel.feature.main.OnNavigationBottomView
+import org.secfirst.umbrella.whitelabel.misc.BundleExt.Companion.EXTRA_ACTIVE_FORM
 import org.secfirst.umbrella.whitelabel.misc.BundleExt.Companion.EXTRA_FORM_SELECTED
 import org.secfirst.umbrella.whitelabel.misc.currentTime
 import org.secfirst.umbrella.whitelabel.misc.hideKeyboard
@@ -39,17 +40,18 @@ class FormController(bundle: Bundle) : BaseController(bundle), FormView, Stepper
     var checkboxList = mutableListOf<HashMap<CheckBox, Answer>>()
     private lateinit var onNavigation: OnNavigationBottomView
     private var listOfViews: MutableList<FormUI> = mutableListOf()
-    private lateinit var newForm: Form
+    private var totalScreens: Int = 0
 
-    constructor(formSelected: Form) : this(Bundle().apply {
-        putSerializable(EXTRA_FORM_SELECTED, formSelected)
+    constructor(activeForm: ActiveForm) : this(Bundle().apply {
+        putSerializable(EXTRA_ACTIVE_FORM, activeForm)
     })
 
-    private val formSelected by lazy { args.getSerializable(EXTRA_FORM_SELECTED) as Form }
+    private val activeForm by lazy { args.getSerializable(EXTRA_ACTIVE_FORM) as ActiveForm }
 
     override fun onAttach(view: View) {
         super.onAttach(view)
-        stepperLayout.adapter = FormAdapter(formSelected, this, listOfViews)
+
+        stepperLayout.adapter = FormAdapter(activeForm.form, this, listOfViews)
         stepperLayout.setListener(this)
         onNavigation = activity as MainActivity
         presenter.onAttach(this)
@@ -59,7 +61,8 @@ class FormController(bundle: Bundle) : BaseController(bundle), FormView, Stepper
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
         val view = inflater.inflate(R.layout.form_view, container, false)
-        createActiveForm()
+        createFormUI()
+        totalScreens = activeForm.form.screens.size
         return view
     }
 
@@ -68,23 +71,14 @@ class FormController(bundle: Bundle) : BaseController(bundle), FormView, Stepper
         super.onDestroy()
     }
 
-    private fun createActiveForm() {
-        newForm = formSelected
-        if (!newForm.active) {
-            newForm.referenceId = formSelected.id
-            newForm.id = if (formSelected.active) newForm.id else System.currentTimeMillis()
-            newForm.active = true
-        }
-        createFormUI()
-    }
-
     private fun createFormUI() {
-        for (view in formSelected.screens)
-            listOfViews.add(FormUI(view, formSelected.answers))
+        activeForm.form.let {
+            for (view in it.screens)
+                listOfViews.add(FormUI(view, activeForm.answers))
+        }
     }
 
     override fun onCompleted(completeButton: View?) {
-        newForm.date = currentTime
         bindCheckboxValue()
         bindEditTextValue()
         bindRadioButtonValue()
@@ -99,21 +93,19 @@ class FormController(bundle: Bundle) : BaseController(bundle), FormView, Stepper
                 .inject(this)
     }
 
-
     private fun bindCheckboxValue() {
         checkboxList.forEach { map ->
             for (entry in map) {
                 val answer = entry.value
                 val checkbox = entry.key
+                answer.activeForm = activeForm
                 answer.choiceInput = checkbox.isChecked
-                answer.form = newForm
-                if (answer.choiceInput)
-                    newForm.answers.add(answer)
-
+                if (answer.choiceInput) {
+                    activeForm.answers.add(answer)
+                }
             }
-
-            presenter.submitForm(newForm)
         }
+        presenter.submitActiveForm(activeForm)
     }
 
     private fun bindEditTextValue() {
@@ -121,14 +113,14 @@ class FormController(bundle: Bundle) : BaseController(bundle), FormView, Stepper
             for (entry in map) {
                 val answer = entry.value
                 val editText = entry.key
+                answer.activeForm = activeForm
                 answer.textInput = editText.text.toString()
-                answer.form = newForm
-                if (answer.textInput.isNotEmpty())
-                    newForm.answers.add(answer)
-
+                if (answer.textInput.isNotEmpty()) {
+                    activeForm.answers.add(answer)
+                }
             }
-            presenter.submitForm(newForm)
         }
+        presenter.submitActiveForm(activeForm)
     }
 
     private fun bindRadioButtonValue() {
@@ -136,29 +128,33 @@ class FormController(bundle: Bundle) : BaseController(bundle), FormView, Stepper
             for (entry in map) {
                 val answer = entry.value
                 val radioButton = entry.key
+                answer.activeForm = activeForm
                 answer.choiceInput = radioButton.isChecked
-                answer.form = newForm
-                if (answer.choiceInput)
-                    newForm.answers.add(answer)
-
+                if (answer.choiceInput) {
+                    activeForm.answers.add(answer)
+                }
             }
-            presenter.submitForm(newForm)
         }
+        presenter.submitActiveForm(activeForm)
+    }
+
+    override fun onStepSelected(newStepPosition: Int) {
+        setProgress(newStepPosition)
     }
 
     @SuppressLint("SetTextI18n")
-    override fun onStepSelected(newStepPosition: Int) {
-        val size = formSelected.screens.size.toFloat()
-        var percentage = newStepPosition / size * 100f
+    private fun setProgress(newStepPosition: Int) {
+        val size = totalScreens
+        var percentage = newStepPosition * 100 / totalScreens
         if (newStepPosition > 0) {
-            progressAnswer.progress = percentage.toInt()
-            titleProgressAnswer.text = "${percentage.toInt()}%"
+            progressAnswer.progress = percentage
+            titleProgressAnswer.text = "$percentage%"
         }
 
-        if (newStepPosition == size.toInt() - 1) {
-            percentage = 100f
-            progressAnswer.progress = percentage.toInt()
-            titleProgressAnswer.text = "${percentage.toInt()}%"
+        if (newStepPosition == size - 1) {
+            percentage = 100
+            progressAnswer.progress = percentage
+            titleProgressAnswer.text = "$percentage%"
         }
     }
 
@@ -166,7 +162,7 @@ class FormController(bundle: Bundle) : BaseController(bundle), FormView, Stepper
 
     override fun onReturn() {}
 
-    override fun getTitleToolbar() = formSelected.title
+    override fun getTitleToolbar() = activeForm.title
 
     override fun getEnableBackAction() = true
 

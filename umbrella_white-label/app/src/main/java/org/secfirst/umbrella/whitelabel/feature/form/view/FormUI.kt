@@ -13,10 +13,9 @@ import com.stepstone.stepper.VerificationError
 import org.jetbrains.anko.*
 import org.secfirst.umbrella.whitelabel.R
 import org.secfirst.umbrella.whitelabel.data.Answer
-import org.secfirst.umbrella.whitelabel.data.Item
-import org.secfirst.umbrella.whitelabel.data.Option
 import org.secfirst.umbrella.whitelabel.data.Screen
 import org.secfirst.umbrella.whitelabel.feature.form.FieldType
+import org.secfirst.umbrella.whitelabel.feature.form.hasAnswer
 import org.secfirst.umbrella.whitelabel.feature.form.view.controller.FormController
 
 
@@ -40,52 +39,45 @@ class FormUI(private val screen: Screen, private val answers: List<Answer>?) : A
                             }.lparams { gravity = Gravity.CENTER }
 
                         FieldType.TEXT_AREA.value -> {
-                            var answer = Answer()
+                            val answer = item.hasAnswer(answers)
                             textView(item.label) { textSize = size }.lparams { topMargin = dip(10) }
                             val editText = editText {
                                 hint = item.hint
-                                getAnswer(item)?.let { answer = it }
                                 setText(answer.textInput)
 
                             }.lparams(width = matchParent)
-
                             answer.itemId = item.id
                             bindEditText(answer, editText, ui)
                         }
                         FieldType.TEXT_INPUT.value -> {
-                            var answer = Answer()
+                            val answer = item.hasAnswer(answers)
                             textView(item.label) { textSize = size }.lparams { topMargin = dip(10) }
                             val editText = editText {
                                 hint = item.hint
-                                getAnswer(item)?.let { answer = it }
                                 setText(answer.textInput)
                             }.lparams(width = matchParent)
-
                             answer.itemId = item.id
-                            bindEditText(answer, editText, ui)
+                            answer.run { bindEditText(answer, editText, ui) }
                         }
                         FieldType.MULTIPLE_CHOICE.value -> {
                             textView(item.label) { textSize = size }.lparams { topMargin = dip(10) }
                             item.options.forEach { formOption ->
-                                var answer = Answer()
+                                val answer = formOption.hasAnswer(answers)
                                 val checkBox = checkBox {
                                     text = formOption.label
-                                    getAnswer(formOption)?.let { answer = it }
                                     isChecked = answer.choiceInput
-                                    answer.optionId = formOption.id
                                 }
+                                answer.optionId = formOption.id
                                 bindCheckBox(answer, checkBox, ui)
                             }
                         }
                         FieldType.SINGLE_CHOICE.value -> {
                             textView(item.label)
                             item.options.forEach { formOption ->
-                                var answer = Answer()
+                                val answer = formOption.hasAnswer(answers)
                                 val radioButton = radioButton {
                                     text = formOption.label
-                                    getAnswer(formOption)?.let { answer = it }
                                     isChecked = answer.choiceInput
-                                    answer.optionId = formOption.id
                                 }
                                 answer.optionId = formOption.id
                                 bindRadioButton(answer, radioButton, ui)
@@ -99,21 +91,6 @@ class FormUI(private val screen: Screen, private val answers: List<Answer>?) : A
 
     }.view
 
-    private fun getAnswer(formOption: Option): Answer? {
-        answers?.forEach { answer ->
-            if (formOption.id == answer.optionId)
-                return answer
-        }
-        return null
-    }
-
-    private fun getAnswer(item: Item): Answer? {
-        answers?.forEach { answer ->
-            if (item.id == answer.itemId)
-                return answer
-        }
-        return null
-    }
 
     private fun bindRadioButton(answer: Answer, radioButton: RadioButton, ui: AnkoContext<FormController>) {
         val radioButtonMap = hashMapOf<RadioButton, Answer>()

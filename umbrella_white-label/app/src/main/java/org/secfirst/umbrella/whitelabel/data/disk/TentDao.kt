@@ -1,4 +1,4 @@
-package org.secfirst.umbrella.whitelabel.data.storage
+package org.secfirst.umbrella.whitelabel.data.disk
 
 import android.util.Log
 import kotlinx.coroutines.experimental.withContext
@@ -7,7 +7,7 @@ import org.secfirst.umbrella.whitelabel.misc.AppExecutors.Companion.ioContext
 import java.io.File
 import java.util.*
 
-interface TentStorageDao {
+interface TentDao {
 
     suspend fun cloneRepository(tentConfig: TentConfig): Boolean {
         var result = true
@@ -25,7 +25,7 @@ interface TentStorageDao {
         } catch (e: Exception) {
             result = false
             File(tentConfig.getPathRepository()).deleteRecursively()
-            Log.i(TentStorageDao::class.java.name,
+            Log.i(TentDao::class.java.name,
                     "Repository wasn't created - ${tentConfig.isNotCreate()} " +
                             "path - ${tentConfig.getPathRepository()}")
         }

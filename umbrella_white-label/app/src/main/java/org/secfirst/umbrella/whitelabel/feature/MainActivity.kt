@@ -13,7 +13,7 @@ import com.bluelinelabs.conductor.RouterTransaction
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.main_view.*
 import org.secfirst.umbrella.whitelabel.R
-import org.secfirst.umbrella.whitelabel.data.storage.TentConfig
+import org.secfirst.umbrella.whitelabel.data.disk.TentConfig
 import org.secfirst.umbrella.whitelabel.feature.account.AccountController
 import org.secfirst.umbrella.whitelabel.feature.feed.FeedController
 import org.secfirst.umbrella.whitelabel.feature.form.view.controller.HostFormController

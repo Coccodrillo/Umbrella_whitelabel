@@ -7,18 +7,19 @@ import dagger.Provides
 import dagger.Reusable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import org.secfirst.umbrella.whitelabel.data.VirtualStorage
 import org.secfirst.umbrella.whitelabel.data.database.content.ContentDao
 import org.secfirst.umbrella.whitelabel.data.database.content.ContentRepo
 import org.secfirst.umbrella.whitelabel.data.database.content.ContentRepository
 import org.secfirst.umbrella.whitelabel.data.database.form.FormDao
 import org.secfirst.umbrella.whitelabel.data.database.form.FormRepo
 import org.secfirst.umbrella.whitelabel.data.database.form.FormRepository
+import org.secfirst.umbrella.whitelabel.data.disk.TentConfig
+import org.secfirst.umbrella.whitelabel.data.disk.TentDao
+import org.secfirst.umbrella.whitelabel.data.disk.TentRepo
+import org.secfirst.umbrella.whitelabel.data.disk.TentRepository
 import org.secfirst.umbrella.whitelabel.data.network.ApiHelper
 import org.secfirst.umbrella.whitelabel.data.network.NetworkEndPoint.BASE_URL
-import org.secfirst.umbrella.whitelabel.data.storage.TentConfig
-import org.secfirst.umbrella.whitelabel.data.storage.TentStorageDao
-import org.secfirst.umbrella.whitelabel.data.storage.TentStorageRepo
-import org.secfirst.umbrella.whitelabel.data.storage.TentStorageRepository
 import org.secfirst.umbrella.whitelabel.misc.SchedulerProvider
 import org.secfirst.umbrella.whitelabel.serialize.ElementLoader
 import org.secfirst.umbrella.whitelabel.serialize.ElementSerializer
@@ -42,18 +43,17 @@ class AppModule {
 
     @Provides
     @Singleton
-    internal fun provideElementSerializer(tentRep: TentStorageRepo) = ElementSerializer(tentRep)
+    internal fun provideElementSerializer(tentRep: TentRepo) = ElementSerializer(tentRep)
 
     @Provides
     @Singleton
-    internal fun provideElementLoader(tentRep: TentStorageRepo) = ElementLoader(tentRep)
-
+    internal fun provideElementLoader(tentRep: TentRepo) = ElementLoader(tentRep)
 }
 
 @Module
 class TentContentModule {
     internal val tentDao
-        get() = object : TentStorageDao {}
+        get() = object : TentDao {}
 
     @Provides
     @Singleton
@@ -61,7 +61,7 @@ class TentContentModule {
 
     @Provides
     @Singleton
-    internal fun provideTentRepo(tentConfig: TentConfig): TentStorageRepo = TentStorageRepository(tentDao, tentConfig)
+    internal fun provideTentRepo(tentConfig: TentConfig): TentRepo = TentRepository(tentDao, tentConfig)
 }
 
 
@@ -81,6 +81,11 @@ class RepositoryModule {
     @Provides
     @Singleton
     internal fun provideFormDao(): FormRepo = FormRepository(formDao)
+
+
+    @Provides
+    @Singleton
+    internal fun provideVirtualStorage(application: Application): VirtualStorage = VirtualStorage(application)
 
 }
 

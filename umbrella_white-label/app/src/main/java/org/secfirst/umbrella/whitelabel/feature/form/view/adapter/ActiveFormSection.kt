@@ -7,29 +7,30 @@ import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapt
 import io.github.luizgrp.sectionedrecyclerviewadapter.StatelessSection
 import kotlinx.android.synthetic.main.active_form_item_view.view.*
 import org.secfirst.umbrella.whitelabel.R
+import org.secfirst.umbrella.whitelabel.data.ActiveForm
 import org.secfirst.umbrella.whitelabel.data.Form
 import org.secfirst.umbrella.whitelabel.misc.HeaderViewHolder
 
 
-class ActiveFormSection(private val onEditItemClick: (Form) -> Unit,
-                        private val onDeleteItemClick: (Int, Form) -> Unit,
-                        private val onShareItemClick: (Form) -> Unit,
+class ActiveFormSection(private val onEditItemClick: (ActiveForm) -> Unit,
+                        private val onDeleteItemClick: (Int, ActiveForm) -> Unit,
+                        private val onShareItemClick: (ActiveForm) -> Unit,
                         private val titleSection: String,
-                        private val forms: MutableList<Form>) : StatelessSection(SectionParameters.builder()
+                        private val activeForms: MutableList<ActiveForm>) : StatelessSection(SectionParameters.builder()
         .itemResourceId(R.layout.active_form_item_view)
         .headerResourceId(R.layout.head_section)
         .footerResourceId(R.layout.foot_section)
         .build()) {
 
-    override fun getContentItemsTotal() = forms.size
+    override fun getContentItemsTotal() = activeForms.size
 
     override fun onBindItemViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
         val activeFormHolder = holder as ItemActiveFormHolder
-        val currentTime = forms[position].date
-        val title = forms[position].title
-        activeFormHolder.bind(title, currentTime, editClickListener = { onEditItemClick(forms[position]) },
-                shareClickListener = { onShareItemClick(forms[position]) },
-                deleteClickListener = { onDeleteItemClick(position, forms[position]) })
+        val currentTime = activeForms[position].date
+        val title = activeForms[position].title
+        activeFormHolder.bind(title, currentTime, editClickListener = { onEditItemClick(activeForms[position]) },
+                shareClickListener = { onShareItemClick(activeForms[position]) },
+                deleteClickListener = { onDeleteItemClick(position, activeForms[position]) })
 
     }
 
@@ -47,7 +48,7 @@ class ActiveFormSection(private val onEditItemClick: (Form) -> Unit,
 
     fun remove(position: Int, sectionAdapter: SectionedRecyclerViewAdapter) {
         sectionAdapter.notifyItemRemoved(position)
-        forms.removeAt(position)
+        activeForms.removeAt(position)
         sectionAdapter.notifyDataSetChanged()
     }
 }
