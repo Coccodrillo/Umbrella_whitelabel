@@ -76,16 +76,18 @@ android {
 dependencies {
 
     implementation "net.zetetic:android-database-sqlcipher:3.5.9@aar"
-    implementation 'org.jsoup:jsoup:1.8.2'
-    implementation 'info.guardianproject.iocipher:IOCipher:0.4'
-    implementation "io.github.luizgrp.sectionedrecyclerviewadapter:sectionedrecyclerviewadapter:1.2.0"
     //ViewPager indicator.
     implementation 'com.romandanylyk:pageindicatorview:1.0.1@aar'
-    //Framework to replace fragments
+    implementation "org.jsoup:jsoup:$jsoup"
+    implementation "info.guardianproject.iocipher:IOCipher:$io_cipher"
+    //Sectioned list
+    implementation "io.github.luizgrp.sectionedrecyclerviewadapter:sectionedrecyclerviewadapter:$sectioned_recycle"
+    //Framework for replacing fragments
     implementation "com.bluelinelabs:conductor:$conductor_version"
     implementation "com.bluelinelabs:conductor-support:$conductor_version"
     // Stepper Viewer
     implementation "com.stepstone.stepper:material-stepper:$stepper_version"
+    //enable multi-dex
     implementation "com.android.support:multidex:$multidex_version"
     //Font lib
     implementation "uk.co.chrisjenx:calligraphy:$caligraphy_version"

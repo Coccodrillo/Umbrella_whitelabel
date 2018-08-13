@@ -97,4 +97,7 @@ ext {
     multidex_version = "1.0.3"
     caligraphy_version = "2.3.0"
     crashlytics_version = "2.9.4@aar"
+    jsoup = '1.8.2'
+    io_cipher = '0.4'
+    sectioned_recycle = '1.2.0'
 }
