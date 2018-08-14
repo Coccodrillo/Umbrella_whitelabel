@@ -1,6 +1,6 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
-    ext.kotlin_version = '1.2.51'
+    ext.kotlin_version = '1.2.60'
     repositories {
         google()
         jcenter()
@@ -46,12 +46,6 @@ detekt {
         outputName = "detekt-report"
         baseline = file("reports/baseline.xml")
     }
-}
-
-ext {
-    travisBuild = System.getenv("TRAVIS") == "true"
-    // allows for -Dpre-dex=false to be set
-    preDexEnabled = "true" == System.getProperty("pre-dex", "true")
 }
 
 ext {

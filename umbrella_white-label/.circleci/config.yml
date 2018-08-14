@@ -5,9 +5,8 @@
 version: 2
 jobs:
   build:
-    working_directory: ~/basic_algorithm/umbrella_white-label/
     docker:
-      - image: circleci/android:api-25-alpha
+      - image: circleci/android:api-19-alpha
     environment:
       JVM_OPTS: -Xmx3200m
     steps:
