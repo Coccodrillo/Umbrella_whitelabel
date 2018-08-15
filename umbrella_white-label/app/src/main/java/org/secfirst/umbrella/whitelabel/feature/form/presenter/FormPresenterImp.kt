@@ -54,7 +54,6 @@ class FormPresenterImp<V : FormView, I : FormBaseInteractor>
                     modelForms.forEach { modelForm ->
                         if (activeForm.referenceId == modelForm.id)
                             activeForm.form = modelForm
-
                     }
                 }
                 if (isActive)

@@ -16,8 +16,8 @@ abstract class FakeTentRepository {
             val file8 = File("/travel/kidnapping/advanced/.foreingkey.yml")
             val file9 = File("/email/how_to_learn.md")
             val file10 = File("/about/.foreingkey.yml")
-            val file11 = File("/something/hello.xml")
-            val file12 = File("/form_view/f_first_form.yml")
+            val file11 = File("/something/hello_wrong_file.xml")
+            val file12 = File("/form_view/f_first_form_wrong_file.yml")
 
             val files = arrayListOf<File>()
             files.add(file1)
