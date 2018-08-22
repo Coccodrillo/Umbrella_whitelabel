@@ -11,7 +11,7 @@ interface FormBaseInteractor : BaseInteractor {
 
     suspend fun insertFormData(answer: Answer)
 
-    suspend fun insertActiveForm(activeForm: ActiveForm)
+    suspend fun insertActiveForm(activeForm: ActiveForm) : Boolean
 
     suspend fun deleteActiveForm(activeForm: ActiveForm)
 
