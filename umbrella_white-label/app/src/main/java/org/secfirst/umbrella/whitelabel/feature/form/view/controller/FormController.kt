@@ -16,7 +16,6 @@ import org.secfirst.umbrella.whitelabel.R
 import org.secfirst.umbrella.whitelabel.UmbrellaApplication
 import org.secfirst.umbrella.whitelabel.data.ActiveForm
 import org.secfirst.umbrella.whitelabel.data.Answer
-import org.secfirst.umbrella.whitelabel.feature.MainActivity
 import org.secfirst.umbrella.whitelabel.feature.base.view.BaseController
 import org.secfirst.umbrella.whitelabel.feature.form.DaggerFormComponent
 import org.secfirst.umbrella.whitelabel.feature.form.interactor.FormBaseInteractor
@@ -24,12 +23,12 @@ import org.secfirst.umbrella.whitelabel.feature.form.presenter.FormBasePresenter
 import org.secfirst.umbrella.whitelabel.feature.form.view.FormUI
 import org.secfirst.umbrella.whitelabel.feature.form.view.FormView
 import org.secfirst.umbrella.whitelabel.feature.form.view.adapter.FormAdapter
-import org.secfirst.umbrella.whitelabel.feature.main.OnNavigationBottomView
 import org.secfirst.umbrella.whitelabel.misc.BundleExt.Companion.EXTRA_ACTIVE_FORM
 import org.secfirst.umbrella.whitelabel.misc.hideKeyboard
 import javax.inject.Inject
 
 class FormController(bundle: Bundle) : BaseController(bundle), FormView, StepperLayout.StepperListener {
+
 
     @Inject
     internal lateinit var presenter: FormBasePresenter<FormView, FormBaseInteractor>
@@ -38,10 +37,8 @@ class FormController(bundle: Bundle) : BaseController(bundle), FormView, Stepper
     var radioButtonList = mutableListOf<HashMap<RadioButton, Answer>>()
     var checkboxList = mutableListOf<HashMap<CheckBox, Answer>>()
 
-    private lateinit var onNavigation: OnNavigationBottomView
     private var listOfViews: MutableList<FormUI> = mutableListOf()
     private var totalScreens: Int = 0
-    private var insertState = false
 
     constructor(activeForm: ActiveForm) : this(Bundle().apply {
         putSerializable(EXTRA_ACTIVE_FORM, activeForm)
@@ -51,12 +48,10 @@ class FormController(bundle: Bundle) : BaseController(bundle), FormView, Stepper
 
     override fun onAttach(view: View) {
         super.onAttach(view)
-
+        disableNavigation()
         stepperLayout.adapter = FormAdapter(activeForm.form, this, listOfViews)
         stepperLayout.setListener(this)
-        onNavigation = activity as MainActivity
         presenter.onAttach(this)
-        onNavigation.hideBottomMenu()
 
     }
 
@@ -68,7 +63,7 @@ class FormController(bundle: Bundle) : BaseController(bundle), FormView, Stepper
     }
 
     override fun onDestroy() {
-        onNavigation.showBottomMenu()
+        enableNavigation()
         super.onDestroy()
     }
 
@@ -172,5 +167,7 @@ class FormController(bundle: Bundle) : BaseController(bundle), FormView, Stepper
     override fun getTitleToolbar() = activeForm.title
 
     override fun getEnableBackAction() = true
+
+    override fun getEnableToolbar() = true
 
 }

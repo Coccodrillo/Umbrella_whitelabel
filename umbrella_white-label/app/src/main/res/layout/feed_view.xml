@@ -4,13 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="org.secfirst.umbrella.whitelabel.feature.feed.FeedController">
+    tools:context="org.secfirst.umbrella.whitelabel.feature.feed.HostFeedController">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/feedTab"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Feed"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:tabMode="fixed" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/feedPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white" />
 </android.support.constraint.ConstraintLayout>

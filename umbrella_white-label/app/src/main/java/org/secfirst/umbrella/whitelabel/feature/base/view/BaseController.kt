@@ -1,14 +1,15 @@
 package org.secfirst.umbrella.whitelabel.feature.base.view
 
-import android.content.res.Resources
 import android.os.Bundle
 import android.view.View
 import com.bluelinelabs.conductor.Controller
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.*
-import org.secfirst.umbrella.whitelabel.feature.MainActivity
+import org.secfirst.umbrella.whitelabel.feature.main.MainActivity
 
 abstract class BaseController(bundle: Bundle = Bundle()) : Controller(bundle), LayoutContainer {
+
+    private lateinit var mainActivity: MainActivity
 
     init {
         inject()
@@ -23,7 +24,7 @@ abstract class BaseController(bundle: Bundle = Bundle()) : Controller(bundle), L
 
     override fun onAttach(view: View) {
         super.onAttach(view)
-        val mainActivity = activity as MainActivity
+        mainActivity = activity as MainActivity
         mainActivity.setToolBarTitle(getTitleToolbar())
         mainActivity.enableUpArrow(getEnableBackAction())
     }
@@ -34,11 +35,17 @@ abstract class BaseController(bundle: Bundle = Bundle()) : Controller(bundle), L
     }
 
     protected abstract fun getEnableBackAction(): Boolean
-    protected abstract fun getTitleToolbar(): String
-}
 
-fun Any?.notNull(f: ()-> Unit){
-    if (this != null){
-        f()
-    }
+    protected abstract fun getTitleToolbar(): String
+
+    protected abstract fun getEnableToolbar(): Boolean
+
+    fun enableNavigation() = mainActivity.showNavigation()
+
+    fun disableNavigation() = mainActivity.hideNavigation()
+
+    fun enableToolbar() = mainActivity.showToolbar()
+
+    fun disableToolbar() = mainActivity.hideToolbar()
+
 }

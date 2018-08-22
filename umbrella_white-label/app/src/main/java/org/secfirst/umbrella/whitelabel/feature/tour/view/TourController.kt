@@ -16,10 +16,8 @@ import org.secfirst.umbrella.whitelabel.R
 import org.secfirst.umbrella.whitelabel.UmbrellaApplication
 import org.secfirst.umbrella.whitelabel.component.DialogManager
 import org.secfirst.umbrella.whitelabel.component.DialogManager.Companion.PROGRESS_DIALOG_TAG
-import org.secfirst.umbrella.whitelabel.feature.MainActivity
 import org.secfirst.umbrella.whitelabel.feature.base.view.BaseController
 import org.secfirst.umbrella.whitelabel.feature.lesson.LessonController
-import org.secfirst.umbrella.whitelabel.feature.main.OnNavigationBottomView
 import org.secfirst.umbrella.whitelabel.feature.tour.DaggerTourComponent
 import org.secfirst.umbrella.whitelabel.feature.tour.interactor.TourBaseInteractor
 import org.secfirst.umbrella.whitelabel.feature.tour.presenter.TourBasePresenter
@@ -27,10 +25,11 @@ import javax.inject.Inject
 
 
 class TourController : BaseController(), TourView {
+
+
     @Inject
     internal lateinit var presenter: TourBasePresenter<TourView, TourBaseInteractor>
     private var viewList: MutableList<TourUI> = mutableListOf()
-    private lateinit var nav: OnNavigationBottomView
     private lateinit var dialogManager: DialogManager
     private lateinit var progressDialog: ProgressDialog
 
@@ -40,10 +39,6 @@ class TourController : BaseController(), TourView {
                 .build()
                 .inject(this)
     }
-
-    override fun getEnableBackAction() = false
-
-    override fun getTitleToolbar() = ""
 
     init {
         viewList.add(TourUI(R.color.umbrella_purple_dark, R.drawable.umbrella190, R.string.tour_slide_1_text, VISIBLE, GONE))
@@ -59,18 +54,39 @@ class TourController : BaseController(), TourView {
 
     override fun onAttach(view: View) {
         super.onAttach(view)
-        hideToolbarAndNav()
+        disableToolbar()
+        disableNavigation()
         initViewPager()
         onAcceptButton()
         presenter.onAttach(this)
     }
 
+
+    private fun initViewPager() {
+        tourViewPager?.let {
+            val tourAdapter = TourAdapter(this)
+            it.adapter = tourAdapter
+            tourAdapter.setData(viewList)
+            it.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+                override fun onPageScrollStateChanged(state: Int) {}
+                override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
+                override fun onPageSelected(position: Int) {
+                    if (position == viewList.lastIndex)
+                        acceptButton?.let { btn -> btn.visibility = VISIBLE }
+                    else
+                        acceptButton?.let { btn -> btn.visibility = INVISIBLE }
+                }
+            })
+        }
+    }
+
+
     override fun downloadContentCompleted(res: Boolean) {
         progressDialog.dismiss()
         if (res) {
             router.pushController(RouterTransaction.with(LessonController()))
-            nav.showBottomMenu()
-            nav.showToolbar()
+            enableNavigation()
+            enableToolbar()
         } else
             view?.let {
                 Snackbar.make(it,
@@ -92,13 +108,6 @@ class TourController : BaseController(), TourView {
         }
     }
 
-    private fun hideToolbarAndNav() {
-        nav = activity as MainActivity
-        nav.hideBottomMenu()
-        nav.hideToolbar()
-    }
-
-
     private fun doLongOperation() {
         dialogManager.showDialog(PROGRESS_DIALOG_TAG, object : DialogManager.DialogFactory {
             override fun createDialog(context: Context?): Dialog {
@@ -110,21 +119,11 @@ class TourController : BaseController(), TourView {
         })
     }
 
-    private fun initViewPager() {
-        tourViewPager?.let {
-            val tourAdapter = TourAdapter(this)
-            it.adapter = tourAdapter
-            tourAdapter.setData(viewList)
-            it.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-                override fun onPageScrollStateChanged(state: Int) {}
-                override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
-                override fun onPageSelected(position: Int) {
-                    if (position == viewList.lastIndex)
-                        acceptButton?.let { btn -> btn.visibility = VISIBLE }
-                    else
-                        acceptButton?.let { btn -> btn.visibility = INVISIBLE }
-                }
-            })
-        }
-    }
+
+    override fun getEnableBackAction() = false
+
+    override fun getTitleToolbar() = ""
+
+    override fun getEnableToolbar() = false
+
 }
