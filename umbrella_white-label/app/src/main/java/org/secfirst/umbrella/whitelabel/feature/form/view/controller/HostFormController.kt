@@ -55,6 +55,7 @@ class HostFormController : BaseController(), FormView {
         presenter.onAttach(this)
         allFormRecycleView.layoutManager = LinearLayoutManager(view.context)
         presenter.submitLoadAllForms()
+        enableToolbar()
     }
 
     private fun onEditFormClicked(form: Form) {
@@ -125,6 +126,4 @@ class HostFormController : BaseController(), FormView {
     override fun getTitleToolbar() = applicationContext?.getString(R.string.form_title)!!
 
     override fun getEnableBackAction() = false
-
-    override fun getEnableToolbar() = true
 }

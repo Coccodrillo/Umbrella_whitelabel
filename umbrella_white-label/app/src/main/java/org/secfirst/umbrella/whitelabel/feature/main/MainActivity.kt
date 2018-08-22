@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.main_view.*
 import org.secfirst.umbrella.whitelabel.R
 import org.secfirst.umbrella.whitelabel.data.disk.TentConfig
 import org.secfirst.umbrella.whitelabel.feature.account.AccountController
-import org.secfirst.umbrella.whitelabel.feature.feed.HostFeedController
+import org.secfirst.umbrella.whitelabel.feature.feed.view.HostFeedController
 import org.secfirst.umbrella.whitelabel.feature.form.view.controller.HostFormController
 import org.secfirst.umbrella.whitelabel.feature.lesson.LessonController
 import org.secfirst.umbrella.whitelabel.feature.tour.view.TourController
