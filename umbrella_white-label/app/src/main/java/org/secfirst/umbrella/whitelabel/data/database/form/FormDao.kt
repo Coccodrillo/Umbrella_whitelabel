@@ -30,14 +30,16 @@ interface FormDao {
         }
     }
 
-    suspend fun saveActiveForm(activeForm: ActiveForm) {
+    suspend fun saveActiveForm(activeForm: ActiveForm) : Boolean{
+        var res = false
         withContext(ioContext) {
             try {
-                modelAdapter<ActiveForm>().save(activeForm)
+                res = modelAdapter<ActiveForm>().save(activeForm)
             } catch (e: Exception) {
                 Log.e(FormDao::class.simpleName, "Error when tried to insert a activeForm - ${e.stackTrace}")
             }
         }
+        return res
     }
 
     suspend fun getAnswerBy(formId: Long): List<Answer> = withContext(ioContext) {

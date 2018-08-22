@@ -4,6 +4,7 @@ import io.reactivex.disposables.CompositeDisposable
 import kotlinx.coroutines.experimental.launch
 import org.secfirst.umbrella.whitelabel.data.ActiveForm
 import org.secfirst.umbrella.whitelabel.data.Answer
+import org.secfirst.umbrella.whitelabel.data.Form
 import org.secfirst.umbrella.whitelabel.data.VirtualStorage
 import org.secfirst.umbrella.whitelabel.feature.base.presenter.BasePresenterImp
 import org.secfirst.umbrella.whitelabel.feature.form.interactor.FormBaseInteractor
@@ -41,7 +42,10 @@ class FormPresenterImp<V : FormView, I : FormBaseInteractor>
 
     override fun submitActiveForm(activeForm: ActiveForm) {
         launchSilent(uiContext) {
-            interactor?.insertActiveForm(activeForm)
+            val res = interactor?.insertActiveForm(activeForm)
+            res?.let {
+                getView()?.showActiveFormWLoad(it)
+            }
         }
     }
 
@@ -50,15 +54,19 @@ class FormPresenterImp<V : FormView, I : FormBaseInteractor>
             interactor?.let {
                 val activeForms = it.fetchActiveForms()
                 val modelForms = it.fetchModalForms()
-                activeForms.forEach { activeForm ->
-                    modelForms.forEach { modelForm ->
-                        if (activeForm.referenceId == modelForm.id)
-                            activeForm.form = modelForm
-                    }
-                }
+                populateReferenceId(activeForms, modelForms)
                 if (isActive)
                     getView()?.showModelAndActiveForms(modelForms.toMutableList(),
                             activeForms.toMutableList())
+            }
+        }
+    }
+
+    private fun populateReferenceId(activeForms: List<ActiveForm>, modelForms: List<Form>) {
+        activeForms.forEach { activeForm ->
+            modelForms.forEach { modelForm ->
+                if (activeForm.referenceId == modelForm.id)
+                    activeForm.form = modelForm
             }
         }
     }

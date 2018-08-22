@@ -26,8 +26,6 @@ import org.secfirst.umbrella.whitelabel.feature.form.view.FormView
 import org.secfirst.umbrella.whitelabel.feature.form.view.adapter.FormAdapter
 import org.secfirst.umbrella.whitelabel.feature.main.OnNavigationBottomView
 import org.secfirst.umbrella.whitelabel.misc.BundleExt.Companion.EXTRA_ACTIVE_FORM
-import org.secfirst.umbrella.whitelabel.misc.BundleExt.Companion.EXTRA_FORM_SELECTED
-import org.secfirst.umbrella.whitelabel.misc.currentTime
 import org.secfirst.umbrella.whitelabel.misc.hideKeyboard
 import javax.inject.Inject
 
@@ -35,12 +33,15 @@ class FormController(bundle: Bundle) : BaseController(bundle), FormView, Stepper
 
     @Inject
     internal lateinit var presenter: FormBasePresenter<FormView, FormBaseInteractor>
+
     var editTextList = mutableListOf<HashMap<EditText, Answer>>()
     var radioButtonList = mutableListOf<HashMap<RadioButton, Answer>>()
     var checkboxList = mutableListOf<HashMap<CheckBox, Answer>>()
+
     private lateinit var onNavigation: OnNavigationBottomView
     private var listOfViews: MutableList<FormUI> = mutableListOf()
     private var totalScreens: Int = 0
+    private var insertState = false
 
     constructor(activeForm: ActiveForm) : this(Bundle().apply {
         putSerializable(EXTRA_ACTIVE_FORM, activeForm)
@@ -83,7 +84,7 @@ class FormController(bundle: Bundle) : BaseController(bundle), FormView, Stepper
         bindEditTextValue()
         bindRadioButtonValue()
         hideKeyboard()
-        router.popCurrentController()
+        presenter.submitActiveForm(activeForm)
     }
 
     override fun onInject() {
@@ -105,7 +106,6 @@ class FormController(bundle: Bundle) : BaseController(bundle), FormView, Stepper
                 }
             }
         }
-        presenter.submitActiveForm(activeForm)
     }
 
     private fun bindEditTextValue() {
@@ -120,7 +120,6 @@ class FormController(bundle: Bundle) : BaseController(bundle), FormView, Stepper
                 }
             }
         }
-        presenter.submitActiveForm(activeForm)
     }
 
     private fun bindRadioButtonValue() {
@@ -135,7 +134,11 @@ class FormController(bundle: Bundle) : BaseController(bundle), FormView, Stepper
                 }
             }
         }
-        presenter.submitActiveForm(activeForm)
+
+    }
+
+    private fun closeView() {
+        router.popCurrentController()
     }
 
     override fun onStepSelected(newStepPosition: Int) {
@@ -156,6 +159,10 @@ class FormController(bundle: Bundle) : BaseController(bundle), FormView, Stepper
             progressAnswer.progress = percentage
             titleProgressAnswer.text = "$percentage%"
         }
+    }
+
+    override fun showActiveFormWLoad(result: Boolean) {
+        if (result) closeView()
     }
 
     override fun onError(verificationError: VerificationError?) {}

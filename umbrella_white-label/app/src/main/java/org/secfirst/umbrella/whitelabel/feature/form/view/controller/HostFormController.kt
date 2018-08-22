@@ -124,5 +124,4 @@ class HostFormController : BaseController(), FormView {
     override fun getTitleToolbar() = applicationContext?.getString(R.string.form_title)!!
 
     override fun getEnableBackAction() = false
-
 }
