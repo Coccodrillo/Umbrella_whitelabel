@@ -1,4 +1,4 @@
-package org.secfirst.umbrella.whitelabel.feature
+package org.secfirst.umbrella.whitelabel.feature.main
 
 import android.content.Context
 import android.os.Bundle
@@ -15,22 +15,23 @@ import kotlinx.android.synthetic.main.main_view.*
 import org.secfirst.umbrella.whitelabel.R
 import org.secfirst.umbrella.whitelabel.data.disk.TentConfig
 import org.secfirst.umbrella.whitelabel.feature.account.AccountController
-import org.secfirst.umbrella.whitelabel.feature.feed.FeedController
+import org.secfirst.umbrella.whitelabel.feature.feed.HostFeedController
 import org.secfirst.umbrella.whitelabel.feature.form.view.controller.HostFormController
 import org.secfirst.umbrella.whitelabel.feature.lesson.LessonController
-import org.secfirst.umbrella.whitelabel.feature.main.OnNavigationBottomView
 import org.secfirst.umbrella.whitelabel.feature.tour.view.TourController
 import org.secfirst.umbrella.whitelabel.misc.hideKeyboard
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 import javax.inject.Inject
 
 
-class MainActivity : AppCompatActivity(), OnNavigationBottomView {
+class MainActivity : AppCompatActivity() {
 
     private lateinit var router: Router
 
     @Inject
     internal lateinit var tentConfig: TentConfig
+
+    private fun performDI() = AndroidInjection.inject(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,7 +71,7 @@ class MainActivity : AppCompatActivity(), OnNavigationBottomView {
         navigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener)
         router = Conductor.attachRouter(this, baseContainer, savedInstanceState)
         if (!router.hasRootController() && tentConfig.isCreate())
-            router.setRoot(RouterTransaction.with(FeedController()))
+            router.setRoot(RouterTransaction.with(HostFeedController()))
         else router.setRoot(RouterTransaction.with(TourController()))
     }
 
@@ -78,7 +79,7 @@ class MainActivity : AppCompatActivity(), OnNavigationBottomView {
 
         when (item.itemId) {
             R.id.navigation_feeds -> {
-                router.pushController(RouterTransaction.with(FeedController()))
+                router.pushController(RouterTransaction.with(HostFeedController()))
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_forms -> {
@@ -101,29 +102,17 @@ class MainActivity : AppCompatActivity(), OnNavigationBottomView {
         false
     }
 
+    fun hideToolbar() = supportActionBar?.hide()
+
+    fun showToolbar() = supportActionBar?.show()
+
+    fun hideNavigation() = navigation?.let { it.visibility = INVISIBLE }
+
+    fun showNavigation() = navigation?.let { it.visibility = VISIBLE }
+
     override fun onBackPressed() {
         if (!router.handleBack()) {
             super.onBackPressed()
         }
-    }
-
-    private fun performDI() = AndroidInjection.inject(this)
-
-    fun getRouter() = router
-
-    override fun showBottomMenu() {
-        navigation?.let { it.visibility = VISIBLE }
-    }
-
-    override fun hideBottomMenu() {
-        navigation?.let { it.visibility = INVISIBLE }
-    }
-
-    override fun showToolbar() {
-        supportActionBar?.show()
-    }
-
-    override fun hideToolbar() {
-        supportActionBar?.hide()
     }
 }
