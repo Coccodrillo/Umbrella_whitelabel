@@ -9,8 +9,6 @@ import org.secfirst.umbrella.whitelabel.feature.main.MainActivity
 
 abstract class BaseController(bundle: Bundle = Bundle()) : Controller(bundle), LayoutContainer {
 
-    private lateinit var mainActivity: MainActivity
-
     init {
         inject()
     }
@@ -24,9 +22,11 @@ abstract class BaseController(bundle: Bundle = Bundle()) : Controller(bundle), L
 
     override fun onAttach(view: View) {
         super.onAttach(view)
-        mainActivity = activity as MainActivity
-        mainActivity.setToolBarTitle(getTitleToolbar())
-        mainActivity.enableUpArrow(getEnableBackAction())
+        activity?.let {
+            val mainActivity = activity as MainActivity
+            mainActivity.setToolBarTitle(getTitleToolbar())
+            mainActivity.enableUpArrow(getEnableBackAction())
+        }
     }
 
     override fun onDestroyView(view: View) {
@@ -38,14 +38,31 @@ abstract class BaseController(bundle: Bundle = Bundle()) : Controller(bundle), L
 
     protected abstract fun getTitleToolbar(): String
 
-    protected abstract fun getEnableToolbar(): Boolean
+    fun enableNavigation() {
+        activity?.let {
+            val mainActivity = it as MainActivity
+            mainActivity.showNavigation()
+        }
+    }
 
-    fun enableNavigation() = mainActivity.showNavigation()
+    fun disableNavigation() {
+        activity?.let {
+            val mainActivity = it as MainActivity
+            mainActivity.hideNavigation()
+        }
+    }
 
-    fun disableNavigation() = mainActivity.hideNavigation()
+    fun enableToolbar() {
+        activity?.let {
+            val mainActivity = it as MainActivity
+            mainActivity.showToolbar()
+        }
+    }
 
-    fun enableToolbar() = mainActivity.showToolbar()
-
-    fun disableToolbar() = mainActivity.hideToolbar()
-
+    fun disableToolbar() {
+        activity?.let {
+            val mainActivity = it as MainActivity
+            mainActivity.hideToolbar()
+        }
+    }
 }
