@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.host_feed_view.*
 import org.secfirst.umbrella.whitelabel.R
 import org.secfirst.umbrella.whitelabel.feature.base.view.BaseController
-import org.secfirst.umbrella.whitelabel.feature.feed.view.adapter.FeedAdapter
+import org.secfirst.umbrella.whitelabel.feature.feed.adapter.FeedAdapter
 
 
 class HostFeedController : BaseController() {

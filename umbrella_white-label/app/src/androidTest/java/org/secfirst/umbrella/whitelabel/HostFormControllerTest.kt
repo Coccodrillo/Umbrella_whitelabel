@@ -11,9 +11,9 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.secfirst.whitelabel.data.Form
-import org.secfirst.whitelabel.feature.MainActivity
-import org.secfirst.whitelabel.feature.form.view.controller.HostFormController
+import org.secfirst.umbrella.whitelabel.data.Form
+import org.secfirst.umbrella.whitelabel.feature.form.view.controller.HostFormController
+import org.secfirst.umbrella.whitelabel.feature.main.MainActivity
 
 
 @RunWith(AndroidJUnit4::class)
@@ -30,7 +30,7 @@ class HostFormControllerTest {
     @Before
     fun setUp() {
         testRule.runOnUiThread {
-            router = testRule.activity.getRouter()
+            router = testRule.activity.router
             router.setRoot(RouterTransaction.with(HostFormController()))
         }
     }

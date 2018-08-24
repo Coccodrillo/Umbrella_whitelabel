@@ -1,4 +1,4 @@
-package org.secfirst.umbrella.whitelabel.feature.feed.view.adapter
+package org.secfirst.umbrella.whitelabel.feature.feed.adapter
 
 import com.bluelinelabs.conductor.Controller
 import com.bluelinelabs.conductor.Router
@@ -16,7 +16,7 @@ class FeedAdapter(host: Controller) : RouterPagerAdapter(host) {
         }
     }
 
-    override fun getPageTitle(position: Int) = if (position == 1) "Custom Feed" else "Feed"
+    override fun getPageTitle(position: Int) = if (position == 0) "FEED" else "RSS"
 
     override fun getCount() = 2
 }

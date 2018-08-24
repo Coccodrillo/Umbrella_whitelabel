@@ -82,7 +82,7 @@ class UmbrellaApplication : Application(), HasActivityInjector {
         Crashlytics.Builder()
                 .core(CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
                 .build()
-//        Fabric.with(this, Crashlytics())
+        // Fabric.with(this, Crashlytics())
     }
 
     private fun initTentRepository() {
