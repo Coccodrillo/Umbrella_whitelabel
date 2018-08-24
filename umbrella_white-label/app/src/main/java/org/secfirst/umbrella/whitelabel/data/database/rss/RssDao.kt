@@ -7,9 +7,9 @@ import org.secfirst.umbrella.whitelabel.misc.AppExecutors
 
 interface RssDao {
 
-    suspend fun save(RSS: RSS) {
+    suspend fun save(rss: RSS) {
         withContext(AppExecutors.ioContext) {
-            modelAdapter<RSS>().insert(RSS)
+            modelAdapter<RSS>().insert(rss)
         }
     }
 
@@ -17,5 +17,9 @@ interface RssDao {
         SQLite.select()
                 .from(RSS::class.java)
                 .queryList()
+    }
+
+    suspend fun delete(rss: RSS) = withContext(AppExecutors.ioContext) {
+        modelAdapter<RSS>().delete(rss)
     }
 }
