@@ -30,7 +30,7 @@ interface FormDao {
         }
     }
 
-    suspend fun saveActiveForm(activeForm: ActiveForm) : Boolean{
+    suspend fun saveActiveForm(activeForm: ActiveForm): Boolean {
         var res = false
         withContext(ioContext) {
             try {
@@ -43,36 +43,28 @@ interface FormDao {
     }
 
     suspend fun getAnswerBy(formId: Long): List<Answer> = withContext(ioContext) {
-        withContext(ioContext) {
-            SQLite.select()
-                    .from(Answer::class.java)
-                    .where(Answer_Table.activeForm_id.`is`(formId))
-                    .queryList()
-        }
+        SQLite.select()
+                .from(Answer::class.java)
+                .where(Answer_Table.activeForm_id.`is`(formId))
+                .queryList()
     }
 
     suspend fun getAllFormModel(): List<Form> = withContext(ioContext) {
-        withContext(ioContext) {
-            SQLite.select()
-                    .from(Form::class.java)
-                    .queryList()
-        }
+        SQLite.select()
+                .from(Form::class.java)
+                .queryList()
     }
 
     suspend fun getAllActiveForms(): List<ActiveForm> = withContext(ioContext) {
-        withContext(ioContext) {
-            SQLite.select()
-                    .from(ActiveForm::class.java)
-                    .queryList()
-        }
+        SQLite.select()
+                .from(ActiveForm::class.java)
+                .queryList()
     }
 
     suspend fun getScreenBy(formId: Long): List<Screen> = withContext(ioContext) {
-        withContext(ioContext) {
-            SQLite.select()
-                    .from(Screen::class.java)
-                    .where(Screen_Table.form_id.`is`(formId))
-                    .queryList()
-        }
+        SQLite.select()
+                .from(Screen::class.java)
+                .where(Screen_Table.form_id.`is`(formId))
+                .queryList()
     }
 }

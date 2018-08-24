@@ -26,7 +26,7 @@ import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var router: Router
+    lateinit var router: Router
 
     @Inject
     internal lateinit var tentConfig: TentConfig
