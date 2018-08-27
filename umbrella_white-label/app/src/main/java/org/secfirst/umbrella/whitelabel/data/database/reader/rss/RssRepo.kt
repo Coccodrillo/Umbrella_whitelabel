@@ -1,4 +1,4 @@
-package org.secfirst.umbrella.whitelabel.data.database.rss
+package org.secfirst.umbrella.whitelabel.data.database.reader.rss
 
 interface RssRepo {
 

@@ -1,4 +1,4 @@
-package org.secfirst.umbrella.whitelabel.data.database.rss
+package org.secfirst.umbrella.whitelabel.data.database.reader.rss
 
 import com.raizlabs.android.dbflow.kotlinextensions.modelAdapter
 import com.raizlabs.android.dbflow.sql.language.SQLite

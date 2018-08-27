@@ -15,3 +15,11 @@ data class BlogResponse(@Expose
                         @Expose
                         @SerializedName("date")
                         var data: List<Blog>? = null)
+
+@Suppress("MatchingDeclarationName")
+data class RssResponse(
+        var title: String = "",
+        var description: String = "",
+        var url: String = "")
+
+

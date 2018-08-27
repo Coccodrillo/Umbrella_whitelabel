@@ -1,4 +1,4 @@
-package org.secfirst.umbrella.whitelabel.feature.feed.view
+package org.secfirst.umbrella.whitelabel.feature.reader.rss.view
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import org.secfirst.umbrella.whitelabel.R
 import org.secfirst.umbrella.whitelabel.feature.base.view.BaseController
 
-class FeedController : BaseController() {
+class RssController : BaseController() {
 
     override fun onInject() {
 
