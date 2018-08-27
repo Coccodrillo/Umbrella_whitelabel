@@ -1,6 +1,5 @@
 package org.secfirst.umbrella.whitelabel.feature.form.presenter
 
-import io.reactivex.disposables.CompositeDisposable
 import kotlinx.coroutines.experimental.launch
 import org.secfirst.umbrella.whitelabel.data.ActiveForm
 import org.secfirst.umbrella.whitelabel.data.Answer
@@ -10,7 +9,6 @@ import org.secfirst.umbrella.whitelabel.feature.base.presenter.BasePresenterImp
 import org.secfirst.umbrella.whitelabel.feature.form.interactor.FormBaseInteractor
 import org.secfirst.umbrella.whitelabel.feature.form.view.FormView
 import org.secfirst.umbrella.whitelabel.misc.AppExecutors.Companion.uiContext
-import org.secfirst.umbrella.whitelabel.misc.SchedulerProvider
 import org.secfirst.umbrella.whitelabel.misc.asHTML
 import org.secfirst.umbrella.whitelabel.misc.launchSilent
 import javax.inject.Inject
@@ -19,12 +17,8 @@ import javax.inject.Inject
 class FormPresenterImp<V : FormView, I : FormBaseInteractor>
 @Inject internal constructor(
         private val virtualStorage: VirtualStorage,
-        interactor: I,
-        schedulerProvider: SchedulerProvider,
-        disposable: CompositeDisposable) : BasePresenterImp<V, I>(
-        interactor = interactor,
-        schedulerProvider = schedulerProvider,
-        compositeDisposable = disposable), FormBasePresenter<V, I> {
+        interactor: I) : BasePresenterImp<V, I>(
+        interactor = interactor), FormBasePresenter<V, I> {
 
     override fun submitShareFormHtml(activeForm: ActiveForm) {
         launch(uiContext) {
