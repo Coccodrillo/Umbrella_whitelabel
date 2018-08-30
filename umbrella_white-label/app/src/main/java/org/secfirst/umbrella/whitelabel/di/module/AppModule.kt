@@ -2,11 +2,11 @@ package org.secfirst.umbrella.whitelabel.di.module
 
 import android.app.Application
 import android.content.Context
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.experimental.CoroutineCallAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 import org.secfirst.umbrella.whitelabel.data.VirtualStorage
 import org.secfirst.umbrella.whitelabel.data.database.content.ContentDao
 import org.secfirst.umbrella.whitelabel.data.database.content.ContentRepo
@@ -14,6 +14,9 @@ import org.secfirst.umbrella.whitelabel.data.database.content.ContentRepository
 import org.secfirst.umbrella.whitelabel.data.database.form.FormDao
 import org.secfirst.umbrella.whitelabel.data.database.form.FormRepo
 import org.secfirst.umbrella.whitelabel.data.database.form.FormRepository
+import org.secfirst.umbrella.whitelabel.data.database.reader.rss.RssDao
+import org.secfirst.umbrella.whitelabel.data.database.reader.rss.RssRepo
+import org.secfirst.umbrella.whitelabel.data.database.reader.rss.RssRepository
 import org.secfirst.umbrella.whitelabel.data.disk.TentConfig
 import org.secfirst.umbrella.whitelabel.data.disk.TentDao
 import org.secfirst.umbrella.whitelabel.data.disk.TentRepo
@@ -24,7 +27,6 @@ import org.secfirst.umbrella.whitelabel.misc.SchedulerProvider
 import org.secfirst.umbrella.whitelabel.serialize.ElementLoader
 import org.secfirst.umbrella.whitelabel.serialize.ElementSerializer
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
 
@@ -55,6 +57,7 @@ class TentContentModule {
     internal val tentDao
         get() = object : TentDao {}
 
+
     @Provides
     @Singleton
     internal fun provideTentConfig(context: Context) = TentConfig(context.cacheDir.path + "/repo/")
@@ -67,6 +70,9 @@ class TentContentModule {
 
 @Module
 class RepositoryModule {
+
+    internal val rssDao
+        get() = object : RssDao {}
 
     internal val contentDao
         get() = object : ContentDao {}
@@ -82,10 +88,13 @@ class RepositoryModule {
     @Singleton
     internal fun provideFormDao(): FormRepo = FormRepository(formDao)
 
-
     @Provides
     @Singleton
     internal fun provideVirtualStorage(application: Application): VirtualStorage = VirtualStorage(application)
+
+    @Provides
+    @Singleton
+    internal fun provideReaderRepo(): RssRepo = RssRepository(rssDao)
 
 }
 
@@ -104,7 +113,7 @@ class NetworkModule {
         return Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(MoshiConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
+                .addCallAdapterFactory(CoroutineCallAdapterFactory())
                 .build()
     }
 }
