@@ -11,6 +11,7 @@ import org.secfirst.umbrella.whitelabel.feature.base.presenter.BasePresenterImp
 import org.secfirst.umbrella.whitelabel.feature.reader.interactor.ReaderBaseInteractor
 import org.secfirst.umbrella.whitelabel.feature.reader.view.ReaderView
 import org.secfirst.umbrella.whitelabel.misc.AppExecutors.Companion.networkContext
+import org.secfirst.umbrella.whitelabel.misc.AppExecutors.Companion.uiContext
 import org.secfirst.umbrella.whitelabel.misc.launchSilent
 import org.secfirst.umbrella.whitelabel.misc.runBlockingSilent
 import javax.inject.Inject
@@ -22,7 +23,7 @@ class ReaderPresenterImp<V : ReaderView, I : ReaderBaseInteractor>
         interactor = interactor), ReaderBasePresenter<V, I> {
 
     override fun submitFetchRss() {
-        launchSilent(networkContext) {
+        launchSilent(uiContext) {
             var refRss: RefRSS
             val urls = mutableListOf<String>()
 
@@ -34,14 +35,13 @@ class ReaderPresenterImp<V : ReaderView, I : ReaderBaseInteractor>
                 } else
                     rssRefList.forEach { item -> urls.add(item.url) }
             }
-            if (isActive)
-                getView()?.showAllRss(parse(urls))
+            getView()?.showAllRss(parse(urls))
         }
     }
 
     private fun parse(urls: List<String>): List<Feed> {
         val result = mutableListOf<Feed>()
-        runBlockingSilent {
+        runBlockingSilent(networkContext) {
             interactor?.let {
                 urls.forEach { url ->
                     try {

@@ -7,21 +7,28 @@
     <ProgressBar
         android:id="@+id/rss_indeterminate_bar"
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center|top"
         android:indeterminate="true"
         android:theme="@style/LinearProgress"
-        android:visibility="invisible" />
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/rss_container" />
 
     <FrameLayout
         android:id="@+id/rss_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/channel_recycler_view"
+            android:id="@+id/rssRecycleView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/light_grey"
@@ -31,9 +38,13 @@
             android:id="@+id/add_feed_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="16dp"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="70dp"
+            android:layout_marginLeft="280dp"
+            android:layout_marginStart="280dp"
             android:src="@android:drawable/ic_input_add"
             app:backgroundTint="@color/umbrella_green" />
     </FrameLayout>
+
+
 </android.support.constraint.ConstraintLayout>

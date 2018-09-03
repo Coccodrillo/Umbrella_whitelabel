@@ -35,7 +35,6 @@ class AllFormSection(private val onItemClick: (Form) -> Unit,
 
 }
 
-
 class ItemAllFormHolder(itemView: View?) : RecyclerView.ViewHolder(itemView) {
     private val titleForm = itemView?.titleAllForm
     fun bind(title: String, clickListener: (ItemAllFormHolder) -> Unit) {
