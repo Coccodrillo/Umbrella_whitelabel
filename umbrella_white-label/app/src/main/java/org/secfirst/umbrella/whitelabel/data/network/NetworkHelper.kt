@@ -4,7 +4,6 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import kotlinx.coroutines.experimental.Deferred
 import okhttp3.ResponseBody
-import org.secfirst.umbrella.whitelabel.data.database.reader.rss.RSS
 import org.secfirst.umbrella.whitelabel.di.ApiKeyInfo
 import retrofit2.http.GET
 import retrofit2.http.Url

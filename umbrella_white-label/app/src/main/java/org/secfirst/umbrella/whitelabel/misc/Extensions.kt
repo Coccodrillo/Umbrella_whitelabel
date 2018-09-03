@@ -42,7 +42,9 @@ class Extensions {
             }
         }
     }
+
+
 }
 
-val Context.myApp: UmbrellaApplication
-    get() = applicationContext as UmbrellaApplication
+fun getAssetFileBy(fileName: String) = UmbrellaApplication.instance.assets.open(fileName)
+

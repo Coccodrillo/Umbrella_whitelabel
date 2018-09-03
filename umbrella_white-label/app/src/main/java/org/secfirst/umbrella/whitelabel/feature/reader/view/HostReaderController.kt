@@ -1,4 +1,4 @@
-package org.secfirst.umbrella.whitelabel.feature.reader.rss.view
+package org.secfirst.umbrella.whitelabel.feature.reader.view
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,16 +6,17 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.host_feed_view.*
 import org.secfirst.umbrella.whitelabel.R
 import org.secfirst.umbrella.whitelabel.feature.base.view.BaseController
+import org.secfirst.umbrella.whitelabel.feature.reader.view.ReaderAdapter
 
 
-class HostRssController : BaseController() {
+class HostReaderController : BaseController() {
 
 
     override fun onInject() {
     }
 
     override fun onAttach(view: View) {
-        feedPager?.adapter = FeedAdapter(this)
+        feedPager?.adapter = ReaderAdapter(this)
         feedTab?.setupWithViewPager(feedPager)
         disableToolbar()
     }
