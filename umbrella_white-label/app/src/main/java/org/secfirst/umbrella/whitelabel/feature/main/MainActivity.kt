@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.main_view.*
 import org.secfirst.umbrella.whitelabel.R
 import org.secfirst.umbrella.whitelabel.data.disk.TentConfig
 import org.secfirst.umbrella.whitelabel.feature.account.AccountController
-import org.secfirst.umbrella.whitelabel.feature.reader.rss.view.HostRssController
+import org.secfirst.umbrella.whitelabel.feature.reader.view.HostReaderController
 import org.secfirst.umbrella.whitelabel.feature.form.view.controller.HostFormController
 import org.secfirst.umbrella.whitelabel.feature.lesson.LessonController
 import org.secfirst.umbrella.whitelabel.feature.tour.view.TourController
@@ -71,7 +71,7 @@ class MainActivity : AppCompatActivity() {
         navigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener)
         router = Conductor.attachRouter(this, baseContainer, savedInstanceState)
         if (!router.hasRootController() && tentConfig.isCreate())
-            router.setRoot(RouterTransaction.with(HostRssController()))
+            router.setRoot(RouterTransaction.with(HostReaderController()))
         else router.setRoot(RouterTransaction.with(TourController()))
     }
 
@@ -79,7 +79,7 @@ class MainActivity : AppCompatActivity() {
 
         when (item.itemId) {
             R.id.navigation_feeds -> {
-                router.pushController(RouterTransaction.with(HostRssController()))
+                router.pushController(RouterTransaction.with(HostReaderController()))
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_forms -> {
