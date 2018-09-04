@@ -40,7 +40,6 @@ class RssController : BaseController(), ReaderView {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
-
         return inflater.inflate(R.layout.rss_view, container, false)
     }
 
