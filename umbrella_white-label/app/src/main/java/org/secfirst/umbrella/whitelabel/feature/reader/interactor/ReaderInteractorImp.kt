@@ -11,11 +11,13 @@ import javax.inject.Inject
 class ReaderInteractorImp @Inject constructor(apiHelper: ApiHelper, private val rssRepo: RssRepo)
     : BaseInteractorImp(apiHelper), ReaderBaseInteractor {
 
+    override suspend fun insertAllRss(rssList: List<RefRSSItem>) = rssRepo.saveAllRss(rssList)
+
     override suspend fun doRSsCall(url: String): Deferred<ResponseBody> = apiHelper.getRss(url)
 
     override suspend fun deleteRss(refRSS: RefRSSItem) = rssRepo.delete(refRSS)
 
-    override suspend fun insertRss(refRSS: RefRSSItem) = rssRepo.saveFeed(refRSS)
+    override suspend fun insertRss(refRSS: RefRSSItem) = rssRepo.saveRss(refRSS)
 
-    override suspend fun fetchRss(): List<RefRSSItem> = rssRepo.getAllFeeds()
+    override suspend fun fetchRss(): List<RefRSSItem> = rssRepo.getAllRss()
 }

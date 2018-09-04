@@ -38,3 +38,11 @@ fun launchSilent(
 fun <T> runBlockingSilent(context: CoroutineContext = EmptyCoroutineContext, block: suspend CoroutineScope.() -> T) {
     runBlocking(context, block)
 }
+
+suspend fun <T> async(block: suspend CoroutineScope.() -> T): Deferred<T> {
+    return async(CommonPool) { block() }
+}
+
+suspend fun <T> asyncAwait(block: suspend CoroutineScope.() -> T): T {
+    return async(block).await()
+}

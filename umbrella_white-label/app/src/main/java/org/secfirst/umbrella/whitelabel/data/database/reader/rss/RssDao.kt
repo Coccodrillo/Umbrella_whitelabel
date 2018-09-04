@@ -13,13 +13,23 @@ interface RssDao {
         }
     }
 
-    suspend fun getAll(): List<RefRSSItem> = withContext(ioContext) {
-        SQLite.select()
-                .from(RefRSSItem::class.java)
-                .queryList()
+    suspend fun saveAll(listRss: List<RefRSSItem>) {
+        withContext(ioContext) {
+            modelAdapter<RefRSSItem>().saveAll(listRss)
+        }
     }
 
-    suspend fun delete(rss: RefRSSItem) = withContext(ioContext) {
-        modelAdapter<RefRSSItem>().delete(rss)
+    suspend fun delete(rss: RefRSSItem) {
+        withContext(ioContext) {
+            modelAdapter<RefRSSItem>().delete(rss)
+        }
+    }
+
+    suspend fun getAll(): List<RefRSSItem> {
+        return withContext(ioContext) {
+            SQLite.select()
+                    .from(RefRSSItem::class.java)
+                    .queryList()
+        }
     }
 }
