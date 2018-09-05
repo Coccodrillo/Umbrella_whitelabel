@@ -7,10 +7,12 @@ import org.secfirst.umbrella.whitelabel.misc.AppExecutors.Companion.ioContext
 
 interface RssDao {
 
-    suspend fun save(rss: RefRSSItem) {
+    suspend fun save(rss: RefRSSItem): Boolean {
+        var result = 0L
         withContext(ioContext) {
-            modelAdapter<RefRSSItem>().insert(rss)
+            result = modelAdapter<RefRSSItem>().insert(rss)
         }
+        return result != 0L
     }
 
     suspend fun saveAll(listRss: List<RefRSSItem>) {

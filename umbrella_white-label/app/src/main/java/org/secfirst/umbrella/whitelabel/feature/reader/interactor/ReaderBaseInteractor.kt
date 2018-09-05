@@ -8,7 +8,7 @@ import org.secfirst.umbrella.whitelabel.feature.base.interactor.BaseInteractor
 
 interface ReaderBaseInteractor : BaseInteractor {
 
-    suspend fun insertRss(refRSS: RefRSSItem)
+    suspend fun insertRss(refRSS: RefRSSItem): Boolean
 
     suspend fun insertAllRss(rssList: List<RefRSSItem>)
 

@@ -18,4 +18,14 @@
         <item name="android:progressBackgroundTint">@color/umbrella_purple_dark</item>
     </style>
 
+    <style name="TextAppearence.App.TextInputLayout" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/green_button</item>
+        <item name="android:textColorHint">@color/green_button</item>
+    </style>
+
+    <style name="Autocomplete" parent="Widget.AppCompat.Light.AutoCompleteTextView">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="colorControlNormal">@color/green_button</item>
+        <item name="colorControlActivated">@color/green_button</item>
+    </style>
 </resources>

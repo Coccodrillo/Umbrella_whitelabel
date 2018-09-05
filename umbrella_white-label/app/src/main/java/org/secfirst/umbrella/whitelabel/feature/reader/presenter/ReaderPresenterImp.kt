@@ -21,6 +21,8 @@ class ReaderPresenterImp<V : ReaderView, I : ReaderBaseInteractor>
         interactor: I) : BasePresenterImp<V, I>(
         interactor = interactor), ReaderBasePresenter<V, I> {
 
+    private val tag: String = ReaderPresenterImp::class.java.name
+
     override fun submitFetchRss() {
         launchSilent(uiContext) {
             var refRss: RefRSS
@@ -53,11 +55,36 @@ class ReaderPresenterImp<V : ReaderView, I : ReaderBaseInteractor>
                     val feed = EarlParser.parseOrThrow(responseBody.byteStream(), 0)
                     result.add(feed)
                 } catch (exception: Exception) {
-                    Log.e("test", "RSS error, $url")
+                    Log.e(tag, "RSS error, $url")
                 }
             }
         }
         return result
+    }
+
+    private suspend fun processRss(url: String): Feed? {
+        interactor?.let {
+            try {
+                val responseBody = it.doRSsCall(url).await()
+                return EarlParser.parseOrThrow(responseBody.byteStream(), 0)
+            } catch (exception: Exception) {
+                Log.e(tag, "RSS error, $url")
+            }
+        }
+        return null
+    }
+
+    override fun submitInsertRss(refRss: RefRSSItem) {
+        launchSilent(uiContext) {
+            interactor?.let { it ->
+                val result = it.insertRss(refRss)
+                if (result) {
+                    processRss(refRss.url)?.let { feed ->
+                        getView()?.showNewestRss(feed)
+                    }
+                }
+            }
+        }
     }
 
     private fun getRssFromAssert(): RefRSS {
