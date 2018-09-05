@@ -28,6 +28,11 @@ class RssAdapter : RecyclerView.Adapter<RssAdapter.RssHolder>() {
         notifyDataSetChanged()
     }
 
+    fun add(feed: Feed) {
+        rssList.add(feed)
+        notifyDataSetChanged()
+    }
+
     class RssHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(feed: Feed) {
             with(feed) {

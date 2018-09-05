@@ -9,8 +9,8 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import kotlinx.android.synthetic.main.head_section.view.*
 import org.secfirst.umbrella.whitelabel.UmbrellaApplication
-import org.secfirst.umbrella.whitelabel.feature.main.MainActivity
 import org.secfirst.umbrella.whitelabel.feature.base.view.BaseController
+import org.secfirst.umbrella.whitelabel.feature.main.MainActivity
 
 val TextView.regular: Typeface get() = Typeface.createFromAsset(context.assets, "fonts/Roboto-Regular.ttf")
 val TextView.medium: Typeface get() = Typeface.createFromAsset(context.assets, "fonts/Roboto-Medium.ttf")
@@ -37,3 +37,4 @@ fun MainActivity.hideKeyboard() {
 class HeaderViewHolder(headerView: View) : RecyclerView.ViewHolder(headerView) {
     val sectionText = headerView.sectionText
 }
+

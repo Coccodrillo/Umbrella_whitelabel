@@ -15,7 +15,9 @@ data class RefRSSItem(
         var id: Long = 0,
         @Column
         @SerializedName("link")
-        var url: String = "")
+        var url: String = "") {
+    constructor(url: String = "") : this(0, url)
+}
 
 const val RSS_FILE_NAME: String = "default_rss.json"
 

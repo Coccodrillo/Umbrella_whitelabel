@@ -58,11 +58,10 @@ class DialogManager(private val controller: Controller) {
         dialog.show()
 
         combos.add(Combo(dialog, tag, factory))
-
         return dialog
     }
 
-    fun findDialog(tag: String?): Dialog? {
+    private fun findDialog(tag: String?): Dialog? {
         if (tag == null) {
             throw NullPointerException("tag == null")
         }

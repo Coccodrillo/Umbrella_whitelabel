@@ -23,7 +23,6 @@ import org.secfirst.umbrella.whitelabel.data.disk.TentRepo
 import org.secfirst.umbrella.whitelabel.data.disk.TentRepository
 import org.secfirst.umbrella.whitelabel.data.network.ApiHelper
 import org.secfirst.umbrella.whitelabel.data.network.NetworkEndPoint.BASE_URL
-import org.secfirst.umbrella.whitelabel.misc.SchedulerProvider
 import org.secfirst.umbrella.whitelabel.serialize.ElementLoader
 import org.secfirst.umbrella.whitelabel.serialize.ElementSerializer
 import retrofit2.Retrofit
@@ -36,9 +35,6 @@ class AppModule {
     @Provides
     @Singleton
     internal fun provideContext(application: Application): Context = application
-
-    @Provides
-    internal fun provideSchedulerProvider(): SchedulerProvider = SchedulerProvider()
 
     @Provides
     internal fun provideCompositeDisposable(): CompositeDisposable = CompositeDisposable()

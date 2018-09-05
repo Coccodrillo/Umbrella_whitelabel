@@ -20,4 +20,9 @@
     <string name="loading_tour_message">Fetching data…</string>
     <string name="error_connection_tour_message">Looks like the server is taking to long to respond, try again later.</string>
 
+    <string name="send_to">Share</string>
+    <string name="delete">Delete</string>
+    <string name="feed_source">Feed source</string>
+    <string name="hint_rss_edit">http://yourfeed</string>
+
 </resources>

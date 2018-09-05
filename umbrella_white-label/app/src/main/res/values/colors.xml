@@ -14,4 +14,7 @@
     <color name="blue_pea">#4285f4</color>
     <color name="dialog_background">#fafafa</color>
     <color name="immersive_background">#88000000</color>
+    <color name="green_button">#CC9BBF2E</color>
+    <color name="grey_location">#9b9b9b</color>
+    <color name="green_dashboard">#9bbf2e</color>
 </resources>
