@@ -1,6 +1,7 @@
 package org.secfirst.umbrella.whitelabel.misc
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Typeface
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -8,12 +9,22 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import kotlinx.android.synthetic.main.head_section.view.*
+import org.secfirst.umbrella.whitelabel.R
 import org.secfirst.umbrella.whitelabel.UmbrellaApplication
 import org.secfirst.umbrella.whitelabel.feature.base.view.BaseController
 import org.secfirst.umbrella.whitelabel.feature.main.MainActivity
 
 val TextView.regular: Typeface get() = Typeface.createFromAsset(context.assets, "fonts/Roboto-Regular.ttf")
 val TextView.medium: Typeface get() = Typeface.createFromAsset(context.assets, "fonts/Roboto-Medium.ttf")
+
+
+fun Context.shareLink(link: String) {
+    val sendIntent = Intent()
+    sendIntent.action = Intent.ACTION_SEND
+    sendIntent.putExtra(Intent.EXTRA_TEXT, link)
+    sendIntent.type = "text/html"
+    this.startActivity(Intent.createChooser(sendIntent, this.resources.getText(R.string.send_to)))
+}
 
 fun RecyclerView.initRecyclerView(layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(UmbrellaApplication.instance),
                                   adapter: RecyclerView.Adapter<out RecyclerView.ViewHolder>,

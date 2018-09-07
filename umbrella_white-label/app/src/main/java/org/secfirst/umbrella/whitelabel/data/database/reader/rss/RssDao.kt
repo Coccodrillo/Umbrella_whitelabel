@@ -7,30 +7,26 @@ import org.secfirst.umbrella.whitelabel.misc.AppExecutors.Companion.ioContext
 
 interface RssDao {
 
-    suspend fun save(rss: RefRSSItem): Boolean {
-        var result = 0L
+    suspend fun save(rss: RSS) {
         withContext(ioContext) {
-            result = modelAdapter<RefRSSItem>().insert(rss)
-        }
-        return result != 0L
-    }
-
-    suspend fun saveAll(listRss: List<RefRSSItem>) {
-        withContext(ioContext) {
-            modelAdapter<RefRSSItem>().saveAll(listRss)
+            modelAdapter<RSS>().save(rss)
         }
     }
 
-    suspend fun delete(rss: RefRSSItem) {
+    suspend fun saveAll(rssList: List<RSS>) {
         withContext(ioContext) {
-            modelAdapter<RefRSSItem>().delete(rss)
+            modelAdapter<RSS>().saveAll(rssList)
         }
     }
 
-    suspend fun getAll(): List<RefRSSItem> {
+    suspend fun delete(rss: RSS) = withContext(ioContext) {
+        modelAdapter<RSS>().delete(rss)
+    }
+
+    suspend fun getAll(): List<RSS> {
         return withContext(ioContext) {
             SQLite.select()
-                    .from(RefRSSItem::class.java)
+                    .from(RSS::class.java)
                     .queryList()
         }
     }

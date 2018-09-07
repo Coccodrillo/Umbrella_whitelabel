@@ -1,16 +1,17 @@
-package org.secfirst.umbrella.whitelabel.feature.reader.rss
+package org.secfirst.umbrella.whitelabel.feature.reader.rss.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.einmalfel.earl.Feed
 import kotlinx.android.synthetic.main.rss_item_view.view.*
 import org.secfirst.umbrella.whitelabel.R
+import org.secfirst.umbrella.whitelabel.data.database.reader.rss.RSS
 
-class RssAdapter : RecyclerView.Adapter<RssAdapter.RssHolder>() {
+class RssAdapter(private val onLongPress: (RSS) -> Unit) : RecyclerView.Adapter<RssAdapter.RssHolder>() {
 
-    private val rssList: MutableList<Feed> = mutableListOf()
+    private val rssList: MutableList<RSS> = mutableListOf()
+    lateinit var currentRss: RSS
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RssHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.rss_item_view, parent, false)
@@ -20,24 +21,35 @@ class RssAdapter : RecyclerView.Adapter<RssAdapter.RssHolder>() {
     override fun getItemCount() = rssList.size
 
     override fun onBindViewHolder(holder: RssHolder, position: Int) {
-        holder.bind(rssList[position])
+        holder.bind(rssList[position], clickListener = { onLongPress(rssList[position]) })
     }
 
-    fun addAll(feedList: List<Feed>) {
+    fun addAll(feedList: List<RSS>) {
         feedList.forEach { rssList.add(it) }
         notifyDataSetChanged()
     }
 
-    fun add(feed: Feed) {
-        rssList.add(feed)
+    fun add(rss: RSS) {
+        rssList.add(rss)
+        notifyDataSetChanged()
+    }
+
+    fun getRss(): MutableList<RSS> = rssList
+
+    fun remove(rss: RSS) {
+        rssList.remove(rss)
         notifyDataSetChanged()
     }
 
     class RssHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(feed: Feed) {
-            with(feed) {
+        fun bind(rss: RSS, clickListener: (RssHolder) -> Unit) {
+            with(rss) {
                 itemView.rssTitle.text = title
                 itemView.rssDescription.text = description
+                itemView.setOnLongClickListener {
+                    clickListener(this@RssHolder)
+                    true
+                }
             }
         }
     }

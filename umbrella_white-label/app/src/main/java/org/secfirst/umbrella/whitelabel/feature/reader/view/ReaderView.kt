@@ -1,11 +1,11 @@
 package org.secfirst.umbrella.whitelabel.feature.reader.view
 
-import com.einmalfel.earl.Feed
+import org.secfirst.umbrella.whitelabel.data.database.reader.rss.RSS
 import org.secfirst.umbrella.whitelabel.feature.base.view.BaseView
 
 interface ReaderView : BaseView {
 
-    fun showAllRss(rss: List<Feed>)
+    fun showAllRss(rss: List<RSS>)
 
-    fun showNewestRss(rss: Feed)
+    fun showNewestRss(rss: RSS)
 }
