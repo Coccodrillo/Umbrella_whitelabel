@@ -15,16 +15,16 @@ import kotlinx.android.synthetic.main.main_view.*
 import org.secfirst.umbrella.whitelabel.R
 import org.secfirst.umbrella.whitelabel.data.disk.TentConfig
 import org.secfirst.umbrella.whitelabel.feature.account.AccountController
-import org.secfirst.umbrella.whitelabel.feature.reader.view.HostReaderController
 import org.secfirst.umbrella.whitelabel.feature.form.view.controller.HostFormController
 import org.secfirst.umbrella.whitelabel.feature.lesson.LessonController
+import org.secfirst.umbrella.whitelabel.feature.reader.view.HostReaderController
 import org.secfirst.umbrella.whitelabel.feature.tour.view.TourController
 import org.secfirst.umbrella.whitelabel.misc.hideKeyboard
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 import javax.inject.Inject
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(){
 
     lateinit var router: Router
 

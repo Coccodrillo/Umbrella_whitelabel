@@ -2,11 +2,11 @@ package org.secfirst.umbrella.whitelabel.data.database.reader.rss
 
 interface RssRepo {
 
-    suspend fun saveRss(rss: RefRSSItem): Boolean
+    suspend fun saveRss(rss: RSS)
 
-    suspend fun saveAllRss(rssList: List<RefRSSItem>)
+    suspend fun saveAllRss(rssList: List<RSS>)
 
-    suspend fun delete(rss: RefRSSItem)
+    suspend fun delete(rss: RSS): Boolean
 
-    suspend fun getAllRss(): List<RefRSSItem>
+    suspend fun getAllRss(): List<RSS>
 }

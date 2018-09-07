@@ -2,12 +2,12 @@ package org.secfirst.umbrella.whitelabel.feature.reader.presenter
 
 import android.util.Log
 import com.einmalfel.earl.EarlParser
-import com.einmalfel.earl.Feed
 import com.google.gson.Gson
 import getAssetFileBy
+import org.secfirst.umbrella.whitelabel.data.database.reader.rss.RSS
 import org.secfirst.umbrella.whitelabel.data.database.reader.rss.RSS_FILE_NAME
 import org.secfirst.umbrella.whitelabel.data.database.reader.rss.RefRSS
-import org.secfirst.umbrella.whitelabel.data.database.reader.rss.RefRSSItem
+import org.secfirst.umbrella.whitelabel.data.database.reader.rss.convertToRSS
 import org.secfirst.umbrella.whitelabel.feature.base.presenter.BasePresenterImp
 import org.secfirst.umbrella.whitelabel.feature.reader.interactor.ReaderBaseInteractor
 import org.secfirst.umbrella.whitelabel.feature.reader.view.ReaderView
@@ -21,68 +21,73 @@ class ReaderPresenterImp<V : ReaderView, I : ReaderBaseInteractor>
         interactor: I) : BasePresenterImp<V, I>(
         interactor = interactor), ReaderBasePresenter<V, I> {
 
+
     private val tag: String = ReaderPresenterImp::class.java.name
+
+    override fun submitDeleteRss(rss: RSS) {
+        launchSilent(uiContext) {
+            interactor?.deleteRss(rss)
+        }
+    }
+
 
     override fun submitFetchRss() {
         launchSilent(uiContext) {
             var refRss: RefRSS
-            val urls = mutableListOf<String>()
             interactor?.let {
-                val rssRefList = it.fetchRss()
-                if (rssRefList.isEmpty()) {
+                val databaseRss = it.fetchRss()
+                if (databaseRss.isEmpty()) {
+                    val assetsRss = mutableListOf<RSS>()
                     refRss = getRssFromAssert()
-                    refRss.items.forEach { item -> urls.add(item.url) }
-                    submitRss(refRss.items)
-                } else
-                    rssRefList.forEach { item -> urls.add(item.url) }
+                    refRss.items.forEach { item -> assetsRss.add(RSS(item.link)) }
+                    submitRss(assetsRss)
+                    getView()?.showAllRss(processRss(assetsRss))
+                }
+                getView()?.showAllRss(processRss(databaseRss))
             }
-            getView()?.showAllRss(processRss(urls))
         }
     }
 
-    private fun submitRss(refRSSList: List<RefRSSItem>) {
+    private fun submitRss(rssList: MutableList<RSS>) {
         launchSilent(uiContext) {
-            interactor?.insertAllRss(refRSSList)
+            interactor?.insertAllRss(rssList)
         }
     }
 
-    private suspend fun processRss(urls: List<String>): List<Feed> {
-        val result = mutableListOf<Feed>()
+    private suspend fun processRss(rssList: List<RSS>): List<RSS> {
+        val rssResult = mutableListOf<RSS>()
         interactor?.let {
-            urls.forEach { url ->
+            rssList.forEach { rssIt ->
                 try {
-                    val responseBody = it.doRSsCall(url).await()
+                    val responseBody = it.doRSsCall(rssIt.url_).await()
                     val feed = EarlParser.parseOrThrow(responseBody.byteStream(), 0)
-                    result.add(feed)
+                    rssResult.add(feed.convertToRSS)
                 } catch (exception: Exception) {
-                    Log.e(tag, "RSS error, $url")
+                    Log.e(tag, "could't load the RSS:, ${rssIt.link}")
                 }
             }
         }
-        return result
+        return rssResult
     }
 
-    private suspend fun processRss(url: String): Feed? {
+    private suspend fun processRss(url: String): RSS? {
         interactor?.let {
             try {
                 val responseBody = it.doRSsCall(url).await()
-                return EarlParser.parseOrThrow(responseBody.byteStream(), 0)
+                val feed = EarlParser.parseOrThrow(responseBody.byteStream(), 0)
+                return feed.convertToRSS
             } catch (exception: Exception) {
-                Log.e(tag, "RSS error, $url")
+                Log.e(tag, "could't load the RSS:, $url")
             }
         }
         return null
     }
 
-    override fun submitInsertRss(refRss: RefRSSItem) {
+    override fun submitInsertRss(rss: RSS) {
         launchSilent(uiContext) {
-            interactor?.let { it ->
-                val result = it.insertRss(refRss)
-                if (result) {
-                    processRss(refRss.url)?.let { feed ->
-                        getView()?.showNewestRss(feed)
-                    }
-                }
+            interactor?.let {
+                it.insertRss(rss)
+                processRss(rss.link)?.let { rss -> getView()?.showNewestRss(rss) }
             }
         }
     }

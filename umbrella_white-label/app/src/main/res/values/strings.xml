@@ -24,5 +24,7 @@
     <string name="delete">Delete</string>
     <string name="feed_source">Feed source</string>
     <string name="hint_rss_edit">http://yourfeed</string>
+    <string name="learn_more">LEARN MORE</string>
+    <string name="share_carpsLk">SHARE</string>
 
 </resources>
