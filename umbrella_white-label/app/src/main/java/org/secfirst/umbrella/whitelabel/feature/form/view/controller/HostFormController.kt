@@ -30,7 +30,6 @@ import javax.inject.Inject
 
 class HostFormController : BaseController(), FormView {
 
-
     @Inject
     internal lateinit var presenter: FormBasePresenter<FormView, FormBaseInteractor>
     private val editClick: (Form) -> Unit = this::onEditFormClicked
@@ -55,7 +54,6 @@ class HostFormController : BaseController(), FormView {
         presenter.onAttach(this)
         allFormRecycleView.layoutManager = LinearLayoutManager(view.context)
         presenter.submitLoadAllForms()
-        enableToolbar()
     }
 
     private fun onEditFormClicked(form: Form) {
@@ -123,7 +121,9 @@ class HostFormController : BaseController(), FormView {
         }
     }
 
-    override fun getTitleToolbar() = applicationContext?.getString(R.string.form_title)!!
+    override fun getEnableBackAction() = true
 
-    override fun getEnableBackAction() = false
+    override fun getTitleToolbar() = context.getString(R.string.form_title)
+
+
 }

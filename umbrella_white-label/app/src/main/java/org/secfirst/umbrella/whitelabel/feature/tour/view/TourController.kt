@@ -26,7 +26,6 @@ import javax.inject.Inject
 
 class TourController : BaseController(), TourView {
 
-
     @Inject
     internal lateinit var presenter: TourBasePresenter<TourView, TourBaseInteractor>
     private var viewList: MutableList<TourUI> = mutableListOf()
@@ -119,8 +118,8 @@ class TourController : BaseController(), TourView {
         })
     }
 
-
     override fun getEnableBackAction() = false
 
     override fun getTitleToolbar() = ""
+
 }

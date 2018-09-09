@@ -8,7 +8,8 @@ import kotlinx.android.synthetic.main.rss_item_view.view.*
 import org.secfirst.umbrella.whitelabel.R
 import org.secfirst.umbrella.whitelabel.data.database.reader.rss.RSS
 
-class RssAdapter(private val onLongPress: (RSS) -> Unit) : RecyclerView.Adapter<RssAdapter.RssHolder>() {
+class RssAdapter(private val onLongPress: (RSS) -> Unit,
+                 private val onClickPress: (RSS) -> Unit) : RecyclerView.Adapter<RssAdapter.RssHolder>() {
 
     private val rssList: MutableList<RSS> = mutableListOf()
     lateinit var currentRss: RSS
@@ -21,7 +22,8 @@ class RssAdapter(private val onLongPress: (RSS) -> Unit) : RecyclerView.Adapter<
     override fun getItemCount() = rssList.size
 
     override fun onBindViewHolder(holder: RssHolder, position: Int) {
-        holder.bind(rssList[position], clickListener = { onLongPress(rssList[position]) })
+        holder.bind(rssList[position], clickListener = { onLongPress(rssList[position]) },
+                clickLongListener = { onLongPress(rssList[position]) })
     }
 
     fun addAll(feedList: List<RSS>) {
@@ -42,12 +44,13 @@ class RssAdapter(private val onLongPress: (RSS) -> Unit) : RecyclerView.Adapter<
     }
 
     class RssHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(rss: RSS, clickListener: (RssHolder) -> Unit) {
+        fun bind(rss: RSS, clickListener: (RssHolder) -> Unit, clickLongListener: (RssHolder) -> Unit) {
             with(rss) {
                 itemView.rssTitle.text = title
                 itemView.rssDescription.text = description
+                itemView.setOnClickListener { clickListener(this@RssHolder) }
                 itemView.setOnLongClickListener {
-                    clickListener(this@RssHolder)
+                    clickLongListener(this@RssHolder)
                     true
                 }
             }

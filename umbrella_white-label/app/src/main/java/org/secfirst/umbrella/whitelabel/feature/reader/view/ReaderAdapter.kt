@@ -20,4 +20,5 @@ class ReaderAdapter(host: Controller) : RouterPagerAdapter(host) {
     override fun getPageTitle(position: Int) = if (position == 0) "FEED" else "RSS"
 
     override fun getCount() = 2
+
 }

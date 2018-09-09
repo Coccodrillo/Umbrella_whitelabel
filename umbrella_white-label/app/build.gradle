@@ -72,8 +72,8 @@ android {
 dependencies {
 
     implementation 'com.jakewharton.retrofit:retrofit2-kotlin-coroutines-experimental-adapter:1.0.0'
-    compile 'com.einmalfel:earl:1.2.0'
-
+    implementation 'com.einmalfel:earl:1.2.0'
+    implementation 'com.squareup.picasso:picasso:2.5.2'
     //OkHttp
     implementation 'com.squareup.okhttp3:okhttp:3.10.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
