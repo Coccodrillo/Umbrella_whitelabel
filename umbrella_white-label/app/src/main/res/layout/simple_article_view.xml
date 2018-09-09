@@ -12,7 +12,7 @@
     tools:ignore="MissingPrefix">
 
     <TextView
-        android:id="@+id/titleSimpleList"
+        android:id="@+id/title"
         fontPath="fonts/Roboto-Medium.ttf"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -21,7 +21,7 @@
         android:textSize="24sp" />
 
     <TextView
-        android:id="@+id/lastUpdateSimpleList"
+        android:id="@+id/lastUpdate"
         fontPath="fonts/Roboto-Regular.ttf"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -34,7 +34,7 @@
         android:textColor="@android:color/black" />
 
     <TextView
-        android:id="@+id/descriptionSimpleList"
+        android:id="@+id/description"
         fontPath="fonts/Roboto-Regular.ttf"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

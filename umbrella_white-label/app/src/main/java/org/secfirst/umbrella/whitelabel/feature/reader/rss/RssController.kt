@@ -3,12 +3,14 @@ package org.secfirst.umbrella.whitelabel.feature.reader.rss
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
+import android.os.Bundle
 import android.support.v7.widget.AppCompatEditText
 import android.support.v7.widget.AppCompatTextView
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.*
 import com.bluelinelabs.conductor.RouterTransaction
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.rss_view.*
 import org.secfirst.umbrella.whitelabel.R
 import org.secfirst.umbrella.whitelabel.UmbrellaApplication
@@ -37,7 +39,7 @@ class RssController : BaseController(), ReaderView {
     private lateinit var rssEdit: AppCompatEditText
     private lateinit var currentRss: RSS
     private val onLongClick: (RSS) -> Unit = this::onLongClickRss
-    private val onClick: (RSS) -> Unit = this::onClickRss
+    private val onClick: (RSS) -> Unit = this::onClickOpenArticle
 
 
     private fun onLongClickRss(rss: RSS) {
@@ -46,7 +48,7 @@ class RssController : BaseController(), ReaderView {
     }
 
 
-    private fun onClickRss(rss: RSS) {
+    private fun onClickOpenArticle(rss: RSS) {
         val mainActivity = activity as MainActivity
         mainActivity.router.pushController(RouterTransaction.with(ArticleController(rss)))
     }

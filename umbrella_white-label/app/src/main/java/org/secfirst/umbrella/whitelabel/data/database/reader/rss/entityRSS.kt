@@ -1,5 +1,6 @@
 package org.secfirst.umbrella.whitelabel.data.database.reader.rss
 
+import com.einmalfel.earl.Enclosure
 import com.einmalfel.earl.Feed
 import com.einmalfel.earl.Item
 import com.raizlabs.android.dbflow.annotation.PrimaryKey
@@ -18,8 +19,7 @@ data class RSS(@PrimaryKey
                var url_: String = "", var title_: String = "",
                var description_: String = "", var publicationDate_: Date = Date(),
                var imageLink_: String = "", var copyRight_: String = "",
-               var author_: String = "", var items_: MutableList<out Item> = mutableListOf()) : Feed, Serializable {
-
+               var author_: String = "", var items_: MutableList<Article> = mutableListOf()) : Feed, Serializable {
 
     override fun getLink(): String = url_
 
@@ -41,6 +41,29 @@ data class RSS(@PrimaryKey
 
 }
 
+data class Article(var url_: String = "", var title_: String = "",
+                   var description_: String = "", var publicationDate_: Date = Date(),
+                   var imageLink_: String = "", var copyRight_: String = "",
+                   var author_: String = "", var enclosures_: MutableList<out Enclosure> = mutableListOf()) : Item, Serializable {
+
+    override fun getLink() = url_
+
+    override fun getImageLink() = imageLink_
+
+    override fun getEnclosures() = enclosures_
+
+    override fun getDescription() = description_
+
+    override fun getId(): String = ""
+
+    override fun getTitle() = title_
+
+    override fun getAuthor() = author_
+
+    override fun getPublicationDate() = publicationDate_
+
+}
+
 val Feed.convertToRSS: RSS
     get() {
         val rss = RSS()
@@ -51,7 +74,14 @@ val Feed.convertToRSS: RSS
         rss.imageLink_ = this.imageLink ?: ""
         rss.copyRight_ = this.copyright ?: ""
         rss.author_ = this.author ?: ""
-        rss.items_ = this.items
+        val articleList = mutableListOf<Article>()
+        items.forEach {
+            val article = Article(it.link ?: "", it.title ?: "", it.description
+                    ?: "", it.publicationDate!!, it.imageLink ?: "", "", it.author
+                    ?: "", it.enclosures)
+            articleList.add(article)
+        }
+        rss.items_ = articleList
         return rss
     }
 const val RSS_FILE_NAME: String = "default_rss.json"
