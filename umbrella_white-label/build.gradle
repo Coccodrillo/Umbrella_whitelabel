@@ -27,6 +27,7 @@ allprojects {
         google()
         jcenter()
         maven { url "https://repo.eclipse.org/content/groups/releases/" }
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         maven { url "https://www.jitpack.io" }
     }
 }
@@ -86,7 +87,7 @@ ext {
     mockito_version = '2.10.0'
     junit_version = '4.12'
     coroutine_version = "0.22.5"
-    conductor_version = "2.1.5"
+    conductor_version = "2.1.6-SNAPSHOT"
     stepper_version = "4.3.1"
     multidex_version = "1.0.3"
     caligraphy_version = "2.3.0"

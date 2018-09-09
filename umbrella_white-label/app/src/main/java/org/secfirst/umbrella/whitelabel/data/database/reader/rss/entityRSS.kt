@@ -5,6 +5,7 @@ import com.einmalfel.earl.Item
 import com.raizlabs.android.dbflow.annotation.PrimaryKey
 import com.raizlabs.android.dbflow.annotation.Table
 import org.secfirst.umbrella.whitelabel.data.database.AppDatabase
+import java.io.Serializable
 import java.util.*
 
 
@@ -17,7 +18,7 @@ data class RSS(@PrimaryKey
                var url_: String = "", var title_: String = "",
                var description_: String = "", var publicationDate_: Date = Date(),
                var imageLink_: String = "", var copyRight_: String = "",
-               var author_: String = "", var items_: MutableList<out Item> = mutableListOf()) : Feed {
+               var author_: String = "", var items_: MutableList<out Item> = mutableListOf()) : Feed, Serializable {
 
 
     override fun getLink(): String = url_

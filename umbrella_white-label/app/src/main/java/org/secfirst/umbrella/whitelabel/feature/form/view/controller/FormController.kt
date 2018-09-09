@@ -29,7 +29,6 @@ import javax.inject.Inject
 
 class FormController(bundle: Bundle) : BaseController(bundle), FormView, StepperLayout.StepperListener {
 
-
     @Inject
     internal lateinit var presenter: FormBasePresenter<FormView, FormBaseInteractor>
 
@@ -165,8 +164,10 @@ class FormController(bundle: Bundle) : BaseController(bundle), FormView, Stepper
 
     override fun onReturn() {}
 
-    override fun getTitleToolbar() = activeForm.title
 
     override fun getEnableBackAction() = true
+
+    override fun getTitleToolbar() = activeForm.title
+
 
 }

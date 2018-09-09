@@ -18,13 +18,14 @@ import org.secfirst.umbrella.whitelabel.feature.account.AccountController
 import org.secfirst.umbrella.whitelabel.feature.form.view.controller.HostFormController
 import org.secfirst.umbrella.whitelabel.feature.lesson.LessonController
 import org.secfirst.umbrella.whitelabel.feature.reader.view.HostReaderController
+import org.secfirst.umbrella.whitelabel.feature.reader.view.HostReaderController.Companion.TAG_UP_TRANSACTION
 import org.secfirst.umbrella.whitelabel.feature.tour.view.TourController
 import org.secfirst.umbrella.whitelabel.misc.hideKeyboard
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 import javax.inject.Inject
 
 
-class MainActivity : AppCompatActivity(){
+class MainActivity : AppCompatActivity() {
 
     lateinit var router: Router
 
@@ -54,8 +55,14 @@ class MainActivity : AppCompatActivity(){
     }
 
     fun enableUpArrow(enabled: Boolean) {
-        supportActionBar?.setDisplayHomeAsUpEnabled(enabled)
-        supportActionBar?.setDisplayShowHomeEnabled(enabled)
+        supportActionBar?.let {
+            it.setDisplayHomeAsUpEnabled(enabled)
+            it.setDisplayShowHomeEnabled(enabled)
+        }
+        if (enabled)
+            showToolbar()
+        else
+            hideToolbar()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -79,7 +86,7 @@ class MainActivity : AppCompatActivity(){
 
         when (item.itemId) {
             R.id.navigation_feeds -> {
-                router.pushController(RouterTransaction.with(HostReaderController()))
+                router.pushController(RouterTransaction.with(HostReaderController()).tag(TAG_UP_TRANSACTION))
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_forms -> {

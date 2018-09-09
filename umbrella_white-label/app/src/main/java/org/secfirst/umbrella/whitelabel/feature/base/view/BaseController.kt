@@ -1,5 +1,6 @@
 package org.secfirst.umbrella.whitelabel.feature.base.view
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import com.bluelinelabs.conductor.Controller
@@ -14,19 +15,22 @@ abstract class BaseController(bundle: Bundle = Bundle()) : Controller(bundle), L
     }
 
     private fun inject() = onInject()
+    lateinit var mainActivity: MainActivity
+    lateinit var context: Context
 
     protected abstract fun onInject()
 
     override val containerView: View?
         get() = view
 
-    override fun onAttach(view: View) {
-        super.onAttach(view)
+    override fun onContextAvailable(context: Context) {
+        this.context = context
         activity?.let {
-            val mainActivity = activity as MainActivity
+            mainActivity = activity as MainActivity
             mainActivity.setToolBarTitle(getTitleToolbar())
             mainActivity.enableUpArrow(getEnableBackAction())
         }
+        super.onContextAvailable(context)
     }
 
     override fun onDestroyView(view: View) {
@@ -38,31 +42,11 @@ abstract class BaseController(bundle: Bundle = Bundle()) : Controller(bundle), L
 
     protected abstract fun getTitleToolbar(): String
 
-    fun enableNavigation() {
-        activity?.let {
-            val mainActivity = it as MainActivity
-            mainActivity.showNavigation()
-        }
-    }
+    fun disableNavigation() = mainActivity.hideNavigation()
 
-    fun disableNavigation() {
-        activity?.let {
-            val mainActivity = it as MainActivity
-            mainActivity.hideNavigation()
-        }
-    }
+    fun enableNavigation() = mainActivity.showNavigation()
 
-    fun enableToolbar() {
-        activity?.let {
-            val mainActivity = it as MainActivity
-            mainActivity.showToolbar()
-        }
-    }
+    fun enableToolbar() = mainActivity.showToolbar()
 
-    fun disableToolbar() {
-        activity?.let {
-            val mainActivity = it as MainActivity
-            mainActivity.hideToolbar()
-        }
-    }
+    fun disableToolbar() = mainActivity.hideToolbar()
 }

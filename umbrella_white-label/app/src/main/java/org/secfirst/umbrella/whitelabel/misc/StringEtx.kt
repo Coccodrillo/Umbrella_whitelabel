@@ -2,9 +2,9 @@ package org.secfirst.umbrella.whitelabel.misc
 
 import org.jsoup.Jsoup
 import org.secfirst.umbrella.whitelabel.data.ActiveForm
-import org.secfirst.umbrella.whitelabel.data.Form
 import org.secfirst.umbrella.whitelabel.feature.form.FieldType
 import org.secfirst.umbrella.whitelabel.feature.form.hasAnswer
+import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -14,6 +14,21 @@ val currentTime: String
         val dateFormat = SimpleDateFormat("dd/M/yyyy hh:mm", Locale.ENGLISH)
         return dateFormat.format(Date())
     }
+
+
+fun convertDateToString(date: Date?): String {
+    val dateFormat: DateFormat
+    var dateConvert = ""
+    try {
+        if (date != null) {
+            dateFormat = SimpleDateFormat("MM/dd/yyyy HH:mm:ss", Locale.ENGLISH)
+            dateConvert = dateFormat.format(date)
+        }
+    } catch (e: Exception) {
+        return dateConvert
+    }
+    return dateConvert
+}
 
 fun ActiveForm.asHTML(): String {
     var fileName = this.title.replace("[^a-zA-Z0-9.-]", "_")

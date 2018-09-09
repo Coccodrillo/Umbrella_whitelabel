@@ -8,12 +8,14 @@ import android.support.v7.widget.AppCompatTextView
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.*
+import com.bluelinelabs.conductor.RouterTransaction
 import kotlinx.android.synthetic.main.rss_view.*
 import org.secfirst.umbrella.whitelabel.R
 import org.secfirst.umbrella.whitelabel.UmbrellaApplication
 import org.secfirst.umbrella.whitelabel.component.DialogManager
 import org.secfirst.umbrella.whitelabel.data.database.reader.rss.RSS
 import org.secfirst.umbrella.whitelabel.feature.base.view.BaseController
+import org.secfirst.umbrella.whitelabel.feature.main.MainActivity
 import org.secfirst.umbrella.whitelabel.feature.reader.DaggerReanderComponent
 import org.secfirst.umbrella.whitelabel.feature.reader.interactor.ReaderBaseInteractor
 import org.secfirst.umbrella.whitelabel.feature.reader.presenter.ReaderBasePresenter
@@ -25,7 +27,6 @@ import javax.inject.Inject
 
 class RssController : BaseController(), ReaderView {
 
-
     @Inject
     internal lateinit var presenter: ReaderBasePresenter<ReaderView, ReaderBaseInteractor>
     private lateinit var rssAdapter: RssAdapter
@@ -36,11 +37,18 @@ class RssController : BaseController(), ReaderView {
     private lateinit var rssEdit: AppCompatEditText
     private lateinit var currentRss: RSS
     private val onLongClick: (RSS) -> Unit = this::onLongClickRss
+    private val onClick: (RSS) -> Unit = this::onClickRss
 
 
     private fun onLongClickRss(rss: RSS) {
         currentRss = rss
         activity?.startActionMode(modeCallBack)
+    }
+
+
+    private fun onClickRss(rss: RSS) {
+        val mainActivity = activity as MainActivity
+        mainActivity.router.pushController(RouterTransaction.with(HostArticleController(rss)))
     }
 
     override fun onInject() {
@@ -70,7 +78,7 @@ class RssController : BaseController(), ReaderView {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
         onCreateDialogView(inflater, container)
-        rssAdapter = RssAdapter(onLongClick)
+        rssAdapter = RssAdapter(onClick, onLongClick)
         return inflater.inflate(R.layout.rss_view, container, false)
     }
 
@@ -103,10 +111,6 @@ class RssController : BaseController(), ReaderView {
         presenter.submitInsertRss(RSS(rssEdit.text.toString()))
         alertDialog.dismiss()
     }
-
-    override fun getEnableBackAction() = false
-
-    override fun getTitleToolbar() = ""
 
     override fun showAllRss(rss: List<RSS>) {
         rssAdapter.addAll(rss)
@@ -148,4 +152,9 @@ class RssController : BaseController(), ReaderView {
             mode.finish()
         }
     }
+
+    override fun getEnableBackAction() = false
+
+    override fun getTitleToolbar() = ""
+
 }

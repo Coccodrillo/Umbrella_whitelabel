@@ -10,6 +10,9 @@ import org.secfirst.umbrella.whitelabel.feature.base.view.BaseController
 
 class HostReaderController : BaseController() {
 
+    companion object {
+        const val TAG_UP_TRANSACTION = "TAG_UP_TRANSACTION"
+    }
 
     override fun onInject() {
     }
@@ -17,7 +20,6 @@ class HostReaderController : BaseController() {
     override fun onAttach(view: View) {
         feedPager?.adapter = ReaderAdapter(this)
         feedTab?.setupWithViewPager(feedPager)
-        disableToolbar()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
@@ -25,13 +27,14 @@ class HostReaderController : BaseController() {
     }
 
     override fun onDestroyView(view: View) {
-        feedTab.setupWithViewPager(null)
+        feedPager?.adapter = null
+        feedTab?.setupWithViewPager(null)
+
         super.onDestroyView(view)
     }
 
-    override fun getTitleToolbar() = ""
-
     override fun getEnableBackAction() = false
 
+    override fun getTitleToolbar() = ""
 }
 
