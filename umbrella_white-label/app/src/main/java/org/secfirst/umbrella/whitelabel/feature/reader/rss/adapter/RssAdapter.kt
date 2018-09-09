@@ -23,7 +23,7 @@ class RssAdapter(private val onLongPress: (RSS) -> Unit,
 
     override fun onBindViewHolder(holder: RssHolder, position: Int) {
         holder.bind(rssList[position], clickListener = { onLongPress(rssList[position]) },
-                clickLongListener = { onLongPress(rssList[position]) })
+                clickLongListener = { onClickPress(rssList[position]) })
     }
 
     fun addAll(feedList: List<RSS>) {
