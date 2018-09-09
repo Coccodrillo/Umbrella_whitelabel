@@ -48,7 +48,7 @@ class RssController : BaseController(), ReaderView {
 
     private fun onClickRss(rss: RSS) {
         val mainActivity = activity as MainActivity
-        mainActivity.router.pushController(RouterTransaction.with(HostArticleController(rss)))
+        mainActivity.router.pushController(RouterTransaction.with(ArticleController(rss)))
     }
 
     override fun onInject() {

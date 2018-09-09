@@ -37,8 +37,9 @@ class ArticleCardAdapter(private val onClickLearnMore: (Item) -> Unit) : Recycle
 
         fun bind(articleItem: Item, clickListener: (CardHolder) -> Unit) {
             with(articleItem) {
+                val desc = description ?: ""
                 itemView.cardTitle.text = title
-                itemView.cardDescription.text = Jsoup.parse(description).text()
+                itemView.cardDescription.text = Jsoup.parse(desc).text()
                 itemView.cardLastUpdate.text = convertDateToString(publicationDate)
                 itemView.cardOpenLink.setOnClickListener { clickListener(this@CardHolder) }
                 itemView.cardShare.setOnClickListener { itemView.context.shareLink(link!!) }

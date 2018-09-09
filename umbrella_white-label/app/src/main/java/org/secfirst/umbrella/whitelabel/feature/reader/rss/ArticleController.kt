@@ -16,7 +16,7 @@ import org.secfirst.umbrella.whitelabel.data.database.reader.rss.RSS
 import org.secfirst.umbrella.whitelabel.feature.base.view.BaseController
 import org.secfirst.umbrella.whitelabel.feature.reader.rss.adapter.ArticleCardAdapter
 
-class HostArticleController(bundle: Bundle) : BaseController(bundle) {
+class ArticleController(bundle: Bundle) : BaseController(bundle) {
 
     private val onClickOpenArticle: (Item) -> Unit = this::onClickLearnMore
     private val rss by lazy { args.getSerializable(EXTRA_RSS) as RSS }
