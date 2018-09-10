@@ -5,13 +5,13 @@ import android.app.Application
 import android.content.Context
 import android.support.multidex.MultiDex
 import com.crashlytics.android.Crashlytics
+import com.crashlytics.android.core.CrashlyticsCore
 import com.raizlabs.android.dbflow.config.DatabaseConfig
 import com.raizlabs.android.dbflow.config.FlowConfig
 import com.raizlabs.android.dbflow.config.FlowLog
 import com.raizlabs.android.dbflow.config.FlowManager
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
-import io.fabric.sdk.android.Fabric
 import net.sqlcipher.database.SQLiteDatabase
 import org.secfirst.umbrella.whitelabel.data.database.AppDatabase
 import org.secfirst.umbrella.whitelabel.data.database.SQLCipherHelperImpl
@@ -79,10 +79,10 @@ class UmbrellaApplication : Application(), HasActivityInjector {
     }
 
     private fun initFabric() {
-//        Crashlytics.Builder()
-//                .core(CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
-//                .build()
-        Fabric.with(this, Crashlytics())
+        Crashlytics.Builder()
+                .core(CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
+                .build()
+        //Fabric.with(this, Crashlytics())
     }
 
     private fun initTentRepository() {
