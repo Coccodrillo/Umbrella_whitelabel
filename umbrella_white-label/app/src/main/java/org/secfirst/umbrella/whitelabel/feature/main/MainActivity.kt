@@ -59,10 +59,10 @@ class MainActivity : AppCompatActivity() {
             it.setDisplayHomeAsUpEnabled(enabled)
             it.setDisplayShowHomeEnabled(enabled)
         }
-        if (enabled)
-            showToolbar()
-        else
-            hideToolbar()
+    }
+
+    fun enableToolbar(enabled: Boolean) {
+        if (enabled) showToolbar() else hideToolbar()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

@@ -51,6 +51,7 @@ class HostFormController : BaseController(), FormView {
 
     override fun onAttach(view: View) {
         super.onAttach(view)
+        enableArrowBack(false)
         presenter.onAttach(this)
         allFormRecycleView.layoutManager = LinearLayoutManager(view.context)
         presenter.submitLoadAllForms()

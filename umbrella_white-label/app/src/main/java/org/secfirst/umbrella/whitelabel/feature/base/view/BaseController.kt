@@ -28,7 +28,7 @@ abstract class BaseController(bundle: Bundle = Bundle()) : Controller(bundle), L
         activity?.let {
             mainActivity = activity as MainActivity
             mainActivity.setToolBarTitle(getTitleToolbar())
-            mainActivity.enableUpArrow(getEnableBackAction())
+            mainActivity.enableToolbar(getEnableBackAction())
         }
         super.onContextAvailable(context)
     }
@@ -49,4 +49,6 @@ abstract class BaseController(bundle: Bundle = Bundle()) : Controller(bundle), L
     fun enableToolbar() = mainActivity.showToolbar()
 
     fun disableToolbar() = mainActivity.hideToolbar()
+
+    fun enableArrowBack(enable : Boolean = false) = mainActivity.enableUpArrow(enable)
 }

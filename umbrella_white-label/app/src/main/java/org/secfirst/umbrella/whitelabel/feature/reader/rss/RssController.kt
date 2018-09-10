@@ -66,7 +66,6 @@ class RssController : BaseController(), ReaderView {
         presenter.submitFetchRss()
         rssOk.setOnClickListener { addRss() }
         rssCancel.setOnClickListener { alertDialog.dismiss() }
-
         initRecyclerView()
         onClickRss()
     }
