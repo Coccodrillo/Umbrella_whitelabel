@@ -7,7 +7,6 @@ import android.util.Patterns
 import android.view.*
 import com.bluelinelabs.conductor.RouterTransaction
 import com.einmalfel.earl.Item
-import com.google.gson.Gson
 import kotlinx.android.synthetic.main.host_article_view.*
 import org.secfirst.umbrella.whitelabel.R
 import org.secfirst.umbrella.whitelabel.component.WebViewController
@@ -36,6 +35,7 @@ class ArticleController(bundle: Bundle) : BaseController(bundle) {
     override fun onAttach(view: View) {
         iniRecycle()
         disableNavigation()
+        enableArrowBack(true)
         openCardListAdapter()
         super.onAttach(view)
     }

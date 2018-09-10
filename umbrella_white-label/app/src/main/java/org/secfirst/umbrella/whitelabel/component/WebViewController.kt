@@ -37,6 +37,7 @@ class WebViewController(bundle: Bundle) : BaseController(bundle) {
         super.onAttach(view)
         setUpWebView()
         enableToolbar()
+        enableArrowBack(true)
         disableNavigation()
     }
 
