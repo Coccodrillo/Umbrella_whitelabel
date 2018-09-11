@@ -14,57 +14,8 @@ import org.secfirst.umbrella.whitelabel.R
 import org.secfirst.umbrella.whitelabel.data.database.AppDatabase
 
 class LessonController : Controller() {
-
-    private val PERMISSION_REQUEST_EXTERNAL_STORAGE = 1
-
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
-        val view = inflater.inflate(R.layout.lesson_view, container, false)
-        val button = view.findViewById<Button>(R.id.sharedb)
-        button.setOnClickListener { showFileChooserPreview() }
-        return view
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun onAttach(view: View) {
-
-    }
-
-    private fun showFileChooserPreview() {
-        if (ContextCompat.checkSelfPermission(activity!!,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-            shareDbFile(AppDatabase.NAME)
-        } else {
-            requestExternalStoragePermission()
-        }
-
-    }
-
-    private fun requestExternalStoragePermission() {
-        if (ActivityCompat.shouldShowRequestPermissionRationale(activity!!,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-
-            // Request the permission
-            requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
-                    PERMISSION_REQUEST_EXTERNAL_STORAGE)
-        } else {
-            requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
-                    PERMISSION_REQUEST_EXTERNAL_STORAGE)
-        }
-    }
-
-    private fun shareDbFile(fileName: String) {
-        Extensions.copyFile(activity!!)
-    }
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == PERMISSION_REQUEST_EXTERNAL_STORAGE) {
-            if (grantResults.size == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // Permission has been granted. Start camera preview Activity.
-                showFileChooserPreview()
-            } else {
-                // Permission request was denied.
-            }
-        }
-    }
 }
