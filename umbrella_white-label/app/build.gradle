@@ -21,7 +21,7 @@ android {
         }
 
     }
-    compileSdkVersion 27
+    compileSdkVersion 28
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -38,7 +38,7 @@ android {
     defaultConfig {
         applicationId "org.secfirst.umbrella.whitelabel"
         minSdkVersion 16
-        targetSdkVersion 27
+        targetSdkVersion 28
         versionCode 1
         versionName "0.2.1"
         multiDexEnabled true
@@ -70,26 +70,16 @@ android {
 }
 
 dependencies {
-    implementation 'com.jakewharton.retrofit:retrofit2-kotlin-coroutines-experimental-adapter:1.0.0'
+
     implementation 'com.einmalfel:earl:1.2.0'
     implementation 'com.squareup.picasso:picasso:2.5.2'
-
-    //OkHttp
-    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
-    implementation 'net.zetetic:android-database-sqlcipher:3.5.9@aar'
-
     //ViewPager indicator.
     implementation 'com.romandanylyk:pageindicatorview:1.0.1@aar'
     implementation "org.jsoup:jsoup:$jsoup"
-    implementation "info.guardianproject.iocipher:IOCipher:$io_cipher"
 
     //Sectioned list
     implementation "io.github.luizgrp.sectionedrecyclerviewadapter:sectionedrecyclerviewadapter:$sectioned_recycle"
 
-    //Framework for replacing fragments
-    implementation "com.bluelinelabs:conductor:$conductor_version"
-    implementation "com.bluelinelabs:conductor-support:$conductor_version"
 
     // Stepper Viewer
     implementation "com.stepstone.stepper:material-stepper:$stepper_version"
@@ -104,6 +94,15 @@ dependencies {
     implementation('com.crashlytics.sdk.android:crashlytics:2.9.4@aar') {
         transitive = true
     }
+
+    //Framework for replacing fragments
+    implementation "com.bluelinelabs:conductor:$conductor_version"
+    implementation "com.bluelinelabs:conductor-support:$conductor_version"
+
+    //OkHttp
+    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
+    implementation 'net.zetetic:android-database-sqlcipher:3.5.9@aar'
 
     //JGit
     implementation "commons-io:commons-io:$commonsIo_version"
@@ -142,14 +141,11 @@ dependencies {
         exclude module: 'support-annotations'
     }
 
-    // Rxjava
-    implementation "io.reactivex.rxjava2:rxandroid:$rx_android_version"
-    implementation "io.reactivex.rxjava2:rxjava:$rx_java_version"
-
     // network
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-moshi:$retrofit_version"
+    implementation 'com.jakewharton.retrofit:retrofit2-kotlin-coroutines-experimental-adapter:1.0.0'
 
     // dependency injection
     implementation "com.google.dagger:dagger:$dagger2_version"
@@ -179,4 +175,5 @@ dependencies {
     implementation "com.github.Raizlabs.DBFlow:dbflow-kotlinextensions:${dbflow_version}"
     implementation "com.github.Raizlabs.DBFlow:dbflow-sqlcipher:${dbflow_version}"
     implementation "net.zetetic:android-database-sqlcipher:${sqlcipher_version}@aar"
+    implementation "info.guardianproject.iocipher:IOCipher:$io_cipher"
 }
