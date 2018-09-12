@@ -70,16 +70,14 @@ android {
 }
 
 dependencies {
-
     implementation 'com.einmalfel:earl:1.2.0'
     implementation 'com.squareup.picasso:picasso:2.5.2'
+
     //ViewPager indicator.
     implementation 'com.romandanylyk:pageindicatorview:1.0.1@aar'
     implementation "org.jsoup:jsoup:$jsoup"
-
+    implementation 'io.github.luizgrp.sectionedrecyclerviewadapter:sectionedrecyclerviewadapter:1.2.0'
     //Sectioned list
-    implementation "io.github.luizgrp.sectionedrecyclerviewadapter:sectionedrecyclerviewadapter:$sectioned_recycle"
-
 
     // Stepper Viewer
     implementation "com.stepstone.stepper:material-stepper:$stepper_version"

@@ -3,21 +3,18 @@ package org.secfirst.umbrella.whitelabel.feature.reader.rss
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
-import android.os.Bundle
 import android.support.v7.widget.AppCompatEditText
 import android.support.v7.widget.AppCompatTextView
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.*
 import com.bluelinelabs.conductor.RouterTransaction
-import com.google.gson.Gson
 import kotlinx.android.synthetic.main.rss_view.*
 import org.secfirst.umbrella.whitelabel.R
 import org.secfirst.umbrella.whitelabel.UmbrellaApplication
 import org.secfirst.umbrella.whitelabel.component.DialogManager
 import org.secfirst.umbrella.whitelabel.data.database.reader.rss.RSS
 import org.secfirst.umbrella.whitelabel.feature.base.view.BaseController
-import org.secfirst.umbrella.whitelabel.feature.main.MainActivity
 import org.secfirst.umbrella.whitelabel.feature.reader.DaggerReanderComponent
 import org.secfirst.umbrella.whitelabel.feature.reader.interactor.ReaderBaseInteractor
 import org.secfirst.umbrella.whitelabel.feature.reader.presenter.ReaderBasePresenter
@@ -49,8 +46,7 @@ class RssController : BaseController(), ReaderView {
 
 
     private fun onClickOpenArticle(rss: RSS) {
-        val mainActivity = activity as MainActivity
-        mainActivity.router.pushController(RouterTransaction.with(ArticleController(rss)))
+        parentController?.router?.pushController(RouterTransaction.with(ArticleController(rss)))
     }
 
     override fun onInject() {

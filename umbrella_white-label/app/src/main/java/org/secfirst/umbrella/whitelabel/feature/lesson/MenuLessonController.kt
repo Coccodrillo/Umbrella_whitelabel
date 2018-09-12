@@ -9,7 +9,7 @@ import org.secfirst.umbrella.whitelabel.feature.base.view.BaseController
 class MenuLessonController : BaseController() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
-        return inflater.inflate(R.layout.lesson_menu_view, container, false)
+        return inflater.inflate(R.layout.lesson_view, container, false)
     }
 
     override fun onInject() {}
