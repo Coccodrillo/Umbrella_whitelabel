@@ -13,3 +13,6 @@
 .idea/misc.xml
 app/debug/
 app/beta/
+app/fabric.properties
+keystore.properties
+*.jks

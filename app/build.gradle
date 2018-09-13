@@ -11,15 +11,11 @@ kotlin {
         coroutines 'enable'
     }
 }
+
 android {
     signingConfigs {
-        umbrella_beta {
-            keyAlias 'umbrella'
-            keyPassword 'android'
-            storeFile file("$project.projectDir/config/beta_keystore.jks")
-            storePassword 'android'
-        }
-
+        umbrella_beta
+        release
     }
     compileSdkVersion 28
     compileOptions {
@@ -68,6 +64,43 @@ android {
         }
     }
 }
+
+
+ext.propertiesValid = { Properties props, String prefix ->
+    return props != null && props.containsKey(prefix+'storeFile') && props.containsKey(prefix+'storePassword') &&
+            props.containsKey(prefix+'keyAlias') && props.containsKey(prefix+'keyPassword')
+}
+
+ext.maptoProperties = { Properties props, prefix ->
+    project.getProperties().findAll {
+        if (it.key.startsWith(prefix)) {
+            props[it.key] = it.value
+        }
+    }
+    return props
+}
+
+def Properties props = new Properties()
+props = maptoProperties(props, "beta_")
+
+def propFile = new File('keystore1.properties')
+if (propFile.canRead()) {
+    props.load(new FileInputStream(propFile))
+} else {
+    println 'signing.properties not found'
+    android.buildTypes.release.signingConfig = null
+}
+
+if (propertiesValid(props, "beta_")) {
+    android.signingConfigs.umbrella_beta.storeFile = file(props['beta_storeFile'])
+    android.signingConfigs.umbrella_beta.storePassword = props['beta_storePassword']
+    android.signingConfigs.umbrella_beta.keyAlias = props['beta_keyAlias']
+    android.signingConfigs.umbrella_beta.keyPassword = props['beta_keyPassword']
+} else {
+    println 'signing.properties found but some entries are missing'
+    android.buildTypes.beta.signingConfig = null
+}
+
 
 dependencies {
 
