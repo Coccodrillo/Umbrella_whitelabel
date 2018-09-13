@@ -2,10 +2,10 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/openjdk:8-jdk
+      - image: circleci/android:api-28-alpha
     environment:
-      JVM_OPTS: -Xmx3200m
-      TERM: dumb
+      ANDROID_HOME: "/opt/android/sdk"
+      JAVA_OPTIONS: "-Xms512m -Xmx3200m"
     steps:
       - checkout
       - restore_cache:
@@ -13,11 +13,20 @@ jobs:
           - v1-dependencies-{{ checksum "build.gradle" }}
           - v1-dependencies-
 
-      - run: gradle dependencies
+      - run: ./gradlew dependencies
 
       - save_cache:
           paths:
             - ~/.gradle
           key: v1-dependencies-{{ checksum "build.gradle" }}
 
-      - run: gradle test
+      - run: ./gradlew test
+      - run:
+          name: Run Unit Tests
+          command: ./gradlew test
+      - run:
+          name: Run Linters
+          command: ./gradlew check
+      - run:
+          name: Build
+          command: ./gradlew assemble
