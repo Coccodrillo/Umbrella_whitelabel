@@ -14,9 +14,12 @@ import org.secfirst.umbrella.whitelabel.data.database.content.ContentRepository
 import org.secfirst.umbrella.whitelabel.data.database.form.FormDao
 import org.secfirst.umbrella.whitelabel.data.database.form.FormRepo
 import org.secfirst.umbrella.whitelabel.data.database.form.FormRepository
-import org.secfirst.umbrella.whitelabel.data.database.reader.rss.RssDao
-import org.secfirst.umbrella.whitelabel.data.database.reader.rss.RssRepo
-import org.secfirst.umbrella.whitelabel.data.database.reader.rss.RssRepository
+import org.secfirst.umbrella.whitelabel.data.database.lesson.LessonDao
+import org.secfirst.umbrella.whitelabel.data.database.lesson.LessonRepo
+import org.secfirst.umbrella.whitelabel.data.database.lesson.LessonRepository
+import org.secfirst.umbrella.whitelabel.data.database.reader.RssDao
+import org.secfirst.umbrella.whitelabel.data.database.reader.RssRepo
+import org.secfirst.umbrella.whitelabel.data.database.reader.RssRepository
 import org.secfirst.umbrella.whitelabel.data.disk.TentConfig
 import org.secfirst.umbrella.whitelabel.data.disk.TentDao
 import org.secfirst.umbrella.whitelabel.data.disk.TentRepo
@@ -53,7 +56,6 @@ class TentContentModule {
     internal val tentDao
         get() = object : TentDao {}
 
-
     @Provides
     @Singleton
     internal fun provideTentConfig(context: Context) = TentConfig(context.cacheDir.path + "/repo/")
@@ -75,6 +77,13 @@ class RepositoryModule {
 
     internal val formDao
         get() = object : FormDao {}
+
+    internal val lessonDao
+        get() = object : LessonDao {}
+
+    @Provides
+    @Singleton
+    internal fun provideLessonDao(): LessonRepo = LessonRepository(lessonDao)
 
     @Provides
     @Singleton

@@ -3,6 +3,7 @@ package org.secfirst.umbrella.whitelabel.data.database.content
 import com.raizlabs.android.dbflow.kotlinextensions.modelAdapter
 import kotlinx.coroutines.experimental.withContext
 import org.secfirst.umbrella.whitelabel.data.*
+import org.secfirst.umbrella.whitelabel.data.Content
 import org.secfirst.umbrella.whitelabel.misc.AppExecutors
 
 interface ContentDao {

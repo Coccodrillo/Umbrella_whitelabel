@@ -7,7 +7,7 @@ import org.secfirst.umbrella.whitelabel.data.database.AppDatabase
 import org.secfirst.umbrella.whitelabel.data.database.BaseModel
 
 
-class Lesson(val categories: MutableList<Category> = arrayListOf(), val forms: MutableList<Form> = arrayListOf())
+class ContentData(val categories: MutableList<Category> = arrayListOf())
 
 @Table(database = AppDatabase::class)
 data class Category(

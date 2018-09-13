@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.rss_item_view.view.*
 import org.secfirst.umbrella.whitelabel.R
-import org.secfirst.umbrella.whitelabel.data.database.reader.rss.RSS
+import org.secfirst.umbrella.whitelabel.data.database.reader.RSS
 
 class RssAdapter(private val onLongPress: (RSS) -> Unit,
                  private val onClickPress: (RSS) -> Unit) : RecyclerView.Adapter<RssAdapter.RssHolder>() {

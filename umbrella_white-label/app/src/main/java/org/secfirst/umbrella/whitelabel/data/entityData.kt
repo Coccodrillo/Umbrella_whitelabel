@@ -8,14 +8,14 @@ import org.secfirst.umbrella.whitelabel.data.database.AppDatabase
 import org.secfirst.umbrella.whitelabel.data.database.BaseModel
 import org.secfirst.umbrella.whitelabel.data.database.content.Category
 import org.secfirst.umbrella.whitelabel.data.database.content.Child
-import org.secfirst.umbrella.whitelabel.data.database.content.Lesson
+import org.secfirst.umbrella.whitelabel.data.database.content.ContentData
 import org.secfirst.umbrella.whitelabel.data.database.content.Subcategory
 import java.io.Serializable
 
 
 class Root(val elements: MutableList<Element> = arrayListOf(), val forms: MutableList<Form> = arrayListOf()) {
 
-    fun convertRootToLesson(): Lesson {
+    fun convertRootToLesson(): ContentData {
         val categories: MutableList<Category> = mutableListOf()
         var subCategories: MutableList<Subcategory> = mutableListOf()
         var children: MutableList<Child> = mutableListOf()
@@ -38,7 +38,7 @@ class Root(val elements: MutableList<Element> = arrayListOf(), val forms: Mutabl
             category.subcategories = subCategories
             subCategories = mutableListOf()
         }
-        return Lesson(categories)
+        return ContentData(categories)
     }
 }
 

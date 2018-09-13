@@ -2,8 +2,8 @@ package org.secfirst.umbrella.whitelabel.feature.reader.interactor
 
 import kotlinx.coroutines.experimental.Deferred
 import okhttp3.ResponseBody
-import org.secfirst.umbrella.whitelabel.data.database.reader.rss.RSS
-import org.secfirst.umbrella.whitelabel.data.database.reader.rss.RssRepo
+import org.secfirst.umbrella.whitelabel.data.database.reader.RSS
+import org.secfirst.umbrella.whitelabel.data.database.reader.RssRepo
 import org.secfirst.umbrella.whitelabel.data.network.ApiHelper
 import org.secfirst.umbrella.whitelabel.feature.base.interactor.BaseInteractorImp
 import javax.inject.Inject

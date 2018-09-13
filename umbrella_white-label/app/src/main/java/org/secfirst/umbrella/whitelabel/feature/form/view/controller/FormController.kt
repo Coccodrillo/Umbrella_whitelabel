@@ -52,7 +52,6 @@ class FormController(bundle: Bundle) : BaseController(bundle), FormView, Stepper
         stepperLayout.adapter = FormAdapter(activeForm.form, this, listOfViews)
         stepperLayout.setListener(this)
         presenter.onAttach(this)
-
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {

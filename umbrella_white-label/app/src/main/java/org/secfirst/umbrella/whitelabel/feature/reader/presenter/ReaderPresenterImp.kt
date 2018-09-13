@@ -4,10 +4,10 @@ import android.util.Log
 import com.einmalfel.earl.EarlParser
 import com.google.gson.Gson
 import getAssetFileBy
-import org.secfirst.umbrella.whitelabel.data.database.reader.rss.RSS
-import org.secfirst.umbrella.whitelabel.data.database.reader.rss.RSS_FILE_NAME
-import org.secfirst.umbrella.whitelabel.data.database.reader.rss.RefRSS
-import org.secfirst.umbrella.whitelabel.data.database.reader.rss.convertToRSS
+import org.secfirst.umbrella.whitelabel.data.database.reader.RSS
+import org.secfirst.umbrella.whitelabel.data.database.reader.RSS_FILE_NAME
+import org.secfirst.umbrella.whitelabel.data.database.reader.RefRSS
+import org.secfirst.umbrella.whitelabel.data.database.reader.convertToRSS
 import org.secfirst.umbrella.whitelabel.feature.base.presenter.BasePresenterImp
 import org.secfirst.umbrella.whitelabel.feature.reader.interactor.ReaderBaseInteractor
 import org.secfirst.umbrella.whitelabel.feature.reader.view.ReaderView

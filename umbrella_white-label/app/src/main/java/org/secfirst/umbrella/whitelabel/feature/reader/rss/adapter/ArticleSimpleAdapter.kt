@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.simple_article_view.view.*
 import org.jsoup.Jsoup
 import org.secfirst.umbrella.whitelabel.R
-import org.secfirst.umbrella.whitelabel.data.database.reader.rss.Article
-import org.secfirst.umbrella.whitelabel.data.database.reader.rss.RSS
+import org.secfirst.umbrella.whitelabel.data.database.reader.Article
+import org.secfirst.umbrella.whitelabel.data.database.reader.RSS
 import org.secfirst.umbrella.whitelabel.misc.convertDateToString
 
 class ArticleSimpleAdapter(private val onClickLearnMore: (Article) -> Unit) : RecyclerView.Adapter<ArticleSimpleAdapter.SimpleHolder>() {

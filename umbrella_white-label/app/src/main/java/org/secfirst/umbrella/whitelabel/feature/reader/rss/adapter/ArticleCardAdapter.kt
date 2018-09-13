@@ -9,8 +9,8 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.card_article_view.view.*
 import org.jsoup.Jsoup
 import org.secfirst.umbrella.whitelabel.R
-import org.secfirst.umbrella.whitelabel.data.database.reader.rss.Article
-import org.secfirst.umbrella.whitelabel.data.database.reader.rss.RSS
+import org.secfirst.umbrella.whitelabel.data.database.reader.Article
+import org.secfirst.umbrella.whitelabel.data.database.reader.RSS
 import org.secfirst.umbrella.whitelabel.misc.convertDateToString
 import org.secfirst.umbrella.whitelabel.misc.shareLink
 

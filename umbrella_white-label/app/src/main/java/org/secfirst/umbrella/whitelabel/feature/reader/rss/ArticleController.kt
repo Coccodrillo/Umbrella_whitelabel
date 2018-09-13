@@ -10,7 +10,7 @@ import com.einmalfel.earl.Item
 import kotlinx.android.synthetic.main.host_article_view.*
 import org.secfirst.umbrella.whitelabel.R
 import org.secfirst.umbrella.whitelabel.component.WebViewController
-import org.secfirst.umbrella.whitelabel.data.database.reader.rss.RSS
+import org.secfirst.umbrella.whitelabel.data.database.reader.RSS
 import org.secfirst.umbrella.whitelabel.feature.base.view.BaseController
 import org.secfirst.umbrella.whitelabel.feature.reader.rss.adapter.ArticleCardAdapter
 import org.secfirst.umbrella.whitelabel.feature.reader.rss.adapter.ArticleSimpleAdapter

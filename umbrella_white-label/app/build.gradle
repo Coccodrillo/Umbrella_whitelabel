@@ -76,7 +76,11 @@ dependencies {
     //ViewPager indicator.
     implementation 'com.romandanylyk:pageindicatorview:1.0.1@aar'
     implementation "org.jsoup:jsoup:$jsoup"
+
+    implementation 'com.github.zhukic:sectioned-recyclerview:1.1.0'
     implementation 'io.github.luizgrp.sectionedrecyclerviewadapter:sectionedrecyclerviewadapter:1.2.0'
+
+
     //Sectioned list
 
     // Stepper Viewer

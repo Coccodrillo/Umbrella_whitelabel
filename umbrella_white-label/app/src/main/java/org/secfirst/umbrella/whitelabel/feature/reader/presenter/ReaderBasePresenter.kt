@@ -1,6 +1,6 @@
 package org.secfirst.umbrella.whitelabel.feature.reader.presenter
 
-import org.secfirst.umbrella.whitelabel.data.database.reader.rss.RSS
+import org.secfirst.umbrella.whitelabel.data.database.reader.RSS
 import org.secfirst.umbrella.whitelabel.feature.base.presenter.BasePresenter
 import org.secfirst.umbrella.whitelabel.feature.reader.interactor.ReaderBaseInteractor
 import org.secfirst.umbrella.whitelabel.feature.reader.view.ReaderView

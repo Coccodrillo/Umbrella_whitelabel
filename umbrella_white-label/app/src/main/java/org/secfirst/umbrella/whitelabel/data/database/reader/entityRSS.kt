@@ -1,4 +1,4 @@
-package org.secfirst.umbrella.whitelabel.data.database.reader.rss
+package org.secfirst.umbrella.whitelabel.data.database.reader
 
 import com.einmalfel.earl.Enclosure
 import com.einmalfel.earl.Feed
@@ -76,7 +76,8 @@ val Feed.convertToRSS: RSS
         rss.author_ = this.author ?: ""
         val articleList = mutableListOf<Article>()
         items.forEach {
-            val article = Article(it.link ?: "", it.title ?: "", it.description
+            val article = Article(it.link
+                    ?: "", it.title ?: "", it.description
                     ?: "", it.publicationDate!!, it.imageLink ?: "", "", it.author
                     ?: "", it.enclosures)
             articleList.add(article)
