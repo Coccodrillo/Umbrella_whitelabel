@@ -1,24 +1,22 @@
-package org.secfirst.umbrella.whitelabel.feature.lesson
+package org.secfirst.umbrella.whitelabel.feature.lesson.view
 
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.zhukic.sectionedrecyclerview.SectionedRecyclerViewAdapter
 import kotlinx.android.synthetic.main.lesson_menu_head.view.*
-import kotlinx.android.synthetic.main.lesson_menu_item.view.*
 import org.secfirst.umbrella.whitelabel.R
 import org.secfirst.umbrella.whitelabel.data.database.content.Category
 
-class MenuLessonAdapter(private val onclickHeader: (Category) -> Unit,
-                        private val onclickLesson: (Category) -> Unit)
+class MenuLessonAdapter(private val onclickLesson: (Category) -> Unit,
+                        private val onclickHeader: (Int) -> Unit)
     : SectionedRecyclerViewAdapter<MenuLessonAdapter.SubHeadHolder, MenuLessonAdapter.LessonHolder>() {
 
-    override fun onPlaceSubheaderBetweenItems(position: Int): Boolean {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    private var categories: MutableList<Category> = mutableListOf()
 
-    private val categories = mutableListOf<Category>()
+    override fun onPlaceSubheaderBetweenItems(position: Int) = true
 
     override fun onCreateItemViewHolder(parent: ViewGroup, viewType: Int): LessonHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.lesson_menu_item, parent, false)
@@ -35,20 +33,34 @@ class MenuLessonAdapter(private val onclickHeader: (Category) -> Unit,
     }
 
     override fun onBindSubheaderViewHolder(subheaderHolder: SubHeadHolder, nextItemPosition: Int) {
-        val position = subheaderHolder.adapterPosition
-        subheaderHolder.bind(categories[position], clickListener = { onclickHeader(categories[position]) })
+        subheaderHolder.bind(categories[nextItemPosition],
+                isSectionExpanded(getSectionIndex(nextItemPosition)),
+                clickListener = { onclickHeader(nextItemPosition) })
     }
 
     fun addAll(categories: List<Category>) {
-        categories.forEach { category -> this.categories.add(category) }
+        this.categories = categories.toMutableList()
+        notifyDataSetChanged()
+    }
+
+    fun add(category: Category) {
+        categories.add(category)
+        notifyDataSetChanged()
     }
 
     override fun getItemSize() = categories.size
 
     class SubHeadHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(category: Category, clickListener: (SubHeadHolder) -> Unit) {
+        fun bind(category: Category, isSectionExpanded: Boolean, clickListener: (SubHeadHolder) -> Unit) {
             with(category) {
                 itemView.subheaderText.text = title
+                if (isSectionExpanded) {
+                    itemView.arrow.setImageDrawable(ContextCompat.getDrawable(
+                            itemView.context, R.drawable.ic_keyboard_arrow_up_black_24dp))
+                } else {
+                    itemView.arrow.setImageDrawable(ContextCompat.getDrawable(
+                            itemView.context, R.drawable.ic_keyboard_arrow_down_black_24dp))
+                }
                 itemView.setOnClickListener { clickListener(this@SubHeadHolder) }
             }
         }
@@ -57,7 +69,6 @@ class MenuLessonAdapter(private val onclickHeader: (Category) -> Unit,
     class LessonHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(category: Category, clickListener: (LessonHolder) -> Unit) {
             with(category) {
-                itemView.categoryName.text = title
                 itemView.setOnClickListener { clickListener(this@LessonHolder) }
             }
         }

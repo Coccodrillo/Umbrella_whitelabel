@@ -8,6 +8,7 @@ class TentConfig(private val repoPath: String) {
         const val BRANCH_NAME: String = "refs/heads/master"
         const val URI_REPOSITORY = "https://github.com/douglasalipio/umbrella-content"
         const val FORM_NAME = "forms"
+        const val ABOUT_NAME = "about"
         const val ELEMENT_LEVEL = 1
         const val SUB_ELEMENT_LEVEL = 2
         const val CHILD_LEVEL = 3
