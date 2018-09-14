@@ -51,6 +51,7 @@ data class Element(
         var children: MutableList<Element> = arrayListOf(),
         var checklist: MutableList<Checklist> = arrayListOf(),
         var rootDir: String = "",
+        var icon: String = "",
         var path: String = "")
 
 @Table(database = AppDatabase::class, allFields = true)

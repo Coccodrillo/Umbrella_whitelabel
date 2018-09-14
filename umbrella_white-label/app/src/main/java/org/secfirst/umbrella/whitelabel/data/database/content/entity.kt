@@ -1,14 +1,19 @@
 package org.secfirst.umbrella.whitelabel.data.database.content
 
+import android.os.Parcel
+import android.os.Parcelable
 import com.raizlabs.android.dbflow.annotation.*
+import com.raizlabs.android.dbflow.data.Blob
 import com.raizlabs.android.dbflow.sql.language.SQLite
-import org.secfirst.umbrella.whitelabel.data.*
+import org.secfirst.umbrella.whitelabel.data.Checklist
+import org.secfirst.umbrella.whitelabel.data.Checklist_Table
+import org.secfirst.umbrella.whitelabel.data.Markdown
+import org.secfirst.umbrella.whitelabel.data.Markdown_Table
 import org.secfirst.umbrella.whitelabel.data.database.AppDatabase
 import org.secfirst.umbrella.whitelabel.data.database.BaseModel
 
 
 class ContentData(val categories: MutableList<Category> = arrayListOf())
-
 @Table(database = AppDatabase::class)
 data class Category(
         @PrimaryKey(autoincrement = true)
@@ -25,8 +30,10 @@ data class Category(
         @Column
         var rootDir: String = "",
         @Column
-        var path: String = "") : BaseModel() {
-
+        var path: String = "",
+        var icon: String = "",
+        @Column
+        var img: Blob = Blob()) : BaseModel() {
 
     @OneToMany(methods = [(OneToMany.Method.ALL)], variableName = "markdowns")
     fun oneToManyMarkdowns(): MutableList<Markdown> {
@@ -178,4 +185,11 @@ inline fun MutableList<Category>.walkChild(action: (Child) -> Unit) {
         }
     }
 }
+
+inline fun <reified T : Parcelable> createParcel(
+        crossinline createFromParcel: (Parcel) -> T?): Parcelable.Creator<T> =
+        object : Parcelable.Creator<T> {
+            override fun createFromParcel(source: Parcel): T? = createFromParcel(source)
+            override fun newArray(size: Int): Array<out T?> = arrayOfNulls(size)
+        }
 

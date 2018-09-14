@@ -1,9 +1,12 @@
 package org.secfirst.umbrella.whitelabel.feature.lesson.view
 
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter
 import kotlinx.android.synthetic.main.lesson_view.*
 import org.secfirst.umbrella.whitelabel.R
 import org.secfirst.umbrella.whitelabel.UmbrellaApplication
@@ -14,13 +17,13 @@ import org.secfirst.umbrella.whitelabel.feature.lesson.interactor.LessonBaseInte
 import org.secfirst.umbrella.whitelabel.feature.lesson.presenter.LessonBasePresenter
 import javax.inject.Inject
 
-class MenuLessonController : BaseController(), LessonView {
+class LessonMenuController : BaseController(), LessonView {
 
     @Inject
     internal lateinit var presenter: LessonBasePresenter<LessonView, LessonBaseInteractor>
-    private val lessonClick: (Category) -> Unit = this::onLessonClicked
-    private val headerClick: (Int) -> Unit = this::onHeaderClicked
-    private val lessonAdapter = MenuLessonAdapter(lessonClick, headerClick)
+    private val lessonClick: (Category?) -> Unit = this::onLessonClicked
+    private val headerClick: (Category?) -> Unit = this::onHeaderClicked
+    private var sectionAdapter = SectionedRecyclerViewAdapter()
 
     override fun onInject() {
         DaggerLessonComponent.builder()
@@ -29,16 +32,12 @@ class MenuLessonController : BaseController(), LessonView {
                 .inject(this)
     }
 
-    private fun onHeaderClicked(position: Int) {
-        if (lessonAdapter.isSectionExpanded(lessonAdapter.getSectionIndex(position))) {
-            lessonAdapter.collapseSection(lessonAdapter.getSectionIndex(position))
-        } else {
-            lessonAdapter.expandSection(lessonAdapter.getSectionIndex(position))
-        }
+    private fun onLessonClicked(category: Category?) {
+        Log.e("test", "tes")
     }
 
-    private fun onLessonClicked(category: Category) {
-
+    private fun onHeaderClicked(category: Category?) {
+        sectionAdapter.notifyDataSetChanged()
     }
 
     override fun onAttach(view: View) {
@@ -52,14 +51,21 @@ class MenuLessonController : BaseController(), LessonView {
     }
 
     override fun showAllLesson(categories: List<Category>) {
-        lessonAdapter.addAll(categories)
-        lessonMenu?.adapter = lessonAdapter
-        lessonAdapter.collapseAllSections()
-
+        val itemSections = mutableListOf<LessonMenuAdapter.ItemSection>()
+        categories.forEach { category ->
+            val itemGroups = mutableListOf<LessonMenuAdapter.ItemGroup>()
+            category.subcategories.forEach { subcategory ->
+                val itemGroup = LessonMenuAdapter.ItemGroup(subcategory.title, subcategory.id)
+                itemGroups.add(itemGroup)
+            }
+            val itemSection = LessonMenuAdapter.ItemSection(category.title, itemGroups)
+            itemSections.add(itemSection)
+        }
+        lessonMenu?.adapter = LessonMenuAdapter(itemSections, lessonClick, headerClick)
     }
 
     override fun getEnableBackAction() = true
 
-    override fun getTitleToolbar() = context.getString(R.string.lesson_title)
+    override fun getTitleToolbar(): String = context.getString(R.string.lesson_title)
 
 }

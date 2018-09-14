@@ -30,6 +30,7 @@ enum class TypeFile(val value: String) {
     CHECKLIST("c"),
     FORM("f"),
     CATEGORY(".category"),
+    IMG_CATEGORY("png"),
     SEGMENT("s"),
     NOUN("")
 }

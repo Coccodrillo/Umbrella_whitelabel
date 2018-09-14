@@ -8,13 +8,12 @@ import dagger.Provides
 import dagger.android.AndroidInjectionModule
 import org.secfirst.umbrella.whitelabel.di.module.AppModule
 import org.secfirst.umbrella.whitelabel.di.module.RepositoryModule
-import org.secfirst.umbrella.whitelabel.feature.form.FormModule
 import org.secfirst.umbrella.whitelabel.feature.lesson.interactor.LessonBaseInteractor
 import org.secfirst.umbrella.whitelabel.feature.lesson.interactor.LessonInteractorImp
 import org.secfirst.umbrella.whitelabel.feature.lesson.presenter.LessonBasePresenter
 import org.secfirst.umbrella.whitelabel.feature.lesson.presenter.LessonPresenterImp
 import org.secfirst.umbrella.whitelabel.feature.lesson.view.LessonView
-import org.secfirst.umbrella.whitelabel.feature.lesson.view.MenuLessonController
+import org.secfirst.umbrella.whitelabel.feature.lesson.view.LessonMenuController
 import javax.inject.Singleton
 
 @Module
@@ -43,5 +42,5 @@ interface LessonComponent {
         fun build(): LessonComponent
     }
 
-    fun inject(menuLessonController: MenuLessonController)
+    fun inject(lessonMenuController: LessonMenuController)
 }

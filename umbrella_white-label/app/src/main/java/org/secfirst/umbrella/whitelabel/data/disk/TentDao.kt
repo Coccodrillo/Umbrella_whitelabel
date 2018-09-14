@@ -44,6 +44,7 @@ interface TentDao {
                         TentConfig.getDelimiter(file.name) == TypeFile.SEGMENT.value
                                 || TentConfig.getDelimiter(file.name) == TypeFile.CHECKLIST.value
                                 || TentConfig.getDelimiter(file.name) == TypeFile.FORM.value
+                                //|| file.extension == TypeFile.IMG_CATEGORY.value
                     }
                     .filter { it.isFile }
                     .forEach { file -> files.add(file) }

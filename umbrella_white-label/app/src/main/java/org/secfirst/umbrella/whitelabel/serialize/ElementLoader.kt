@@ -43,6 +43,7 @@ class ElementLoader @Inject constructor(private val tentRepo: TentRepo) : Serial
                     if (it.path == pwd) {
                         when (getDelimiter(file.nameWithoutExtension)) {
                             TypeFile.SEGMENT.value -> it.markdowns.add(Markdown(file.readText()))
+                            TypeFile.IMG_CATEGORY.value -> it.icon = file.readText()
                             TypeFile.CHECKLIST.value -> it.checklist.add(parseYmlFile(file, Checklist::class))
                         }
                     }
