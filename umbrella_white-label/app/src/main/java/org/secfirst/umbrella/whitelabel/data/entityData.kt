@@ -52,7 +52,9 @@ data class Element(
         var checklist: MutableList<Checklist> = arrayListOf(),
         var rootDir: String = "",
         var icon: String = "",
-        var path: String = "")
+        var path: String = "",
+        @JsonIgnore
+        var resourcePath: String = "")
 
 @Table(database = AppDatabase::class, allFields = true)
 data class Markdown(
@@ -286,6 +288,7 @@ val Element.convertToCategory: Category
         category.path = this.path
         category.rootDir = this.rootDir
         category.title = this.title
+        category.resourcePath = this.resourcePath
         return category
     }
 

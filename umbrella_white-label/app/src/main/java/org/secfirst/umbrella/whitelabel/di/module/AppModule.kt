@@ -58,7 +58,8 @@ class TentContentModule {
 
     @Provides
     @Singleton
-    internal fun provideTentConfig(context: Context) = TentConfig(context.cacheDir.path + "/repo/")
+    internal fun provideTentConfig(context: Context) = TentConfig(context.cacheDir.path + "/repo/",
+            context.cacheDir.path + "/resources/")
 
     @Provides
     @Singleton

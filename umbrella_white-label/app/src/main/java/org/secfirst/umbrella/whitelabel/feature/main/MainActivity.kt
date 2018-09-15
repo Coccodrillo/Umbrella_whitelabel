@@ -77,7 +77,7 @@ class MainActivity : AppCompatActivity() {
     private fun initRoute(savedInstanceState: Bundle?) {
         navigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener)
         router = Conductor.attachRouter(this, baseContainer, savedInstanceState)
-        if (!router.hasRootController() && tentConfig.isCreate())
+        if (!router.hasRootController() && tentConfig.isRepCreate())
             router.setRoot(RouterTransaction.with(HostReaderController()))
         else router.setRoot(RouterTransaction.with(TourController()))
     }

@@ -4,6 +4,7 @@ import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.squareup.picasso.Picasso
 import com.thoughtbot.expandablerecyclerview.ExpandableRecyclerViewAdapter
 import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup
 import com.thoughtbot.expandablerecyclerview.viewholders.ChildViewHolder
@@ -13,6 +14,7 @@ import kotlinx.android.synthetic.main.lesson_menu_head.view.*
 import kotlinx.android.synthetic.main.lesson_menu_item.view.*
 import org.secfirst.umbrella.whitelabel.R
 import org.secfirst.umbrella.whitelabel.data.database.content.Category
+import java.io.File
 
 
 class LessonMenuAdapter(groups: List<ExpandableGroup<*>>,
@@ -44,7 +46,11 @@ class LessonMenuAdapter(groups: List<ExpandableGroup<*>>,
 
     class HeadHolder(itemView: View) : GroupViewHolder(itemView) {
         fun setHeadTitle(group: ExpandableGroup<*>) {
+            val itemSection = group as ItemSection
             itemView.subheaderText.text = group.title
+            Picasso.with(itemView.context)
+                    .load(File(itemSection.pathIcon))
+                    .into(itemView.iconHeader)
         }
     }
 
@@ -54,7 +60,8 @@ class LessonMenuAdapter(groups: List<ExpandableGroup<*>>,
             itemView.setOnClickListener { clickListener(this) }
         }
     }
-    class ItemSection(title: String, items: List<ItemGroup>) : ExpandableGroup<ItemGroup>(title, items)
+
+    class ItemSection(title: String, var pathIcon: String, items: List<ItemGroup>) : ExpandableGroup<ItemGroup>(title, items)
     @Parcelize
     class ItemGroup(val title: String, val idSubcategory: Long) : Parcelable
 }

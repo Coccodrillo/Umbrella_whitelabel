@@ -13,7 +13,7 @@ interface TentDao {
         var result = true
         try {
             withContext(ioContext) {
-                if (tentConfig.isNotCreate()) {
+                if (tentConfig.isNotRepCreate()) {
                     Git.cloneRepository()
                             .setURI(TentConfig.URI_REPOSITORY)
                             .setDirectory(File(tentConfig.getPathRepository()))
@@ -26,7 +26,7 @@ interface TentDao {
             result = false
             File(tentConfig.getPathRepository()).deleteRecursively()
             Log.i(TentDao::class.java.name,
-                    "Repository wasn't created - ${tentConfig.isNotCreate()} " +
+                    "Repository wasn't created - ${tentConfig.isNotRepCreate()} " +
                             "path - ${tentConfig.getPathRepository()}")
         }
 
@@ -34,22 +34,22 @@ interface TentDao {
     }
 
 
-    suspend fun filterByElement(tentConfig: TentConfig): List<File> {
+    fun filterByElement(tentConfig: TentConfig): List<File> {
         val files: MutableList<File> = arrayListOf()
-        withContext(ioContext) {
-            File(tentConfig.getPathRepository())
-                    .walk()
-                    .filter { file -> !file.path.contains(".git") }
-                    .filter { file ->
-                        TentConfig.getDelimiter(file.name) == TypeFile.SEGMENT.value
-                                || TentConfig.getDelimiter(file.name) == TypeFile.CHECKLIST.value
-                                || TentConfig.getDelimiter(file.name) == TypeFile.FORM.value
-                                //|| file.extension == TypeFile.IMG_CATEGORY.value
-                    }
-                    .filter { it.isFile }
-                    .forEach { file -> files.add(file) }
-            files.reverse()
-        }
+
+        File(tentConfig.getPathRepository())
+                .walk()
+                .filter { file -> !file.path.contains(".git") }
+                .filter { file ->
+                    TentConfig.getDelimiter(file.name) == TypeFile.SEGMENT.value
+                            || TentConfig.getDelimiter(file.name) == TypeFile.CHECKLIST.value
+                            || TentConfig.getDelimiter(file.name) == TypeFile.FORM.value
+                            || file.extension == TypeFile.IMG_CATEGORY.value
+                }
+                .filter { it.isFile }
+                .forEach { file -> files.add(file) }
+        files.reverse()
+
         return files
     }
 
@@ -66,4 +66,12 @@ interface TentDao {
         }
         return files
     }
+
+    fun filterByCategoryImage(imgName: String, tentConfig: TentConfig): String = File(tentConfig.getPathRepository())
+            .walk()
+            .filter { file -> !file.path.contains(".git") }
+            .filter { file -> file.name == imgName }
+            .filter { it.isFile }
+            .last()
+            .path
 }

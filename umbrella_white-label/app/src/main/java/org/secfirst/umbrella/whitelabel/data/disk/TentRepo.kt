@@ -3,12 +3,14 @@ package org.secfirst.umbrella.whitelabel.data.disk
 import java.io.File
 
 
-interface   TentRepo {
+interface TentRepo {
 
     suspend fun fetch(): Boolean
 
-    suspend fun getElementsFile(): List<File>
+    suspend fun loadElementsFile(): List<File>
 
-    suspend fun getLoadersFile(): List<File>
+    fun loadFile(): List<File>
+
+    fun loadCategoryImage(imgName: String): String
 
 }

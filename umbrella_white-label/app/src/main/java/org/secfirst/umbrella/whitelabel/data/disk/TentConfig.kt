@@ -2,7 +2,7 @@ package org.secfirst.umbrella.whitelabel.data.disk
 
 import java.io.File
 
-class TentConfig(private val repoPath: String) {
+class TentConfig(private val repoPath: String, val resourcesPath: String) {
 
     companion object {
         const val BRANCH_NAME: String = "refs/heads/master"
@@ -20,9 +20,11 @@ class TentConfig(private val repoPath: String) {
         }
     }
 
-    fun isCreate() = File(repoPath).exists()
-    fun isNotCreate() = !File(repoPath).exists()
+    fun isRepCreate() = File(repoPath).exists()
+    fun isNotRepCreate() = !File(repoPath).exists()
     fun getPathRepository(): String = repoPath
+    fun isResourceCreate() = File(resourcesPath).exists()
+    fun isNotResourceCreate(fileName: String) = !File(resourcesPath + fileName).exists()
 
 }
 

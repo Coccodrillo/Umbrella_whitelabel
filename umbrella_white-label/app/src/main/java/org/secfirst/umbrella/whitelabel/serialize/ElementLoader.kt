@@ -1,6 +1,5 @@
 package org.secfirst.umbrella.whitelabel.serialize
 
-import kotlinx.coroutines.experimental.withContext
 import org.secfirst.umbrella.whitelabel.data.*
 import org.secfirst.umbrella.whitelabel.data.disk.TentConfig.Companion.CHILD_LEVEL
 import org.secfirst.umbrella.whitelabel.data.disk.TentConfig.Companion.ELEMENT_LEVEL
@@ -8,7 +7,6 @@ import org.secfirst.umbrella.whitelabel.data.disk.TentConfig.Companion.SUB_ELEME
 import org.secfirst.umbrella.whitelabel.data.disk.TentConfig.Companion.getDelimiter
 import org.secfirst.umbrella.whitelabel.data.disk.TentRepo
 import org.secfirst.umbrella.whitelabel.data.disk.TypeFile
-import org.secfirst.umbrella.whitelabel.misc.AppExecutors.Companion.ioContext
 import org.secfirst.umbrella.whitelabel.serialize.PathUtils.Companion.getLevelOfPath
 import org.secfirst.umbrella.whitelabel.serialize.PathUtils.Companion.getWorkDirectory
 import java.io.File
@@ -16,18 +14,16 @@ import javax.inject.Inject
 
 class ElementLoader @Inject constructor(private val tentRepo: TentRepo) : Serializer {
 
-    private var root = Root()
-    private var files = listOf<File>()
-    suspend fun load(pRoot: Root): Root {
-        withContext(ioContext) {
-            files = tentRepo.getLoadersFile()
-            root = pRoot
-            create()
-        }
-        return root
+    private lateinit var root: Root
+
+    fun load(pRoot: Root): Root {
+        root = pRoot
+        val files = tentRepo.loadFile()
+        create(files)
+        return pRoot
     }
 
-    private fun create() {
+    private fun create(files: List<File>) {
         files.forEach { currentFile ->
             val absolutePath = currentFile.path.substringAfterLast("en/", "")
             val pwd = getWorkDirectory(absolutePath)
@@ -37,13 +33,13 @@ class ElementLoader @Inject constructor(private val tentRepo: TentRepo) : Serial
     }
 
     private fun addProperties(pwd: String, file: File) {
+
         when (getLevelOfPath(pwd)) {
             ELEMENT_LEVEL -> {
                 root.elements.forEach {
                     if (it.path == pwd) {
                         when (getDelimiter(file.nameWithoutExtension)) {
                             TypeFile.SEGMENT.value -> it.markdowns.add(Markdown(file.readText()))
-                            TypeFile.IMG_CATEGORY.value -> it.icon = file.readText()
                             TypeFile.CHECKLIST.value -> it.checklist.add(parseYmlFile(file, Checklist::class))
                         }
                     }

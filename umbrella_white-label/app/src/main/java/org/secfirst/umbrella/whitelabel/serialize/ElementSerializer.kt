@@ -19,7 +19,7 @@ class ElementSerializer @Inject constructor(private val tentRepo: TentRepo) : Se
 
     suspend fun serialize(): Root {
         withContext(ioContext) {
-            fileList = tentRepo.getElementsFile()
+            fileList = tentRepo.loadElementsFile()
             create()
         }
 
@@ -39,7 +39,9 @@ class ElementSerializer @Inject constructor(private val tentRepo: TentRepo) : Se
     private fun addElement(pwd: String, currentFile: File) {
         val element = parseYmlFile(currentFile, Element::class)
         element.path = pwd
+        element.resourcePath = if (element.icon.isNotEmpty()) tentRepo.loadCategoryImage(element.icon) else ""
         element.rootDir = PathUtils.getLastDirectory(pwd)
+
         when (PathUtils.getLevelOfPath(element.path)) {
             TentConfig.ELEMENT_LEVEL -> root.elements.add(element)
             TentConfig.SUB_ELEMENT_LEVEL -> root.elements.last().children.add(element)

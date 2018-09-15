@@ -6,9 +6,11 @@ import javax.inject.Inject
 class TentRepository @Inject constructor(private val tentDao: TentDao,
                                          private val tentConfig: TentConfig) : TentRepo {
 
-    override suspend fun getElementsFile(): List<File> = tentDao.filterBySubElement(tentConfig)
+    override fun loadCategoryImage(imgName : String) = tentDao.filterByCategoryImage(imgName,tentConfig)
 
-    override suspend fun getLoadersFile(): List<File> = tentDao.filterByElement(tentConfig)
+    override suspend fun loadElementsFile(): List<File> = tentDao.filterBySubElement(tentConfig)
+
+    override fun loadFile(): List<File> = tentDao.filterByElement(tentConfig)
 
     override suspend fun fetch() = tentDao.cloneRepository(tentConfig)
 }

@@ -1,7 +1,6 @@
 package org.secfirst.umbrella.whitelabel.feature.lesson.view
 
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -58,7 +57,7 @@ class LessonMenuController : BaseController(), LessonView {
                 val itemGroup = LessonMenuAdapter.ItemGroup(subcategory.title, subcategory.id)
                 itemGroups.add(itemGroup)
             }
-            val itemSection = LessonMenuAdapter.ItemSection(category.title, itemGroups)
+            val itemSection = LessonMenuAdapter.ItemSection(category.title, category.resourcePath, itemGroups)
             itemSections.add(itemSection)
         }
         lessonMenu?.adapter = LessonMenuAdapter(itemSections, lessonClick, headerClick)

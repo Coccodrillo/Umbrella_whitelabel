@@ -1,9 +1,6 @@
 package org.secfirst.umbrella.whitelabel.data.database.content
 
-import android.os.Parcel
-import android.os.Parcelable
 import com.raizlabs.android.dbflow.annotation.*
-import com.raizlabs.android.dbflow.data.Blob
 import com.raizlabs.android.dbflow.sql.language.SQLite
 import org.secfirst.umbrella.whitelabel.data.Checklist
 import org.secfirst.umbrella.whitelabel.data.Checklist_Table
@@ -33,7 +30,7 @@ data class Category(
         var path: String = "",
         var icon: String = "",
         @Column
-        var img: Blob = Blob()) : BaseModel() {
+        var resourcePath: String = "") : BaseModel() {
 
     @OneToMany(methods = [(OneToMany.Method.ALL)], variableName = "markdowns")
     fun oneToManyMarkdowns(): MutableList<Markdown> {
@@ -185,11 +182,3 @@ inline fun MutableList<Category>.walkChild(action: (Child) -> Unit) {
         }
     }
 }
-
-inline fun <reified T : Parcelable> createParcel(
-        crossinline createFromParcel: (Parcel) -> T?): Parcelable.Creator<T> =
-        object : Parcelable.Creator<T> {
-            override fun createFromParcel(source: Parcel): T? = createFromParcel(source)
-            override fun newArray(size: Int): Array<out T?> = arrayOfNulls(size)
-        }
-

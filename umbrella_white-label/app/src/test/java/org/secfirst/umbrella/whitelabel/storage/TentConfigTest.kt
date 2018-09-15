@@ -72,15 +72,15 @@ class TentConfigTest {
 
     @Test
     fun `Verify if exist Tent repository`() {
-        `when`(tentConfig.isNotCreate()).thenReturn(true)
-        val value = tentConfig.isNotCreate()
+        `when`(tentConfig.isNotRepCreate()).thenReturn(true)
+        val value = tentConfig.isNotRepCreate()
         assertEquals(true, value)
     }
 
     @Test
     fun `Verify if not exist Tent repository`() {
-        `when`(tentConfig.isNotCreate()).thenReturn(false)
-        val value = tentConfig.isNotCreate()
+        `when`(tentConfig.isNotRepCreate()).thenReturn(false)
+        val value = tentConfig.isNotRepCreate()
         assertEquals(false, value)
     }
 
