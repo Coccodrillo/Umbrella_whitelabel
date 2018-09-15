@@ -49,17 +49,7 @@ class LessonMenuController : BaseController(), LessonView {
         return inflater.inflate(R.layout.lesson_view, container, false)
     }
 
-    override fun showAllLesson(categories: List<Category>) {
-        val itemSections = mutableListOf<LessonMenuAdapter.ItemSection>()
-        categories.forEach { category ->
-            val itemGroups = mutableListOf<LessonMenuAdapter.ItemGroup>()
-            category.subcategories.forEach { subcategory ->
-                val itemGroup = LessonMenuAdapter.ItemGroup(subcategory.title, subcategory.id)
-                itemGroups.add(itemGroup)
-            }
-            val itemSection = LessonMenuAdapter.ItemSection(category.title, category.resourcePath, itemGroups)
-            itemSections.add(itemSection)
-        }
+    override fun showAllLesson(itemSections: List<LessonMenuAdapter.ItemSection>) {
         lessonMenu?.adapter = LessonMenuAdapter(itemSections, lessonClick, headerClick)
     }
 
