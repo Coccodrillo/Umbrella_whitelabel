@@ -13,7 +13,7 @@ import org.secfirst.umbrella.whitelabel.feature.lesson.interactor.LessonInteract
 import org.secfirst.umbrella.whitelabel.feature.lesson.presenter.LessonBasePresenter
 import org.secfirst.umbrella.whitelabel.feature.lesson.presenter.LessonPresenterImp
 import org.secfirst.umbrella.whitelabel.feature.lesson.view.LessonView
-import org.secfirst.umbrella.whitelabel.feature.lesson.view.LessonMenuController
+import org.secfirst.umbrella.whitelabel.feature.lesson.view.presenter.LessonMenuController
 import javax.inject.Singleton
 
 @Module

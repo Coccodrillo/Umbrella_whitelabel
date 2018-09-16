@@ -1,5 +1,6 @@
 package org.secfirst.umbrella.whitelabel.feature.lesson.view.adapter
 
+import android.os.Bundle
 import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
@@ -18,8 +19,7 @@ import java.io.File
 
 
 class LessonMenuAdapter(groups: List<ExpandableGroup<*>>,
-                        private val onclickLesson: (Category?) -> Unit,
-                        private val onclickHeader: (Category?) -> Unit)
+                        private val onclickLesson: (ItemGroup) -> Unit)
     : ExpandableRecyclerViewAdapter<LessonMenuAdapter.HeadHolder, LessonMenuAdapter.LessonMenuHolder>(groups) {
 
 
@@ -37,7 +37,7 @@ class LessonMenuAdapter(groups: List<ExpandableGroup<*>>,
 
     override fun onBindChildViewHolder(holder: LessonMenuHolder, flatPosition: Int, group: ExpandableGroup<*>, childIndex: Int) {
         val itemGroup = (group as ItemSection).items[childIndex]
-        holder.bind(itemGroup.title, clickListener = { onclickLesson(null) })
+        holder.bind(itemGroup.title, clickListener = { onclickLesson(itemGroup) })
     }
 
     override fun onBindGroupViewHolder(holder: HeadHolder, flatPosition: Int, group: ExpandableGroup<*>) {

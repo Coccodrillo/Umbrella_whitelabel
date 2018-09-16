@@ -1,19 +1,19 @@
-package org.secfirst.umbrella.whitelabel.feature.lesson.view
+package org.secfirst.umbrella.whitelabel.feature.lesson.view.presenter
 
+import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter
+import com.bluelinelabs.conductor.RouterTransaction
 import kotlinx.android.synthetic.main.lesson_view.*
 import org.secfirst.umbrella.whitelabel.R
 import org.secfirst.umbrella.whitelabel.UmbrellaApplication
-import org.secfirst.umbrella.whitelabel.data.database.content.Category
 import org.secfirst.umbrella.whitelabel.feature.base.view.BaseController
 import org.secfirst.umbrella.whitelabel.feature.lesson.DaggerLessonComponent
 import org.secfirst.umbrella.whitelabel.feature.lesson.interactor.LessonBaseInteractor
 import org.secfirst.umbrella.whitelabel.feature.lesson.presenter.LessonBasePresenter
+import org.secfirst.umbrella.whitelabel.feature.lesson.view.LessonView
 import org.secfirst.umbrella.whitelabel.feature.lesson.view.adapter.LessonMenuAdapter
 import javax.inject.Inject
 
@@ -21,9 +21,9 @@ class LessonMenuController : BaseController(), LessonView {
 
     @Inject
     internal lateinit var presenter: LessonBasePresenter<LessonView, LessonBaseInteractor>
-    private val lessonClick: (Category?) -> Unit = this::onLessonClicked
-    private val headerClick: (Category?) -> Unit = this::onHeaderClicked
-    private var sectionAdapter = SectionedRecyclerViewAdapter()
+    private val lessonClick: (LessonMenuAdapter.ItemGroup) -> Unit = this::onLessonClicked
+    private lateinit var lessonAdapter: LessonMenuAdapter
+
 
     override fun onInject() {
         DaggerLessonComponent.builder()
@@ -32,13 +32,10 @@ class LessonMenuController : BaseController(), LessonView {
                 .inject(this)
     }
 
-    private fun onLessonClicked(category: Category?) {
-        Log.e("test", "tes")
+    private fun onLessonClicked(itemGroup: LessonMenuAdapter.ItemGroup) {
+        router.pushController(RouterTransaction.with(DifficultController()))
     }
 
-    private fun onHeaderClicked(category: Category?) {
-        sectionAdapter.notifyDataSetChanged()
-    }
 
     override fun onAttach(view: View) {
         lessonMenu?.layoutManager = LinearLayoutManager(context)
@@ -50,8 +47,20 @@ class LessonMenuController : BaseController(), LessonView {
         return inflater.inflate(R.layout.lesson_view, container, false)
     }
 
+
     override fun showAllLesson(itemSections: List<LessonMenuAdapter.ItemSection>) {
-        lessonMenu?.adapter = LessonMenuAdapter(itemSections, lessonClick, headerClick)
+        lessonAdapter = LessonMenuAdapter(itemSections, lessonClick)
+        lessonMenu?.adapter = lessonAdapter
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        lessonAdapter.onSaveInstanceState(outState)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        lessonAdapter.onSaveInstanceState(savedInstanceState)
     }
 
     override fun getEnableBackAction() = true

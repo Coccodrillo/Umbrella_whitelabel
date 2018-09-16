@@ -16,7 +16,7 @@ import org.secfirst.umbrella.whitelabel.R
 import org.secfirst.umbrella.whitelabel.data.disk.TentConfig
 import org.secfirst.umbrella.whitelabel.feature.account.AccountController
 import org.secfirst.umbrella.whitelabel.feature.form.view.controller.HostFormController
-import org.secfirst.umbrella.whitelabel.feature.lesson.view.LessonMenuController
+import org.secfirst.umbrella.whitelabel.feature.lesson.view.presenter.LessonMenuController
 import org.secfirst.umbrella.whitelabel.feature.reader.view.controller.HostReaderController
 import org.secfirst.umbrella.whitelabel.feature.reader.view.controller.HostReaderController.Companion.TAG_UP_TRANSACTION
 import org.secfirst.umbrella.whitelabel.feature.tour.view.TourController
@@ -94,7 +94,7 @@ class MainActivity : AppCompatActivity() {
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_checklists -> {
-                router.pushController(RouterTransaction.with(LessonMenuController()))
+                router.pushController(RouterTransaction.with(AccountController()))
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_lessons -> {

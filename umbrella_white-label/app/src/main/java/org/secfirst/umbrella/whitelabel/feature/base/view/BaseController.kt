@@ -25,7 +25,7 @@ abstract class BaseController(bundle: Bundle = Bundle()) : Controller(bundle), L
 
     override fun onContextAvailable(context: Context) {
         this.context = context
-        activity?.let {
+        activity.let {
             mainActivity = activity as MainActivity
             mainActivity.setToolBarTitle(getTitleToolbar())
             mainActivity.enableToolbar(getEnableBackAction())
