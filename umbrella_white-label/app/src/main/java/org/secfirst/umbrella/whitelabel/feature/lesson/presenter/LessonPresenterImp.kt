@@ -1,10 +1,9 @@
 package org.secfirst.umbrella.whitelabel.feature.lesson.presenter
 
 import org.secfirst.umbrella.whitelabel.data.database.content.Category
-import org.secfirst.umbrella.whitelabel.data.disk.TentConfig
 import org.secfirst.umbrella.whitelabel.feature.base.presenter.BasePresenterImp
 import org.secfirst.umbrella.whitelabel.feature.lesson.interactor.LessonBaseInteractor
-import org.secfirst.umbrella.whitelabel.feature.lesson.view.LessonMenuAdapter
+import org.secfirst.umbrella.whitelabel.feature.lesson.view.adapter.LessonMenuAdapter
 import org.secfirst.umbrella.whitelabel.feature.lesson.view.LessonView
 import org.secfirst.umbrella.whitelabel.misc.AppExecutors.Companion.uiContext
 import org.secfirst.umbrella.whitelabel.misc.launchSilent

@@ -1,4 +1,4 @@
-package org.secfirst.umbrella.whitelabel.feature.reader.feed
+package org.secfirst.umbrella.whitelabel.feature.reader.view.controller
 
 import android.view.LayoutInflater
 import android.view.View
