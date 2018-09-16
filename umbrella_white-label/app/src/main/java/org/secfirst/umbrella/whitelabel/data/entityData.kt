@@ -1,5 +1,7 @@
 package org.secfirst.umbrella.whitelabel.data
 
+import android.os.Parcel
+import android.os.Parcelable
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.raizlabs.android.dbflow.annotation.*
@@ -275,6 +277,38 @@ data class ActiveForm(@PrimaryKey
                     .queryList()
         }
         return answers
+    }
+}
+
+data class Difficult(val title: String, val description: String, val layoutColor: String) : Parcelable {
+    constructor(parcel: Parcel) : this(
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readString())
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(title)
+        parcel.writeString(description)
+        parcel.writeString(layoutColor)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<Difficult> {
+
+        const val BEGINNER = 1
+        const val ADVANCED = 2
+        const val EXPERT = 3
+
+        override fun createFromParcel(parcel: Parcel): Difficult {
+            return Difficult(parcel)
+        }
+
+        override fun newArray(size: Int): Array<Difficult?> {
+            return arrayOfNulls(size)
+        }
     }
 }
 

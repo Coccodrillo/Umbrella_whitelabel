@@ -3,6 +3,8 @@ package org.secfirst.umbrella.whitelabel.misc
 import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
+import android.os.Bundle
+import android.os.Parcelable
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
@@ -48,4 +50,10 @@ fun MainActivity.hideKeyboard() {
 class HeaderViewHolder(headerView: View) : RecyclerView.ViewHolder(headerView) {
     val sectionText = headerView.sectionText
 }
+
+@Suppress("UNCHECKED_CAST")
+inline fun <reified T : Parcelable> Bundle.getParcelableMutableList(key: String): MutableList<T> = (getParcelableArray(key) as Array<T>).toMutableList()
+
+inline fun <reified T : Parcelable> Bundle.putParcelableCollection(key: String, value: Collection<T>) = putParcelableArray(key, value.toTypedArray())
+
 

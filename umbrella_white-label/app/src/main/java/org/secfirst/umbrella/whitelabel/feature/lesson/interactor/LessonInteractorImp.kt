@@ -7,5 +7,7 @@ import javax.inject.Inject
 
 class LessonInteractorImp @Inject constructor(private val lessonRepo: LessonRepo) : BaseInteractorImp(), LessonBaseInteractor {
 
+    override suspend fun fetchCategoryBy(id: Long) = lessonRepo.loadCategoryBy(id)
+
     override suspend fun fetchLesson(): List<Category> = lessonRepo.loadAllCategories()
 }

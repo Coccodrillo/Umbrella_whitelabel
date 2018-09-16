@@ -1,10 +1,16 @@
 package org.secfirst.umbrella.whitelabel.feature.lesson.presenter
 
+import org.secfirst.umbrella.whitelabel.data.Difficult
+import org.secfirst.umbrella.whitelabel.data.Difficult.CREATOR.ADVANCED
+import org.secfirst.umbrella.whitelabel.data.Difficult.CREATOR.BEGINNER
+import org.secfirst.umbrella.whitelabel.data.Difficult.CREATOR.EXPERT
 import org.secfirst.umbrella.whitelabel.data.database.content.Category
+import org.secfirst.umbrella.whitelabel.data.database.content.Subcategory
 import org.secfirst.umbrella.whitelabel.feature.base.presenter.BasePresenterImp
 import org.secfirst.umbrella.whitelabel.feature.lesson.interactor.LessonBaseInteractor
-import org.secfirst.umbrella.whitelabel.feature.lesson.view.adapter.LessonMenuAdapter
 import org.secfirst.umbrella.whitelabel.feature.lesson.view.LessonView
+import org.secfirst.umbrella.whitelabel.feature.lesson.view.adapter.ItemGroup
+import org.secfirst.umbrella.whitelabel.feature.lesson.view.adapter.ItemSection
 import org.secfirst.umbrella.whitelabel.misc.AppExecutors.Companion.uiContext
 import org.secfirst.umbrella.whitelabel.misc.launchSilent
 import javax.inject.Inject
@@ -12,6 +18,17 @@ import javax.inject.Inject
 class LessonPresenterImp<V : LessonView, I : LessonBaseInteractor> @Inject constructor(
         interactor: I) : BasePresenterImp<V, I>(
         interactor = interactor), LessonBasePresenter<V, I> {
+
+    override fun submitLessonSelect(lessonSelected: ItemGroup) {
+
+        launchSilent(uiContext) {
+            interactor?.let {
+                val category = it.fetchCategoryBy(lessonSelected.id)
+                getView()?.showSelectDifficult(toDifficult(category))
+            }
+        }
+    }
+
 
     override fun submitLoadAllLesson() {
         launchSilent(uiContext) {
@@ -25,15 +42,31 @@ class LessonPresenterImp<V : LessonView, I : LessonBaseInteractor> @Inject const
         }
     }
 
-    private fun toItemSection(categories: List<Category>): List<LessonMenuAdapter.ItemSection> {
-        val itemSections = mutableListOf<LessonMenuAdapter.ItemSection>()
+    private fun toDifficult(category: Subcategory): MutableList<Difficult> {
+        val difficulties = mutableListOf<Difficult>()
+        val sortedList = category.children.sortedWith(compareBy { it.index })
+        sortedList.forEach { subCategory ->
+            when (subCategory.index) {
+                BEGINNER -> difficulties.add(Difficult(subCategory.title, subCategory.description, "#87BD34"))
+                ADVANCED -> difficulties.add(Difficult(subCategory.title, subCategory.description, "#F3BC2B"))
+                EXPERT -> difficulties.add(Difficult(subCategory.title, subCategory.description, "#B83657"))
+                else -> {
+                    difficulties.add(Difficult(subCategory.title, subCategory.description, "#B83657"))
+                }
+            }
+        }
+        return difficulties
+    }
+
+    private fun toItemSection(categories: List<Category>): List<ItemSection> {
+        val itemSections = mutableListOf<ItemSection>()
         categories.forEach { category ->
-            val itemGroups = mutableListOf<LessonMenuAdapter.ItemGroup>()
+            val itemGroups = mutableListOf<ItemGroup>()
             category.subcategories.forEach { subcategory ->
-                val itemGroup = LessonMenuAdapter.ItemGroup(subcategory.title, subcategory.id)
+                val itemGroup = ItemGroup(subcategory.title, subcategory.id)
                 itemGroups.add(itemGroup)
             }
-            val itemSection = LessonMenuAdapter.ItemSection(category.title, category.resourcePath, itemGroups)
+            val itemSection = ItemSection(category.title, category.resourcePath, itemGroups)
             itemSections.add(itemSection)
         }
         return itemSections

@@ -1,9 +1,7 @@
 package org.secfirst.umbrella.whitelabel.data.database
 
 import com.raizlabs.android.dbflow.rx2.structure.BaseRXModel
-import org.secfirst.umbrella.whitelabel.data.Checklist
-import org.secfirst.umbrella.whitelabel.data.Form
-import org.secfirst.umbrella.whitelabel.data.Markdown
+import org.secfirst.umbrella.whitelabel.data.*
 import org.secfirst.umbrella.whitelabel.data.database.content.Category
 import org.secfirst.umbrella.whitelabel.data.database.content.Child
 import org.secfirst.umbrella.whitelabel.data.database.content.Subcategory

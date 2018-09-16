@@ -1,4 +1,4 @@
-package org.secfirst.umbrella.whitelabel.feature.lesson.view.presenter
+package org.secfirst.umbrella.whitelabel.feature.lesson.view.controller
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -9,11 +9,14 @@ import com.bluelinelabs.conductor.RouterTransaction
 import kotlinx.android.synthetic.main.lesson_view.*
 import org.secfirst.umbrella.whitelabel.R
 import org.secfirst.umbrella.whitelabel.UmbrellaApplication
+import org.secfirst.umbrella.whitelabel.data.Difficult
 import org.secfirst.umbrella.whitelabel.feature.base.view.BaseController
 import org.secfirst.umbrella.whitelabel.feature.lesson.DaggerLessonComponent
 import org.secfirst.umbrella.whitelabel.feature.lesson.interactor.LessonBaseInteractor
 import org.secfirst.umbrella.whitelabel.feature.lesson.presenter.LessonBasePresenter
 import org.secfirst.umbrella.whitelabel.feature.lesson.view.LessonView
+import org.secfirst.umbrella.whitelabel.feature.lesson.view.adapter.ItemGroup
+import org.secfirst.umbrella.whitelabel.feature.lesson.view.adapter.ItemSection
 import org.secfirst.umbrella.whitelabel.feature.lesson.view.adapter.LessonMenuAdapter
 import javax.inject.Inject
 
@@ -21,9 +24,8 @@ class LessonMenuController : BaseController(), LessonView {
 
     @Inject
     internal lateinit var presenter: LessonBasePresenter<LessonView, LessonBaseInteractor>
-    private val lessonClick: (LessonMenuAdapter.ItemGroup) -> Unit = this::onLessonClicked
+    private val lessonClick: (ItemGroup) -> Unit = this::onLessonClicked
     private lateinit var lessonAdapter: LessonMenuAdapter
-
 
     override fun onInject() {
         DaggerLessonComponent.builder()
@@ -32,8 +34,9 @@ class LessonMenuController : BaseController(), LessonView {
                 .inject(this)
     }
 
-    private fun onLessonClicked(itemGroup: LessonMenuAdapter.ItemGroup) {
-        router.pushController(RouterTransaction.with(DifficultController()))
+    private fun onLessonClicked(itemGroup: ItemGroup) {
+        presenter.submitLessonSelect(itemGroup)
+
     }
 
 
@@ -48,9 +51,13 @@ class LessonMenuController : BaseController(), LessonView {
     }
 
 
-    override fun showAllLesson(itemSections: List<LessonMenuAdapter.ItemSection>) {
+    override fun showAllLesson(itemSections: List<ItemSection>) {
         lessonAdapter = LessonMenuAdapter(itemSections, lessonClick)
         lessonMenu?.adapter = lessonAdapter
+    }
+
+    override fun showSelectDifficult(difficults: List<Difficult>) {
+        router.pushController(RouterTransaction.with(DifficultController(difficults)))
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

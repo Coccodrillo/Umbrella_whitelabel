@@ -1,6 +1,5 @@
 package org.secfirst.umbrella.whitelabel.feature.lesson.view.adapter
 
-import android.os.Bundle
 import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
@@ -14,7 +13,6 @@ import kotlinx.android.parcel.Parcelize
 import kotlinx.android.synthetic.main.lesson_menu_head.view.*
 import kotlinx.android.synthetic.main.lesson_menu_item.view.*
 import org.secfirst.umbrella.whitelabel.R
-import org.secfirst.umbrella.whitelabel.data.database.content.Category
 import java.io.File
 
 
@@ -60,8 +58,8 @@ class LessonMenuAdapter(groups: List<ExpandableGroup<*>>,
             itemView.setOnClickListener { clickListener(this) }
         }
     }
-
-    class ItemSection(title: String, var pathIcon: String, items: List<ItemGroup>) : ExpandableGroup<ItemGroup>(title, items)
-    @Parcelize
-    class ItemGroup(val title: String, val idSubcategory: Long) : Parcelable
 }
+
+class ItemSection(title: String, var pathIcon: String, items: List<ItemGroup>) : ExpandableGroup<ItemGroup>(title, items)
+@Parcelize
+class ItemGroup(var title: String = "", var id: Long = 0) : Parcelable
