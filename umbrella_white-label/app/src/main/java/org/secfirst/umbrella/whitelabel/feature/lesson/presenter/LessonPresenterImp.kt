@@ -1,9 +1,9 @@
 package org.secfirst.umbrella.whitelabel.feature.lesson.presenter
 
 import org.secfirst.umbrella.whitelabel.data.Difficult
-import org.secfirst.umbrella.whitelabel.data.Difficult.CREATOR.ADVANCED
-import org.secfirst.umbrella.whitelabel.data.Difficult.CREATOR.BEGINNER
-import org.secfirst.umbrella.whitelabel.data.Difficult.CREATOR.EXPERT
+import org.secfirst.umbrella.whitelabel.data.Difficult.Companion.ADVANCED
+import org.secfirst.umbrella.whitelabel.data.Difficult.Companion.BEGINNER
+import org.secfirst.umbrella.whitelabel.data.Difficult.Companion.EXPERT
 import org.secfirst.umbrella.whitelabel.data.database.content.Category
 import org.secfirst.umbrella.whitelabel.data.database.content.Subcategory
 import org.secfirst.umbrella.whitelabel.feature.base.presenter.BasePresenterImp
@@ -47,11 +47,11 @@ class LessonPresenterImp<V : LessonView, I : LessonBaseInteractor> @Inject const
         val sortedList = category.children.sortedWith(compareBy { it.index })
         sortedList.forEach { subCategory ->
             when (subCategory.index) {
-                BEGINNER -> difficulties.add(Difficult(subCategory.title, subCategory.description, "#87BD34"))
-                ADVANCED -> difficulties.add(Difficult(subCategory.title, subCategory.description, "#F3BC2B"))
-                EXPERT -> difficulties.add(Difficult(subCategory.title, subCategory.description, "#B83657"))
+                BEGINNER -> difficulties.add(Difficult(subCategory.title, subCategory.description, "#87BD34", category.title))
+                ADVANCED -> difficulties.add(Difficult(subCategory.title, subCategory.description, "#F3BC2B", category.title))
+                EXPERT -> difficulties.add(Difficult(subCategory.title, subCategory.description, "#B83657", category.title))
                 else -> {
-                    difficulties.add(Difficult(subCategory.title, subCategory.description, "#B83657"))
+                    difficulties.add(Difficult(subCategory.title, subCategory.description, "#B83657", category.title))
                 }
             }
         }

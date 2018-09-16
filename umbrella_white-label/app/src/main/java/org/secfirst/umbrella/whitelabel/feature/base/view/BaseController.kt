@@ -27,7 +27,7 @@ abstract class BaseController(bundle: Bundle = Bundle()) : Controller(bundle), L
         this.context = context
         activity.let {
             mainActivity = activity as MainActivity
-            mainActivity.setToolBarTitle(getTitleToolbar())
+            mainActivity.setToolbarTitle(getToolbarTitle())
             mainActivity.enableToolbar(getEnableBackAction())
         }
         super.onContextAvailable(context)
@@ -40,7 +40,9 @@ abstract class BaseController(bundle: Bundle = Bundle()) : Controller(bundle), L
 
     protected abstract fun getEnableBackAction(): Boolean
 
-    protected abstract fun getTitleToolbar(): String
+    protected abstract fun getToolbarTitle(): String
+
+    fun setToolbarTitle(title: String) = mainActivity.setToolbarTitle(title)
 
     fun disableNavigation() = mainActivity.hideNavigation()
 
@@ -50,5 +52,5 @@ abstract class BaseController(bundle: Bundle = Bundle()) : Controller(bundle), L
 
     fun disableToolbar() = mainActivity.hideToolbar()
 
-    fun enableArrowBack(enable : Boolean = false) = mainActivity.enableUpArrow(enable)
+    fun enableArrowBack(enable: Boolean = false) = mainActivity.enableUpArrow(enable)
 }

@@ -72,6 +72,6 @@ class LessonMenuController : BaseController(), LessonView {
 
     override fun getEnableBackAction() = true
 
-    override fun getTitleToolbar(): String = context.getString(R.string.lesson_title)
+    override fun getToolbarTitle(): String = context.getString(R.string.lesson_title)
 
 }

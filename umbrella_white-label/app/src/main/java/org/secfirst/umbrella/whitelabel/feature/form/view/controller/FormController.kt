@@ -166,7 +166,7 @@ class FormController(bundle: Bundle) : BaseController(bundle), FormView, Stepper
 
     override fun getEnableBackAction() = true
 
-    override fun getTitleToolbar() = activeForm.title
+    override fun getToolbarTitle() = activeForm.title
 
 
 }

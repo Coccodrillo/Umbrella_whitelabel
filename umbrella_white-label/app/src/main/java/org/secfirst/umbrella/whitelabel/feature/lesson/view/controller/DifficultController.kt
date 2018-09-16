@@ -15,7 +15,7 @@ import org.secfirst.umbrella.whitelabel.feature.lesson.view.adapter.DifficultAda
 class DifficultController(bundle: Bundle) : BaseController(bundle), LessonView {
 
     private val difficultClick: (Difficult) -> Unit = this::onDifficultClick
-    private val difficuties by lazy { args.getParcelableArray(EXTRA_SELECTED_DIFFICULTY) }
+    private val difficulties by lazy { args.getParcelableArray(EXTRA_SELECTED_DIFFICULTY) }
     private val difficultAdapter: DifficultAdapter = DifficultAdapter(difficultClick)
 
     constructor(difficulties: List<Difficult>) : this(Bundle().apply {
@@ -32,20 +32,31 @@ class DifficultController(bundle: Bundle) : BaseController(bundle), LessonView {
 
     @Suppress("UNCHECKED_CAST")
     override fun onAttach(view: View) {
+        enableArrowBack(true)
         difficultRecyclerView?.let {
             it.layoutManager = LinearLayoutManager(context)
-            difficultAdapter.addAll(difficuties as Array<Difficult>)
+            difficultAdapter.addAll(difficulties as Array<Difficult>)
             it.adapter = difficultAdapter
         }
     }
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
         return inflater.inflate(R.layout.difficult_view, container, false)
     }
 
-    override fun getEnableBackAction() = true
+    override fun onDestroyView(view: View) {
+        enableArrowBack(false)
+        setToolbarTitle(context.getString(R.string.lesson_title))
+    }
 
-    override fun getTitleToolbar() = ""
+    @Suppress("UNCHECKED_CAST")
+    override fun getToolbarTitle(): String {
+        val difficultiesList = difficulties as Array<Difficult>
+        return difficultiesList.last().titleToolbar
+    }
+
+    override fun getEnableBackAction() = true
 
     override fun onInject() {}
 

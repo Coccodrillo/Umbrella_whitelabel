@@ -87,6 +87,6 @@ class WebViewController(bundle: Bundle) : BaseController(bundle) {
 
     override fun getEnableBackAction() = true
 
-    override fun getTitleToolbar() = "Umbrella"
+    override fun getToolbarTitle() = "Umbrella"
 
 }

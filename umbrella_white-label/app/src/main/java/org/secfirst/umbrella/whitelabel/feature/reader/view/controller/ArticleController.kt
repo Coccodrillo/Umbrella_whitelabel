@@ -81,7 +81,7 @@ class ArticleController(bundle: Bundle) : BaseController(bundle) {
 
     override fun getEnableBackAction() = true
 
-    override fun getTitleToolbar() = context.getString(R.string.app_name)
+    override fun getToolbarTitle() = context.getString(R.string.app_name)
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         return inflater.inflate(R.menu.article_menu, menu)

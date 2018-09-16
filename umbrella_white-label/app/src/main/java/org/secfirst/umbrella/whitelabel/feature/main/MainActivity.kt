@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(mainToolbar)
     }
 
-    fun setToolBarTitle(title: String) {
+    fun setToolbarTitle(title: String) {
         mainToolbar?.let { it.title = title }
     }
 

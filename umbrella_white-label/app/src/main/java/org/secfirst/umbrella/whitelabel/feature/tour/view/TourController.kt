@@ -119,6 +119,6 @@ class TourController : BaseController(), TourView {
 
     override fun getEnableBackAction() = false
 
-    override fun getTitleToolbar() = ""
+    override fun getToolbarTitle() = ""
 
 }
