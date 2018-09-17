@@ -5,6 +5,9 @@ import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup
 import kotlinx.android.parcel.Parcelize
 import org.secfirst.umbrella.whitelabel.data.database.content.Category
 import org.secfirst.umbrella.whitelabel.data.database.content.Subcategory
+import org.secfirst.umbrella.whitelabel.data.database.lesson.Difficult.Companion.ADVANCED_COLOR
+import org.secfirst.umbrella.whitelabel.data.database.lesson.Difficult.Companion.BEGINNER_COLOR
+import org.secfirst.umbrella.whitelabel.data.database.lesson.Difficult.Companion.EXPERT_COLOR
 
 @Parcelize
 data class Difficult(val title: String, val description: String, val layoutColor: String, val titleToolbar: String) : Parcelable {
@@ -12,6 +15,9 @@ data class Difficult(val title: String, val description: String, val layoutColor
         const val BEGINNER = 1
         const val ADVANCED = 2
         const val EXPERT = 3
+        const val BEGINNER_COLOR = "#87BD34"
+        const val ADVANCED_COLOR = "#F3BC2B"
+        const val EXPERT_COLOR = "#B83657"
     }
 }
 
@@ -25,11 +31,11 @@ fun Subcategory.toDifficult(): MutableList<Difficult> {
     val subcategorySorted = this.children.sortedWith(compareBy { it.index })
     subcategorySorted.forEach { child ->
         when (child.index) {
-            Difficult.BEGINNER -> difficulties.add(Difficult(child.title, child.description, "#87BD34", this.title))
-            Difficult.ADVANCED -> difficulties.add(Difficult(child.title, child.description, "#F3BC2B", this.title))
-            Difficult.EXPERT -> difficulties.add(Difficult(child.title, child.description, "#B83657", this.title))
+            Difficult.BEGINNER -> difficulties.add(Difficult(child.title, child.description, BEGINNER_COLOR, this.title))
+            Difficult.ADVANCED -> difficulties.add(Difficult(child.title, child.description, ADVANCED_COLOR, this.title))
+            Difficult.EXPERT -> difficulties.add(Difficult(child.title, child.description, EXPERT_COLOR, this.title))
             else -> {
-                difficulties.add(Difficult(child.title, child.description, "#B83657", this.title))
+                difficulties.add(Difficult(child.title, child.description, EXPERT_COLOR, this.title))
             }
         }
     }
@@ -37,15 +43,15 @@ fun Subcategory.toDifficult(): MutableList<Difficult> {
 }
 
 fun List<Category>.toLesson(): List<Lesson> {
-    val itemSections = mutableListOf<Lesson>()
+    val lessons = mutableListOf<Lesson>()
     this.forEach { category ->
-        val itemGroups = mutableListOf<Lesson.Topic>()
+        val topics = mutableListOf<Lesson.Topic>()
         category.subcategories.forEach { subcategory ->
-            val itemGroup = Lesson.Topic(subcategory.title, subcategory.id)
-            itemGroups.add(itemGroup)
+            val topic = Lesson.Topic(subcategory.title, subcategory.id)
+            topics.add(topic)
         }
-        val itemSection = Lesson(category.title, category.resourcePath, itemGroups)
-        itemSections.add(itemSection)
+        val lesson = Lesson(category.title, category.resourcePath, topics)
+        lessons.add(lesson)
     }
-    return itemSections
+    return lessons
 }

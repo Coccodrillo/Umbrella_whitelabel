@@ -14,7 +14,7 @@ class LessonPresenterImp<V : LessonView, I : LessonBaseInteractor> @Inject const
         interactor: I) : BasePresenterImp<V, I>(
         interactor = interactor), LessonBasePresenter<V, I> {
 
-    override fun submitLessonSelect(topicSelected: Lesson.Topic) {
+    override fun submitSelectTopic(topicSelected: Lesson.Topic) {
 
         launchSilent(uiContext) {
             interactor?.let {

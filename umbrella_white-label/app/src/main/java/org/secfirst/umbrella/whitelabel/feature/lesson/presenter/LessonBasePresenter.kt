@@ -11,5 +11,5 @@ interface LessonBasePresenter<V : LessonView, I : LessonBaseInteractor> : BasePr
 
     fun submitLoadAllLesson()
 
-    fun submitLessonSelect(topicSelected: Lesson.Topic)
+    fun submitSelectTopic(topicSelected: Lesson.Topic)
 }
