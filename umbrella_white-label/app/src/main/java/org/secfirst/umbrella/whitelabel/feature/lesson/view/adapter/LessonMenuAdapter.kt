@@ -1,6 +1,5 @@
 package org.secfirst.umbrella.whitelabel.feature.lesson.view.adapter
 
-import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,15 +8,15 @@ import com.thoughtbot.expandablerecyclerview.ExpandableRecyclerViewAdapter
 import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup
 import com.thoughtbot.expandablerecyclerview.viewholders.ChildViewHolder
 import com.thoughtbot.expandablerecyclerview.viewholders.GroupViewHolder
-import kotlinx.android.parcel.Parcelize
 import kotlinx.android.synthetic.main.lesson_menu_head.view.*
 import kotlinx.android.synthetic.main.lesson_menu_item.view.*
 import org.secfirst.umbrella.whitelabel.R
+import org.secfirst.umbrella.whitelabel.data.database.lesson.Lesson
 import java.io.File
 
 
 class LessonMenuAdapter(groups: List<ExpandableGroup<*>>,
-                        private val onclickLesson: (ItemGroup) -> Unit)
+                        private val onclickLesson: (Lesson.Topic) -> Unit)
     : ExpandableRecyclerViewAdapter<LessonMenuAdapter.HeadHolder, LessonMenuAdapter.LessonMenuHolder>(groups) {
 
 
@@ -34,7 +33,7 @@ class LessonMenuAdapter(groups: List<ExpandableGroup<*>>,
     }
 
     override fun onBindChildViewHolder(holder: LessonMenuHolder, flatPosition: Int, group: ExpandableGroup<*>, childIndex: Int) {
-        val itemGroup = (group as ItemSection).items[childIndex]
+        val itemGroup = (group as Lesson).items[childIndex]
         holder.bind(itemGroup.title, clickListener = { onclickLesson(itemGroup) })
     }
 
@@ -44,7 +43,7 @@ class LessonMenuAdapter(groups: List<ExpandableGroup<*>>,
 
     class HeadHolder(itemView: View) : GroupViewHolder(itemView) {
         fun setHeadTitle(group: ExpandableGroup<*>) {
-            val itemSection = group as ItemSection
+            val itemSection = group as Lesson
             itemView.subheaderText.text = group.title
             Picasso.with(itemView.context)
                     .load(File(itemSection.pathIcon))
@@ -59,7 +58,3 @@ class LessonMenuAdapter(groups: List<ExpandableGroup<*>>,
         }
     }
 }
-
-class ItemSection(title: String, var pathIcon: String, items: List<ItemGroup>) : ExpandableGroup<ItemGroup>(title, items)
-@Parcelize
-class ItemGroup(var title: String = "", var id: Long = 0) : Parcelable

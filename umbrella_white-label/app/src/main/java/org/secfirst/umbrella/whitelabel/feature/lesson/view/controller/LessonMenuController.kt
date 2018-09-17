@@ -9,14 +9,13 @@ import com.bluelinelabs.conductor.RouterTransaction
 import kotlinx.android.synthetic.main.lesson_view.*
 import org.secfirst.umbrella.whitelabel.R
 import org.secfirst.umbrella.whitelabel.UmbrellaApplication
-import org.secfirst.umbrella.whitelabel.data.Difficult
+import org.secfirst.umbrella.whitelabel.data.database.lesson.Difficult
 import org.secfirst.umbrella.whitelabel.feature.base.view.BaseController
 import org.secfirst.umbrella.whitelabel.feature.lesson.DaggerLessonComponent
 import org.secfirst.umbrella.whitelabel.feature.lesson.interactor.LessonBaseInteractor
 import org.secfirst.umbrella.whitelabel.feature.lesson.presenter.LessonBasePresenter
 import org.secfirst.umbrella.whitelabel.feature.lesson.view.LessonView
-import org.secfirst.umbrella.whitelabel.feature.lesson.view.adapter.ItemGroup
-import org.secfirst.umbrella.whitelabel.feature.lesson.view.adapter.ItemSection
+import org.secfirst.umbrella.whitelabel.data.database.lesson.Lesson
 import org.secfirst.umbrella.whitelabel.feature.lesson.view.adapter.LessonMenuAdapter
 import javax.inject.Inject
 
@@ -24,7 +23,7 @@ class LessonMenuController : BaseController(), LessonView {
 
     @Inject
     internal lateinit var presenter: LessonBasePresenter<LessonView, LessonBaseInteractor>
-    private val lessonClick: (ItemGroup) -> Unit = this::onLessonClicked
+    private val lessonClick: (Lesson.Topic) -> Unit = this::onLessonClicked
     private lateinit var lessonAdapter: LessonMenuAdapter
 
     override fun onInject() {
@@ -34,8 +33,8 @@ class LessonMenuController : BaseController(), LessonView {
                 .inject(this)
     }
 
-    private fun onLessonClicked(itemGroup: ItemGroup) {
-        presenter.submitLessonSelect(itemGroup)
+    private fun onLessonClicked(topic: Lesson.Topic) {
+        presenter.submitLessonSelect(topic)
 
     }
 
@@ -51,8 +50,8 @@ class LessonMenuController : BaseController(), LessonView {
     }
 
 
-    override fun showAllLesson(itemSections: List<ItemSection>) {
-        lessonAdapter = LessonMenuAdapter(itemSections, lessonClick)
+    override fun showAllLesson(lessons: List<Lesson>) {
+        lessonAdapter = LessonMenuAdapter(lessons, lessonClick)
         lessonMenu?.adapter = lessonAdapter
     }
 

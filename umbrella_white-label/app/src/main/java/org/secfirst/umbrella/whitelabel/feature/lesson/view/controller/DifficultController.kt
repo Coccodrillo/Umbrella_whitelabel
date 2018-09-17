@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.difficult_view.*
 import org.secfirst.umbrella.whitelabel.R
-import org.secfirst.umbrella.whitelabel.data.Difficult
+import org.secfirst.umbrella.whitelabel.data.database.lesson.Difficult
 import org.secfirst.umbrella.whitelabel.feature.base.view.BaseController
 import org.secfirst.umbrella.whitelabel.feature.lesson.view.LessonView
 import org.secfirst.umbrella.whitelabel.feature.lesson.view.adapter.DifficultAdapter

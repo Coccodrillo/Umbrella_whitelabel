@@ -18,7 +18,6 @@ import org.secfirst.umbrella.whitelabel.feature.account.AccountController
 import org.secfirst.umbrella.whitelabel.feature.form.view.controller.HostFormController
 import org.secfirst.umbrella.whitelabel.feature.lesson.view.controller.LessonMenuController
 import org.secfirst.umbrella.whitelabel.feature.reader.view.controller.HostReaderController
-import org.secfirst.umbrella.whitelabel.feature.reader.view.controller.HostReaderController.Companion.TAG_UP_TRANSACTION
 import org.secfirst.umbrella.whitelabel.feature.tour.view.TourController
 import org.secfirst.umbrella.whitelabel.misc.hideKeyboard
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
@@ -86,7 +85,7 @@ class MainActivity : AppCompatActivity() {
 
         when (item.itemId) {
             R.id.navigation_feeds -> {
-                router.pushController(RouterTransaction.with(HostReaderController()).tag(TAG_UP_TRANSACTION))
+                router.pushController(RouterTransaction.with(HostReaderController()))
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_forms -> {

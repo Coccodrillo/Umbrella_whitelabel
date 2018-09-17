@@ -11,14 +11,11 @@ import org.secfirst.umbrella.whitelabel.feature.reader.view.adapter.ReaderAdapte
 
 class HostReaderController : BaseController() {
 
-    companion object {
-        const val TAG_UP_TRANSACTION = "TAG_UP_TRANSACTION"
-    }
-
     override fun onInject() {
     }
 
     override fun onAttach(view: View) {
+        enableNavigation()
         feedPager?.adapter = ReaderAdapter(this)
         feedTab?.setupWithViewPager(feedPager)
     }

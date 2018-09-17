@@ -75,7 +75,7 @@ data class Subcategory(
         @ForeignKey(onUpdate = ForeignKeyAction.CASCADE,
                 onDelete = ForeignKeyAction.CASCADE,
                 stubbedRelationship = true)
-        @ForeignKeyReference(foreignKeyColumnName = "id", columnName = "category_id")
+        @ForeignKeyReference(foreignKeyColumnName = "idReference", columnName = "category_id")
         var category: Category? = null,
         @Column
         var index: Int = 0,
@@ -136,7 +136,7 @@ data class Child(
         @ForeignKey(onUpdate = ForeignKeyAction.CASCADE,
                 onDelete = ForeignKeyAction.CASCADE,
                 stubbedRelationship = true)
-        @ForeignKeyReference(foreignKeyColumnName = "id", columnName = "child_id")
+        @ForeignKeyReference(foreignKeyColumnName = "idReference", columnName = "child_id")
         var subcategory: Subcategory? = null,
         @Column
         var index: Int = 0,

@@ -1,11 +1,9 @@
 package org.secfirst.umbrella.whitelabel.data
 
-import android.os.Parcelable
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.raizlabs.android.dbflow.annotation.*
 import com.raizlabs.android.dbflow.sql.language.SQLite
-import kotlinx.android.parcel.Parcelize
 import org.secfirst.umbrella.whitelabel.data.database.AppDatabase
 import org.secfirst.umbrella.whitelabel.data.database.BaseModel
 import org.secfirst.umbrella.whitelabel.data.database.content.Category
@@ -17,7 +15,7 @@ import java.io.Serializable
 
 class Root(val elements: MutableList<Element> = arrayListOf(), val forms: MutableList<Form> = arrayListOf()) {
 
-    fun convertRootToLesson(): ContentData {
+    fun convertRootTo(): ContentData {
         val categories: MutableList<Category> = mutableListOf()
         var subCategories: MutableList<Subcategory> = mutableListOf()
         var children: MutableList<Child> = mutableListOf()
@@ -63,19 +61,19 @@ data class Markdown(
         @PrimaryKey(autoincrement = true)
         var id: Long = 0,
 
-        @ForeignKeyReference(foreignKeyColumnName = "id", columnName = "category_id")
+        @ForeignKeyReference(foreignKeyColumnName = "idReference", columnName = "category_id")
         @ForeignKey(onUpdate = ForeignKeyAction.CASCADE,
                 onDelete = ForeignKeyAction.CASCADE,
                 stubbedRelationship = true)
         var category: Category? = null,
 
-        @ForeignKeyReference(foreignKeyColumnName = "id", columnName = "subcategory_id")
+        @ForeignKeyReference(foreignKeyColumnName = "idReference", columnName = "subcategory_id")
         @ForeignKey(onUpdate = ForeignKeyAction.CASCADE,
                 onDelete = ForeignKeyAction.CASCADE,
                 stubbedRelationship = true)
         var subcategory: Subcategory? = null,
 
-        @ForeignKeyReference(foreignKeyColumnName = "id", columnName = "child_id")
+        @ForeignKeyReference(foreignKeyColumnName = "idReference", columnName = "child_id")
         @ForeignKey(onUpdate = ForeignKeyAction.CASCADE,
                 onDelete = ForeignKeyAction.CASCADE,
                 stubbedRelationship = true)
@@ -94,20 +92,20 @@ data class Checklist(
         @Column
         var index: Int = 0,
 
-        @ForeignKeyReference(foreignKeyColumnName = "id", columnName = "category_id")
+        @ForeignKeyReference(foreignKeyColumnName = "idReference", columnName = "category_id")
         @ForeignKey(onUpdate = ForeignKeyAction.CASCADE,
                 onDelete = ForeignKeyAction.CASCADE,
                 stubbedRelationship = true)
         var category: Category? = null,
 
-        @ForeignKeyReference(foreignKeyColumnName = "id", columnName = "subcategory_id")
+        @ForeignKeyReference(foreignKeyColumnName = "idReference", columnName = "subcategory_id")
         @ForeignKey(onUpdate = ForeignKeyAction.CASCADE,
                 onDelete = ForeignKeyAction.CASCADE,
                 stubbedRelationship = true)
         var subcategory: Subcategory? = null,
 
 
-        @ForeignKeyReference(foreignKeyColumnName = "id", columnName = "child_id")
+        @ForeignKeyReference(foreignKeyColumnName = "idReference", columnName = "child_id")
         @ForeignKey(onUpdate = ForeignKeyAction.CASCADE,
                 onDelete = ForeignKeyAction.CASCADE,
                 stubbedRelationship = true)
@@ -139,7 +137,7 @@ class Content(
         @ForeignKey(onUpdate = ForeignKeyAction.CASCADE,
                 onDelete = ForeignKeyAction.CASCADE,
                 stubbedRelationship = true)
-        @ForeignKeyReference(foreignKeyColumnName = "id", columnName = "checklist_id")
+        @ForeignKeyReference(foreignKeyColumnName = "idReference", columnName = "checklist_id")
         var checklist: Checklist? = null,
         @Column
         var label: String = "") : BaseModel()
@@ -175,7 +173,7 @@ data class Screen(
         @ForeignKey(onUpdate = ForeignKeyAction.CASCADE,
                 deleteForeignKeyModel = false,
                 stubbedRelationship = true)
-        @ForeignKeyReference(foreignKeyColumnName = "id", columnName = "form_id")
+        @ForeignKeyReference(foreignKeyColumnName = "idReference", columnName = "form_id")
         var form: Form? = null,
         var items: MutableList<Item> = arrayListOf()) : BaseModel(), Serializable {
 
@@ -204,7 +202,7 @@ data class Item(
         @ForeignKey(onUpdate = ForeignKeyAction.CASCADE,
                 deleteForeignKeyModel = false,
                 stubbedRelationship = true)
-        @ForeignKeyReference(foreignKeyColumnName = "id", columnName = "screen_id")
+        @ForeignKeyReference(foreignKeyColumnName = "idReference", columnName = "screen_id")
         var screen: Screen? = null,
         var options: MutableList<Option> = arrayListOf(),
         @Column
@@ -233,7 +231,7 @@ data class Option(
         @ForeignKey(onUpdate = ForeignKeyAction.CASCADE,
                 deleteForeignKeyModel = false,
                 stubbedRelationship = true)
-        @ForeignKeyReference(foreignKeyColumnName = "id", columnName = "item_id")
+        @ForeignKeyReference(foreignKeyColumnName = "idReference", columnName = "item_id")
         var item: Item? = null,
         @Column
         var value: String = "") : BaseModel(), Serializable
@@ -253,7 +251,7 @@ data class Answer(
         @ForeignKey(onUpdate = ForeignKeyAction.CASCADE,
                 deleteForeignKeyModel = false,
                 stubbedRelationship = true)
-        @ForeignKeyReference(foreignKeyColumnName = "id", columnName = "active_form_id")
+        @ForeignKeyReference(foreignKeyColumnName = "idReference", columnName = "active_form_id")
         var activeForm: ActiveForm? = null) : Serializable
 
 @Table(database = AppDatabase::class)
@@ -277,15 +275,6 @@ data class ActiveForm(@PrimaryKey
                     .queryList()
         }
         return answers
-    }
-}
-
-@Parcelize
-data class Difficult(val title: String, val description: String, val layoutColor: String, val titleToolbar: String) : Parcelable {
-    companion object {
-        const val BEGINNER = 1
-        const val ADVANCED = 2
-        const val EXPERT = 3
     }
 }
 

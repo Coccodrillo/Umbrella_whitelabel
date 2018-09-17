@@ -10,7 +10,7 @@ interface ContentDao {
 
     suspend fun insertAllLessons(root: Root) {
         withContext(AppExecutors.ioContext) {
-            val dataLesson = root.convertRootToLesson()
+            val dataLesson = root.convertRootTo()
 
             dataLesson.categories.forEach { category ->
                 category.associateForeignKey(category)

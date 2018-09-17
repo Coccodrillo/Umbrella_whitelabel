@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.difficult_item_view.view.*
 import org.jetbrains.anko.backgroundColor
 import org.secfirst.umbrella.whitelabel.R
-import org.secfirst.umbrella.whitelabel.data.Difficult
+import org.secfirst.umbrella.whitelabel.data.database.lesson.Difficult
 
 class DifficultAdapter(private val onClickDiff: (Difficult) -> Unit) : RecyclerView.Adapter<DifficultAdapter.DifficultHolder>() {
 
